@@ -23,6 +23,20 @@ footer{padding:30px 7%;background:#101828;color:#cbd5e1;margin-top:30px}
 .empty{display:none;text-align:center;padding:30px;color:#667085}
 @media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}.hero h1{font-size:34px}}
 @media(max-width:600px){header{padding:15px 4%}nav a{display:none}.hero,.container{padding-left:4%;padding-right:4%}.search{flex-direction:column}.grid{grid-template-columns:1fr}}
+
+.upload-box{border:2px dashed #cbd5e1;border-radius:10px;padding:15px;text-align:center;background:#f8fafc}
+.upload-preview{width:100%;height:170px;object-fit:cover;border-radius:10px;margin-top:8px;display:none}
+.contact-info{background:#f8fafc;border-radius:10px;padding:15px;margin:12px 0}
+.contact-link{display:block;text-decoration:none;margin-top:10px}
+
+.nav-user{font-size:13px;color:#dbe4f0}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}
+.toolbar input,.toolbar select{padding:11px;border:1px solid #d6dce5;border-radius:9px;background:#fff}
+.card-actions{display:flex;gap:8px;flex-wrap:wrap}
+.small-btn{padding:8px 11px;border-radius:8px;font-size:12px}
+.notice{padding:12px 15px;border-radius:10px;background:#fff8e6;color:#8a5b00;margin-bottom:20px;border:1px solid #f2dfaa}
+.profile-pill{display:inline-block;padding:5px 8px;border-radius:20px;background:#eef6ff;color:#1558a6;font-size:11px;font-weight:700}
+.req-card{border-left:4px solid #2f80ed}
 </style>
 </head>
 <body>
@@ -31,7 +45,7 @@ footer{padding:30px 7%;background:#101828;color:#cbd5e1;margin-top:30px}
   <nav>
     <a href="#browse">Browse</a>
     <a href="#how">How it works</a>
-    <button class="btn primary" onclick="openModal()">+ Sell Component</button>
+    <button class="btn secondary" onclick="openRequirement()">+ Need a Component</button><button class="btn primary" onclick="openModal()">+ Sell Component</button>
   </nav>
 </header>
 
@@ -39,8 +53,8 @@ footer{padding:30px 7%;background:#101828;color:#cbd5e1;margin-top:30px}
   <h1>Buy & Sell Used Electronics Components on Campus</h1>
   <p>A student-first marketplace for Arduino boards, sensors, motors, modules, tools and project components.</p>
   <div class="search">
-    <input id="search" placeholder="Search Arduino, sensor, motor, NRF24L01..." oninput="filterCards()">
-    <select id="condition" onchange="filterCards()">
+    <input id="heroSearch" placeholder="Search Arduino, sensor, motor, NRF24L01...">
+    <select id="heroCondition" onchange="syncHeroSearch()">
       <option value="">Any condition</option><option>Working</option><option>New</option>
     </select>
     <button class="btn primary" onclick="document.getElementById('browse').scrollIntoView({behavior:'smooth'})">Find Components</button>
@@ -49,6 +63,13 @@ footer{padding:30px 7%;background:#101828;color:#cbd5e1;margin-top:30px}
 
 <section class="container" id="browse">
   <div class="section-head"><h2>Components near you</h2><span id="count" class="badge">6 listings</span></div>
+  <div class="notice">💡 Looking for something that isn't listed? Post a requirement and let sellers contact you.</div>
+  <div class="toolbar">
+    <input id="search" placeholder="Search Arduino, sensor, motor..." oninput="filterCards()">
+    <select id="condition" onchange="filterCards()"><option value="">Any condition</option><option>Working</option><option>New</option></select>
+    <select id="sort" onchange="filterCards()"><option value="new">Newest</option><option value="low">Price: Low to High</option><option value="high">Price: High to Low</option></select>
+    <button class="btn secondary" onclick="openRequirement()">+ Post Requirement</button>
+  </div>
   <div class="grid" id="grid"></div>
   <div id="empty" class="empty">No matching components found.</div>
 </section>
@@ -56,19 +77,10 @@ footer{padding:30px 7%;background:#101828;color:#cbd5e1;margin-top:30px}
 <section class="container" id="how">
   <div class="section-head"><h2>How it works</h2></div>
   <div class="grid">
-    <div class="card"><div class="card-body"><h3>1. List</h3><p>Add a photo, condition, price and location.</p></div></div>
+    <div class="card"><div class="card-body"><h3>1. List</h3><p>Add photos, condition, price and contact details.</p></div></div>
     <div class="card"><div class="card-body"><h3>2. Discover</h3><p>Students search for affordable components nearby.</p></div></div>
     <div class="card"><div class="card-body"><h3>3. Connect</h3><p>Buyer contacts the seller and confirms the deal.</p></div></div>
     <div class="card"><div class="card-body"><h3>4. Exchange</h3><p>Meet safely on campus and complete the transaction.</p></div></div>
-  </div>
-</section>
-
-<section class="container">
-  <div class="card" style="padding:20px">
-    <h2 style="margin-top:0">Seller Location</h2>
-    <p style="margin-bottom:4px"><strong>GLA University</strong></p>
-    <p style="margin:0;color:#687588">Mathura, Uttar Pradesh</p>
-    <p style="margin-top:12px;color:#687588">Interested buyers can use <strong>Message Seller</strong> on a listing to send an enquiry.</p>
   </div>
 </section>
 
@@ -82,9 +94,16 @@ footer{padding:30px 7%;background:#101828;color:#cbd5e1;margin-top:30px}
       <input id="name" required placeholder="Component name">
       <input id="price" required type="number" min="1" placeholder="Price (₹)">
       <select id="cond" required><option value="">Condition</option><option>Working</option><option>New</option></select>
-      <input id="location" required placeholder="College / City">
       <input id="seller" required placeholder="Seller name">
+      <input id="whatsapp" placeholder="WhatsApp number (recommended)">
+      <input id="instagram" placeholder="Instagram ID (e.g. @username)">
+      <div class="upload-box">
+        <strong>Upload component image</strong>
+        <input id="image" type="file" accept="image/*" required onchange="previewImage(event)">
+        <img id="preview" class="upload-preview">
+      </div>
       <textarea id="desc" rows="3" placeholder="Short description"></textarea>
+      <small style="color:#667085">Provide at least one contact method: WhatsApp or Instagram.</small>
       <button class="btn primary" type="submit">Publish Listing</button>
     </form>
   </div>
@@ -92,37 +111,57 @@ footer{padding:30px 7%;background:#101828;color:#cbd5e1;margin-top:30px}
 
 <script>
 const listings=[
- {name:"Arduino UNO R3",price:350,condition:"Working",location:"GLA University, Mathura",seller:"NAA",icon:"🔌"},
- {name:"NRF24L01 Module",price:120,condition:"Working",location:"GLA University, Mathura",seller:"NAA",icon:"📡"},
- {name:"HC-SR04 Ultrasonic Sensor",price:90,condition:"Working",location:"GLA University, Mathura",seller:"NAA",icon:"📏"},
- {name:"L298N Motor Driver",price:130,condition:"Working",location:"GLA University, Mathura",seller:"NAA",icon:"⚙️"},
- {name:"OLED 0.96 inch",price:180,condition:"New",location:"GLA University, Mathura",seller:"NAA",icon:"🖥️"},
- {name:"SG90 Servo Motor",price:100,condition:"Working",location:"GLA University, Mathura",seller:"NAA",icon:"🔧"}
+ {name:"Arduino UNO R3",price:350,condition:"Working",location:"",seller:"NAA",icon:"🔌"},
+ {name:"NRF24L01 Module",price:120,condition:"Working",location:"",seller:"NAA",icon:"📡"},
+ {name:"HC-SR04 Ultrasonic Sensor",price:90,condition:"Working",location:"",seller:"NAA",icon:"📏"},
+ {name:"L298N Motor Driver",price:130,condition:"Working",location:"",seller:"NAA",icon:"⚙️"},
+ {name:"OLED 0.96 inch",price:180,condition:"New",location:"",seller:"NAA",icon:"🖥️"},
+ {name:"SG90 Servo Motor",price:100,condition:"Working",location:"",seller:"NAA",icon:"🔧"}
 ];
 
 function render(data=listings){
  const grid=document.getElementById("grid"); grid.innerHTML="";
  data.forEach((x,i)=>{
-  grid.innerHTML+=`<div class="card"><div class="pic">${x.icon||"🔧"}</div><div class="card-body">
+  grid.innerHTML+=`<div class="card"><div class="pic">${x.image?`<img src="${x.image}" style="width:100%;height:100%;object-fit:cover">`:x.icon||"🔧"}</div><div class="card-body">
   <h3>${escapeHtml(x.name)}</h3><div class="price">₹${x.price}</div>
-  <div class="meta">${escapeHtml(x.condition)} · ${escapeHtml(x.location)}<br>Seller: ${escapeHtml(x.seller)}</div>
-  <button class="btn secondary" onclick="contact('${encodeURIComponent(x.seller)}','${encodeURIComponent(x.name)}')">Message Seller</button>
+  <div class="meta">${escapeHtml(x.condition)}<br>Seller: ${escapeHtml(x.seller)}<br><span class="profile-pill">Student Seller</span></div>
+  <button class="btn secondary" onclick="contact(${i})">Message Seller</button>
   </div></div>`;
  });
  document.getElementById("count").textContent=data.length+" listings";
  document.getElementById("empty").style.display=data.length?"none":"block";
 }
 function filterCards(){
- const q=document.getElementById("search").value.toLowerCase(), c=document.getElementById("condition").value;
- render(listings.filter(x=>(x.name.toLowerCase().includes(q)||x.location.toLowerCase().includes(q))&&(!c||x.condition===c)));
+ const q=(document.getElementById("search")?.value||"").toLowerCase();
+ const c=document.getElementById("condition")?.value||"";
+ let data=listings.filter(x=>(x.name.toLowerCase().includes(q))&&(!c||x.condition===c));
+ const sort=document.getElementById("sort")?.value||"new";
+ if(sort==="low") data.sort((a,b)=>a.price-b.price);
+ if(sort==="high") data.sort((a,b)=>b.price-a.price);
+ render(data);
+}
+function syncHeroSearch(){
+ document.getElementById("search").value=document.getElementById("heroSearch").value;
+ document.getElementById("condition").value=document.getElementById("heroCondition").value;
+ filterCards();
+}
+function openRequirement(){document.getElementById("reqModal").style.display="flex"}
+function closeRequirement(){document.getElementById("reqModal").style.display="none"}
+function addRequirement(e){
+ e.preventDefault();
+ const req={name:document.getElementById("reqName").value,budget:document.getElementById("reqBudget").value||"Any",
+ qty:document.getElementById("reqQty").value||1,details:document.getElementById("reqDetails").value,contact:document.getElementById("reqContact").value};
+ const saved=JSON.parse(localStorage.getItem("requirements")||"[]"); saved.unshift(req); localStorage.setItem("requirements",JSON.stringify(saved));
+ closeRequirement(); e.target.reset(); alert("Requirement posted successfully in this prototype.");
 }
 function openModal(){document.getElementById("modal").style.display="flex"}
 function closeModal(){document.getElementById("modal").style.display="none"}
 function addListing(e){
  e.preventDefault();
  listings.unshift({name:document.getElementById("name").value,price:Number(document.getElementById("price").value),
- condition:document.getElementById("cond").value,location:document.getElementById("location").value,
- seller:document.getElementById("seller").value,icon:"📦"});
+ condition:document.getElementById("cond").value,location:"",seller:document.getElementById("seller").value,
+ whatsapp:document.getElementById("whatsapp").value.trim(),instagram:document.getElementById("instagram").value.trim(),
+ image:selectedImage,icon:"📦",owner:true});
  render(); closeModal(); e.target.reset(); document.getElementById("browse").scrollIntoView({behavior:"smooth"});
 }
 function contact(s,n){openMessage(decodeURIComponent(s), decodeURIComponent(n))}
@@ -135,7 +174,36 @@ function openMessage(seller, item){
 }
 
 function escapeHtml(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+
+const storedListings=JSON.parse(localStorage.getItem("campusListings")||"null");
+if(storedListings && Array.isArray(storedListings)) listings.splice(0,listings.length,...storedListings);
 render();
 </script>
+
+
+<div class="modal" id="reqModal">
+  <div class="modal-box">
+    <button class="close" onclick="closeRequirement()">×</button>
+    <h2>Post a Requirement</h2>
+    <p style="color:#667085">Tell sellers what component you need.</p>
+    <form class="form" onsubmit="addRequirement(event)">
+      <input id="reqName" required placeholder="Component you need">
+      <input id="reqBudget" type="number" min="1" placeholder="Maximum budget (₹)">
+      <input id="reqQty" type="number" min="1" value="1" placeholder="Quantity">
+      <textarea id="reqDetails" rows="3" placeholder="Details / preferred condition"></textarea>
+      <input id="reqContact" required placeholder="WhatsApp number or Instagram ID">
+      <button class="btn primary" type="submit">Post Requirement</button>
+    </form>
+  </div>
+</div>
+
+<div class="modal" id="contactModal">
+  <div class="modal-box">
+    <button class="close" onclick="closeContact()">×</button>
+    <h2 id="contactTitle">Contact Seller</h2>
+    <div id="contactBox" class="contact-info"></div>
+    <p style="font-size:13px;color:#667085">Use the contact button above to message the seller directly.</p>
+  </div>
+</div>
 </body>
 </html>
