@@ -156,13 +156,32 @@ function addRequirement(e){
 }
 function openModal(){document.getElementById("modal").style.display="flex"}
 function closeModal(){document.getElementById("modal").style.display="none"}
-function addListing(e){
+let selectedImage = "";
+
+function previewImage(event) {
+    const file = event.target.files[0];
+
+    if (!file) {
+        selectedImage = "";
+        return;
+    }
+
+    const reader = new FileReader();
+
+    reader.onload = function(e) {
+        selectedImage = e.target.result;
+    };
+
+    reader.readAsDataURL(file);
+}
+  function addListing(e){
  e.preventDefault();
  listings.unshift({name:document.getElementById("name").value,price:Number(document.getElementById("price").value),
  condition:document.getElementById("cond").value,location:"",seller:document.getElementById("seller").value,
  whatsapp:document.getElementById("whatsapp").value.trim(),instagram:document.getElementById("instagram").value.trim(),
  image:selectedImage,icon:"📦",owner:true});
- render(); closeModal(); e.target.reset(); document.getElementById("browse").scrollIntoView({behavior:"smooth"});
+ localStorage.setItem("campusListings", JSON.stringify(listings));
+    render(); closeModal(); e.target.reset(); document.getElementById("browse").scrollIntoView({behavior:"smooth"});
 }
 function contact(s,n){openMessage(decodeURIComponent(s), decodeURIComponent(n))}
 
