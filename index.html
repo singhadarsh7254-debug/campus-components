@@ -1,253 +1,1362 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Campus Components — Student Electronics Marketplace</title>
+
 <style>
-*{box-sizing:border-box} body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#f6f7fb;color:#172033}
-header{background:#101828;color:white;padding:18px 7%;display:flex;align-items:center;justify-content:space-between;gap:20px;position:sticky;top:0;z-index:5}
-.logo{font-size:22px;font-weight:800}.logo span{color:#63b3ed}
-nav{display:flex;gap:18px;align-items:center} nav a{color:#dbe4f0;text-decoration:none;font-size:14px}
-.btn{border:0;border-radius:10px;padding:11px 17px;font-weight:700;cursor:pointer}.primary{background:#2f80ed;color:#fff}.secondary{background:#eaf2ff;color:#1558a6}
-.hero{padding:55px 7%;background:linear-gradient(135deg,#eaf3ff,#fff)}
-.hero h1{font-size:42px;max-width:700px;margin:0 0 12px}.hero p{font-size:18px;color:#536174;max-width:650px}
-.search{display:flex;gap:10px;max-width:850px;margin-top:25px}.search input,.search select,.form input,.form select,.form textarea{width:100%;padding:13px;border:1px solid #d6dce5;border-radius:9px;background:white}
-.container{padding:35px 7%}.section-head{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:20px}.section-head h2{margin:0}
-.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
-.card{background:white;border:1px solid #e5e9f0;border-radius:14px;overflow:hidden;box-shadow:0 3px 12px #1018280b}.pic{height:155px;background:#eef2f7;display:flex;align-items:center;justify-content:center;font-size:50px}.card-body{padding:15px}.card h3{margin:0 0 8px;font-size:17px}.price{font-size:20px;font-weight:800}.meta{font-size:13px;color:#687588;margin:7px 0 13px}
-.badge{display:inline-block;background:#e9f8ef;color:#16834a;padding:5px 8px;border-radius:20px;font-size:11px;font-weight:700}
-footer{padding:30px 7%;background:#101828;color:#cbd5e1;margin-top:30px}
-.modal{display:none;position:fixed;inset:0;background:#0008;align-items:center;justify-content:center;z-index:10}.modal-box{background:#fff;border-radius:15px;padding:25px;width:min(520px,92%);max-height:90vh;overflow:auto}.modal-box h2{margin-top:0}.form{display:grid;gap:12px}.close{float:right;background:none;border:0;font-size:22px;cursor:pointer}
-.empty{display:none;text-align:center;padding:30px;color:#667085}
-@media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}.hero h1{font-size:34px}}
-@media(max-width:600px){header{padding:15px 4%}nav a{display:none}.hero,.container{padding-left:4%;padding-right:4%}.search{flex-direction:column}.grid{grid-template-columns:1fr}}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:#f6f7fb;
+  color:#172033
+}
+header{
+  background:#101828;
+  color:white;
+  padding:18px 7%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+  position:sticky;
+  top:0;
+  z-index:5
+}
+.logo{font-size:22px;font-weight:800}
+.logo span{color:#63b3ed}
+nav{display:flex;gap:18px;align-items:center}
+nav a{color:#dbe4f0;text-decoration:none;font-size:14px}
 
-.upload-box{border:2px dashed #cbd5e1;border-radius:10px;padding:15px;text-align:center;background:#f8fafc}
-.upload-preview{width:100%;height:170px;object-fit:cover;border-radius:10px;margin-top:8px;display:none}
-.contact-info{background:#f8fafc;border-radius:10px;padding:15px;margin:12px 0}
-.contact-link{display:block;text-decoration:none;margin-top:10px}
+.btn{
+  border:0;
+  border-radius:10px;
+  padding:11px 17px;
+  font-weight:700;
+  cursor:pointer
+}
+.primary{background:#2f80ed;color:#fff}
+.secondary{background:#eaf2ff;color:#1558a6}
 
-.nav-user{font-size:13px;color:#dbe4f0}
-.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}
-.toolbar input,.toolbar select{padding:11px;border:1px solid #d6dce5;border-radius:9px;background:#fff}
-.card-actions{display:flex;gap:8px;flex-wrap:wrap}
-.small-btn{padding:8px 11px;border-radius:8px;font-size:12px}
-.notice{padding:12px 15px;border-radius:10px;background:#fff8e6;color:#8a5b00;margin-bottom:20px;border:1px solid #f2dfaa}
-.profile-pill{display:inline-block;padding:5px 8px;border-radius:20px;background:#eef6ff;color:#1558a6;font-size:11px;font-weight:700}
-.req-card{border-left:4px solid #2f80ed}
+.hero{
+  padding:55px 7%;
+  background:linear-gradient(135deg,#eaf3ff,#fff)
+}
+.hero h1{
+  font-size:42px;
+  max-width:700px;
+  margin:0 0 12px
+}
+.hero p{
+  font-size:18px;
+  color:#536174;
+  max-width:650px
+}
+.search{
+  display:flex;
+  gap:10px;
+  max-width:850px;
+  margin-top:25px
+}
+.search input,
+.search select,
+.form input,
+.form select,
+.form textarea{
+  width:100%;
+  padding:13px;
+  border:1px solid #d6dce5;
+  border-radius:9px;
+  background:white
+}
+
+.container{padding:35px 7%}
+.section-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+  margin-bottom:20px
+}
+.section-head h2{margin:0}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:18px
+}
+.card{
+  background:white;
+  border:1px solid #e5e9f0;
+  border-radius:14px;
+  overflow:hidden;
+  box-shadow:0 3px 12px #1018280b
+}
+.pic{
+  height:155px;
+  background:#eef2f7;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:50px
+}
+.pic img{
+  width:100%;
+  height:100%;
+  object-fit:cover
+}
+.card-body{padding:15px}
+.card h3{
+  margin:0 0 8px;
+  font-size:17px
+}
+.price{
+  font-size:20px;
+  font-weight:800
+}
+.meta{
+  font-size:13px;
+  color:#687588;
+  margin:7px 0 13px;
+  line-height:1.6
+}
+
+.badge{
+  display:inline-block;
+  background:#e9f8ef;
+  color:#16834a;
+  padding:5px 8px;
+  border-radius:20px;
+  font-size:11px;
+  font-weight:700
+}
+
+.profile-pill{
+  display:inline-block;
+  padding:5px 8px;
+  border-radius:20px;
+  background:#eef6ff;
+  color:#1558a6;
+  font-size:11px;
+  font-weight:700
+}
+
+footer{
+  padding:30px 7%;
+  background:#101828;
+  color:#cbd5e1;
+  margin-top:30px
+}
+
+.modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:#0008;
+  align-items:center;
+  justify-content:center;
+  z-index:10
+}
+.modal-box{
+  background:#fff;
+  border-radius:15px;
+  padding:25px;
+  width:min(550px,92%);
+  max-height:90vh;
+  overflow:auto
+}
+.modal-box h2{margin-top:0}
+.form{display:grid;gap:12px}
+.close{
+  float:right;
+  background:none;
+  border:0;
+  font-size:22px;
+  cursor:pointer
+}
+
+.empty{
+  display:none;
+  text-align:center;
+  padding:30px;
+  color:#667085
+}
+
+.upload-box{
+  border:2px dashed #cbd5e1;
+  border-radius:10px;
+  padding:15px;
+  text-align:center;
+  background:#f8fafc
+}
+.upload-preview{
+  width:100%;
+  height:170px;
+  object-fit:cover;
+  border-radius:10px;
+  margin-top:8px;
+  display:none
+}
+
+.toolbar{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-bottom:18px
+}
+.toolbar input,
+.toolbar select{
+  padding:11px;
+  border:1px solid #d6dce5;
+  border-radius:9px;
+  background:#fff
+}
+
+.notice{
+  padding:12px 15px;
+  border-radius:10px;
+  background:#fff8e6;
+  color:#8a5b00;
+  margin-bottom:20px;
+  border:1px solid #f2dfaa
+}
+
+.contact-info{
+  background:#f8fafc;
+  border-radius:10px;
+  padding:15px;
+  margin:12px 0
+}
+
+.contact-link{
+  display:block;
+  text-decoration:none;
+  margin-top:10px
+}
+
+.card-actions{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap
+}
+
+.small-btn{
+  padding:8px 11px;
+  border-radius:8px;
+  font-size:12px
+}
+
+.loading{
+  text-align:center;
+  padding:30px;
+  color:#667085
+}
+
+.status{
+  position:fixed;
+  bottom:15px;
+  right:15px;
+  background:#101828;
+  color:#fff;
+  padding:10px 14px;
+  border-radius:9px;
+  font-size:12px;
+  display:none;
+  z-index:20
+}
+
+@media(max-width:900px){
+  .grid{grid-template-columns:repeat(2,1fr)}
+  .hero h1{font-size:34px}
+}
+
+@media(max-width:600px){
+  header{padding:15px 4%}
+  nav a{display:none}
+  .hero,.container{
+    padding-left:4%;
+    padding-right:4%
+  }
+  .search{flex-direction:column}
+  .grid{grid-template-columns:1fr}
+}
 </style>
 </head>
+
 <body>
+
 <header>
   <div class="logo">Campus<span>Components</span></div>
+
   <nav>
     <a href="#browse">Browse</a>
     <a href="#how">How it works</a>
-    <button class="btn secondary" onclick="openRequirement()">+ Need a Component</button><button class="btn primary" onclick="openModal()">+ Sell Component</button>
+    <button class="btn secondary" onclick="openRequirement()">+ Need a Component</button>
+    <button class="btn primary" onclick="openModal()">+ Sell Component</button>
   </nav>
 </header>
 
 <section class="hero">
+
   <h1>Buy & Sell Used Electronics Components on Campus</h1>
-  <p>A student-first marketplace for Arduino boards, sensors, motors, modules, tools and project components.</p>
+
+  <p>
+    A student-first marketplace for Arduino boards, sensors, motors,
+    modules, tools and project components.
+  </p>
+
   <div class="search">
-    <input id="heroSearch" placeholder="Search Arduino, sensor, motor, NRF24L01...">
+
+    <input
+      id="heroSearch"
+      placeholder="Search Arduino, sensor, MQ2, motor, NRF24L01..."
+      oninput="syncHeroSearch()"
+    >
+
     <select id="heroCondition" onchange="syncHeroSearch()">
-      <option value="">Any condition</option><option>Working</option><option>New</option>
+      <option value="">Any condition</option>
+      <option>Working</option>
+      <option>New</option>
     </select>
-    <button class="btn primary" onclick="document.getElementById('browse').scrollIntoView({behavior:'smooth'})">Find Components</button>
+
+    <button
+      class="btn primary"
+      onclick="document.getElementById('browse').scrollIntoView({behavior:'smooth'})"
+    >
+      Find Components
+    </button>
+
   </div>
 </section>
+
 
 <section class="container" id="browse">
-  <div class="section-head"><h2>Components near you</h2><span id="count" class="badge">6 listings</span></div>
-  <div class="notice">💡 Looking for something that isn't listed? Post a requirement and let sellers contact you.</div>
-  <div class="toolbar">
-    <input id="search" placeholder="Search Arduino, sensor, motor..." oninput="filterCards()">
-    <select id="condition" onchange="filterCards()"><option value="">Any condition</option><option>Working</option><option>New</option></select>
-    <select id="sort" onchange="filterCards()"><option value="new">Newest</option><option value="low">Price: Low to High</option><option value="high">Price: High to Low</option></select>
-    <button class="btn secondary" onclick="openRequirement()">+ Post Requirement</button>
+
+  <div class="section-head">
+    <h2>Components near you</h2>
+    <span id="count" class="badge">Loading...</span>
   </div>
+
+  <div class="notice">
+    💡 Looking for something that isn't listed?
+    Post a requirement and let sellers contact you.
+  </div>
+
+  <div class="toolbar">
+
+    <input
+      id="search"
+      placeholder="Search Arduino, MQ2, sensor, motor..."
+      oninput="filterCards()"
+    >
+
+    <select id="condition" onchange="filterCards()">
+      <option value="">Any condition</option>
+      <option>Working</option>
+      <option>New</option>
+    </select>
+
+    <select id="sort" onchange="filterCards()">
+      <option value="new">Newest</option>
+      <option value="low">Price: Low to High</option>
+      <option value="high">Price: High to Low</option>
+    </select>
+
+    <button class="btn secondary" onclick="openRequirement()">
+      + Post Requirement
+    </button>
+
+  </div>
+
+  <div id="loading" class="loading">
+    Loading components...
+  </div>
+
   <div class="grid" id="grid"></div>
-  <div id="empty" class="empty">No matching components found.</div>
+
+  <div id="empty" class="empty">
+    No matching components found.
+  </div>
+
 </section>
+
 
 <section class="container" id="how">
-  <div class="section-head"><h2>How it works</h2></div>
-  <div class="grid">
-    <div class="card"><div class="card-body"><h3>1. List</h3><p>Add photos, condition, price and contact details.</p></div></div>
-    <div class="card"><div class="card-body"><h3>2. Discover</h3><p>Students search for affordable components nearby.</p></div></div>
-    <div class="card"><div class="card-body"><h3>3. Connect</h3><p>Buyer contacts the seller and confirms the deal.</p></div></div>
-    <div class="card"><div class="card-body"><h3>4. Exchange</h3><p>Meet safely on campus and complete the transaction.</p></div></div>
+
+  <div class="section-head">
+    <h2>How it works</h2>
   </div>
+
+  <div class="grid">
+
+    <div class="card">
+      <div class="card-body">
+        <h3>1. List</h3>
+        <p>Add photos, college, location, condition and price.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-body">
+        <h3>2. Discover</h3>
+        <p>Students search for affordable components nearby.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-body">
+        <h3>3. Connect</h3>
+        <p>Buyer contacts the seller directly.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-body">
+        <h3>4. Exchange</h3>
+        <p>Meet safely on campus and complete the transaction.</p>
+      </div>
+    </div>
+
+  </div>
+
 </section>
 
-<footer>CampusComponents — Prototype MVP · Student electronics marketplace</footer>
+
+<footer>
+  CampusComponents — Student Electronics Marketplace
+</footer>
+
+
+<!-- SELL MODAL -->
 
 <div class="modal" id="modal">
-  <div class="modal-box">
-    <button class="close" onclick="closeModal()">×</button>
-    <h2>Sell a component</h2>
-    <form class="form" onsubmit="addListing(event)">
-      <input id="name" required placeholder="Component name">
-      <input id="college" required placeholder="College name">
 
-<input id="collegeLocation" required placeholder="College location (City / Area)">
-      <input id="price" required type="number" min="1" placeholder="Price (₹)">
-      <select id="cond" required><option value="">Condition</option><option>Working</option><option>New</option></select>
-      <input id="seller" required placeholder="Seller name">
-      <input id="whatsapp" placeholder="WhatsApp number (recommended)">
-      <input id="instagram" placeholder="Instagram ID (e.g. @username)">
+  <div class="modal-box">
+
+    <button class="close" onclick="closeModal()">×</button>
+
+    <h2>Sell a component</h2>
+
+    <form class="form" onsubmit="addListing(event)">
+
+      <input
+        id="name"
+        required
+        placeholder="Component name e.g. MQ2 Gas Sensor"
+      >
+
+      <input
+        id="price"
+        required
+        type="number"
+        min="1"
+        placeholder="Price (₹)"
+      >
+
+      <select id="cond" required>
+        <option value="">Condition</option>
+        <option>Working</option>
+        <option>New</option>
+      </select>
+
+      <input
+        id="seller"
+        required
+        placeholder="Seller name"
+      >
+
+      <input
+        id="college"
+        required
+        placeholder="College name"
+      >
+
+      <input
+        id="collegeLocation"
+        required
+        placeholder="College location (City / Area)"
+      >
+
+      <input
+        id="whatsapp"
+        placeholder="WhatsApp number (recommended)"
+      >
+
+      <input
+        id="instagram"
+        placeholder="Instagram ID (e.g. @username)"
+      >
+
       <div class="upload-box">
+
         <strong>Upload component image</strong>
-        <input id="image" type="file" accept="image/*" required onchange="previewImage(event)">
-        <img id="preview" class="upload-preview">
+
+        <input
+          id="image"
+          type="file"
+          accept="image/*"
+          required
+          onchange="previewImage(event)"
+        >
+
+        <img
+          id="preview"
+          class="upload-preview"
+        >
+
       </div>
-      <textarea id="desc" rows="3" placeholder="Short description"></textarea>
-      <small style="color:#667085">Provide at least one contact method: WhatsApp or Instagram.</small>
-      <button class="btn primary" type="submit">Publish Listing</button>
+
+      <textarea
+        id="desc"
+        rows="3"
+        placeholder="Short description"
+      ></textarea>
+
+      <small style="color:#667085">
+        Provide at least one contact method: WhatsApp or Instagram.
+      </small>
+
+      <button
+        class="btn primary"
+        type="submit"
+      >
+        Publish Listing
+      </button>
+
     </form>
+
   </div>
+
 </div>
 
-<script>
-const listings=[
- {name:"Arduino UNO R3",price:350,condition:"Working",location:"",seller:"NAA",icon:"🔌"},
- {name:"NRF24L01 Module",price:120,condition:"Working",location:"",seller:"NAA",icon:"📡"},
- {name:"HC-SR04 Ultrasonic Sensor",price:90,condition:"Working",location:"",seller:"NAA",icon:"📏"},
- {name:"L298N Motor Driver",price:130,condition:"Working",location:"",seller:"NAA",icon:"⚙️"},
- {name:"OLED 0.96 inch",price:180,condition:"New",location:"",seller:"NAA",icon:"🖥️"},
- {name:"SG90 Servo Motor",price:100,condition:"Working",location:"",seller:"NAA",icon:"🔧"}
-];
 
-function render(data=listings){
- const grid=document.getElementById("grid"); grid.innerHTML="";
- data.forEach((x,i)=>{
-  grid.innerHTML+=`<div class="card"><div class="pic">${x.image?`<img src="${x.image}" style="width:100%;height:100%;object-fit:cover">`:x.icon||"🔧"}</div><div class="card-body">
-  <h3>${escapeHtml(x.name)}</h3><div class="price">₹${x.price}</div>
-  <div class="meta">${escapeHtml(x.condition)}<br>Seller: ${escapeHtml(x.seller)}<br>
-College: ${escapeHtml(x.college || "Not provided")}<br>
-📍 ${escapeHtml(x.collegeLocation || "Location not provided")}<br>
-<span class="profile-pill">Student Seller</span></div>
-  <button class="btn secondary" onclick="contact(${i})">Message Seller</button>
-  </div></div>`;
- });
- document.getElementById("count").textContent=data.length+" listings";
- document.getElementById("empty").style.display=data.length?"none":"block";
-}
-function filterCards(){
- const q=(document.getElementById("search")?.value||"").toLowerCase();
- const c=document.getElementById("condition")?.value||"";
- let data=listings.filter(x=>(x.name.toLowerCase().includes(q))&&(!c||x.condition===c));
- const sort=document.getElementById("sort")?.value||"new";
- if(sort==="low") data.sort((a,b)=>a.price-b.price);
- if(sort==="high") data.sort((a,b)=>b.price-a.price);
- render(data);
-}
-function syncHeroSearch(){
- document.getElementById("search").value=document.getElementById("heroSearch").value;
- document.getElementById("condition").value=document.getElementById("heroCondition").value;
- filterCards();
-}
-function openRequirement(){document.getElementById("reqModal").style.display="flex"}
-function closeRequirement(){document.getElementById("reqModal").style.display="none"}
-function addRequirement(e){
- e.preventDefault();
- const req={name:document.getElementById("reqName").value,budget:document.getElementById("reqBudget").value||"Any",
- qty:document.getElementById("reqQty").value||1,details:document.getElementById("reqDetails").value,contact:document.getElementById("reqContact").value};
- const saved=JSON.parse(localStorage.getItem("requirements")||"[]"); saved.unshift(req); localStorage.setItem("requirements",JSON.stringify(saved));
- closeRequirement(); e.target.reset(); alert("Requirement posted successfully in this prototype.");
-}
-function openModal(){document.getElementById("modal").style.display="flex"}
-function closeModal(){document.getElementById("modal").style.display="none"}
-let selectedImage = "";
-
-function previewImage(event) {
-    const file = event.target.files[0];
-
-    if (!file) {
-        selectedImage = "";
-        return;
-    }
-
-    const reader = new FileReader();
-
-    reader.onload = function(e) {
-        selectedImage = e.target.result;
-    };
-
-    reader.readAsDataURL(file);
-}
-  function addListing(e){
- e.preventDefault();
- listings.unshift({name:document.getElementById("name").value,price:Number(document.getElementById("price").value),
- condition:document.getElementById("cond").value,location:"",seller:document.getElementById("seller").value,
- whatsapp:document.getElementById("whatsapp").value.trim(),instagram:document.getElementById("instagram").value.trim(),
- image:selectedImage,icon:"📦",owner:true});
- localStorage.setItem("campusListings", JSON.stringify(listings));
-    render(); closeModal(); e.target.reset(); document.getElementById("browse").scrollIntoView({behavior:"smooth"});
-}
-  async function loadListings(){
-    try {
-        const snapshot = await db.collection("listings")
-            .orderBy("createdAt", "desc")
-            .get();
-
-        listings.splice(0, listings.length);
-
-        snapshot.forEach(doc => {
-            listings.push({
-                id: doc.id,
-                ...doc.data()
-            });
-        });
-
-        render();
-
-    } catch (error) {
-        console.error("Error loading listings:", error);
-    }
-}
-function contact(s,n){openMessage(decodeURIComponent(s), decodeURIComponent(n))}
-
-function openMessage(seller, item){
-  const text = prompt("Message to "+seller+" about "+item+":");
-  if(text && text.trim()){
-    alert("Message saved in this prototype.\n\nTo: "+seller+"\nItem: "+item+"\nMessage: "+text);
-  }
-}
-
-function escapeHtml(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
-
-loadListings();
-</script>
-
+<!-- REQUIREMENT MODAL -->
 
 <div class="modal" id="reqModal">
+
   <div class="modal-box">
+
     <button class="close" onclick="closeRequirement()">×</button>
-    <h2>Post a Requirement</h2>
-    <p style="color:#667085">Tell sellers what component you need.</p>
+
+    <h2>Need a Component</h2>
+
     <form class="form" onsubmit="addRequirement(event)">
-      <input id="reqName" required placeholder="Component you need">
-      <input id="reqBudget" type="number" min="1" placeholder="Maximum budget (₹)">
-      <input id="reqQty" type="number" min="1" value="1" placeholder="Quantity">
-      <textarea id="reqDetails" rows="3" placeholder="Details / preferred condition"></textarea>
-      <input id="reqContact" required placeholder="WhatsApp number or Instagram ID">
-      <button class="btn primary" type="submit">Post Requirement</button>
+
+      <input
+        id="reqName"
+        required
+        placeholder="Component required"
+      >
+
+      <input
+        id="reqBudget"
+        type="number"
+        placeholder="Maximum budget (₹)"
+      >
+
+      <input
+        id="reqQty"
+        type="number"
+        min="1"
+        value="1"
+        placeholder="Quantity"
+      >
+
+      <textarea
+        id="reqDetails"
+        rows="3"
+        placeholder="Details"
+      ></textarea>
+
+      <input
+        id="reqContact"
+        required
+        placeholder="WhatsApp / Instagram"
+      >
+
+      <button
+        class="btn primary"
+        type="submit"
+      >
+        Post Requirement
+      </button>
+
     </form>
+
   </div>
+
 </div>
 
-<div class="modal" id="contactModal">
-  <div class="modal-box">
-    <button class="close" onclick="closeContact()">×</button>
-    <h2 id="contactTitle">Contact Seller</h2>
-    <div id="contactBox" class="contact-info"></div>
-    <p style="font-size:13px;color:#667085">Use the contact button above to message the seller directly.</p>
-  </div>
-</div>
+
+<div id="status" class="status"></div>
+
+
+<!-- FIREBASE -->
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
+
+<script>
+
+/* =========================
+   FIREBASE CONFIG
+========================= */
+
+const firebaseConfig = {
+
+  apiKey: "AIzaSyAkETZr4bZQRlLfpbHVlCdvwK7iub-gVmQ",
+
+  authDomain:
+    "campus-components-2c641.firebaseapp.com",
+
+  projectId:
+    "campus-components-2c641",
+
+  storageBucket:
+    "campus-components-2c641.firebasestorage.app",
+
+  messagingSenderId:
+    "174888026978",
+
+  appId:
+    "1:174888026978:web:9170ceb1880bf9334f223b",
+
+  measurementId:
+    "G-0JYEYHLHDC"
+};
+
+
+firebase.initializeApp(firebaseConfig);
+
+const db = firebase.firestore();
+
+
+/* =========================
+   LOCAL DISPLAY ARRAY
+========================= */
+
+const listings = [];
+
+
+/* =========================
+   IMAGE
+========================= */
+
+let selectedImage = "";
+
+
+function previewImage(event){
+
+  const file = event.target.files[0];
+
+  if(!file){
+
+    selectedImage = "";
+
+    document.getElementById("preview").style.display = "none";
+
+    return;
+  }
+
+  const reader = new FileReader();
+
+  reader.onload = function(e){
+
+    selectedImage = e.target.result;
+
+    const preview =
+      document.getElementById("preview");
+
+    preview.src = selectedImage;
+
+    preview.style.display = "block";
+  };
+
+  reader.readAsDataURL(file);
+}
+
+
+/* =========================
+   STATUS
+========================= */
+
+function showStatus(message){
+
+  const box = document.getElementById("status");
+
+  box.textContent = message;
+
+  box.style.display = "block";
+
+  setTimeout(function(){
+
+    box.style.display = "none";
+
+  },3000);
+}
+
+
+/* =========================
+   LOAD FIREBASE LISTINGS
+========================= */
+
+async function loadListings(){
+
+  document.getElementById("loading").style.display = "block";
+
+  try{
+
+    const snapshot =
+      await db.collection("listings")
+      .orderBy("createdAt","desc")
+      .get();
+
+    listings.length = 0;
+
+    snapshot.forEach(function(doc){
+
+      listings.push({
+
+        id: doc.id,
+
+        ...doc.data()
+
+      });
+
+    });
+
+    document.getElementById("loading").style.display = "none";
+
+    filterCards();
+
+  }catch(error){
+
+    console.error(error);
+
+    document.getElementById("loading").style.display = "none";
+
+    document.getElementById("empty").style.display = "block";
+
+    document.getElementById("empty").textContent =
+      "Unable to load listings. Please refresh the page.";
+
+  }
+
+}
+
+
+/* =========================
+   REAL-TIME LISTENER
+========================= */
+
+function startRealtimeListings(){
+
+  db.collection("listings")
+    .orderBy("createdAt","desc")
+    .onSnapshot(
+
+      function(snapshot){
+
+        listings.length = 0;
+
+        snapshot.forEach(function(doc){
+
+          listings.push({
+
+            id: doc.id,
+
+            ...doc.data()
+
+          });
+
+        });
+
+        filterCards();
+
+      },
+
+      function(error){
+
+        console.error(
+          "Realtime listener error:",
+          error
+        );
+
+      }
+
+    );
+
+}
+
+
+/* =========================
+   RENDER
+========================= */
+
+function render(data = listings){
+
+  const grid =
+    document.getElementById("grid");
+
+  grid.innerHTML = "";
+
+  if(data.length === 0){
+
+    document.getElementById("empty").style.display = "block";
+
+    document.getElementById("count").textContent =
+      "0 listings";
+
+    return;
+
+  }
+
+  document.getElementById("empty").style.display = "none";
+
+  data.forEach(function(x){
+
+    let imageHTML = "";
+
+    if(x.image){
+
+      imageHTML =
+        `<img src="${x.image}" alt="Component">`;
+
+    }else{
+
+      imageHTML =
+        `<span>${x.icon || "🔧"}</span>`;
+
+    }
+
+
+    const whatsapp =
+      String(x.whatsapp || "")
+      .replace(/\D/g,"");
+
+
+    const instagram =
+      String(x.instagram || "")
+      .replace(/^@/,"");
+
+
+    let contactButtons = "";
+
+
+    if(whatsapp){
+
+      contactButtons += `
+
+        <a
+          class="btn secondary small-btn"
+          href="https://wa.me/${whatsapp}"
+          target="_blank"
+        >
+          WhatsApp
+        </a>
+
+      `;
+
+    }
+
+
+    if(instagram){
+
+      contactButtons += `
+
+        <a
+          class="btn secondary small-btn"
+          href="https://instagram.com/${instagram}"
+          target="_blank"
+        >
+          Instagram
+        </a>
+
+      `;
+
+    }
+
+
+    grid.innerHTML += `
+
+      <div class="card">
+
+        <div class="pic">
+
+          ${imageHTML}
+
+        </div>
+
+        <div class="card-body">
+
+          <h3>
+            ${escapeHtml(x.name || "Component")}
+          </h3>
+
+          <div class="price">
+            ₹${Number(x.price || 0)}
+          </div>
+
+          <div class="meta">
+
+            ${escapeHtml(x.condition || "")}
+
+            <br>
+
+            👤 Seller:
+            ${escapeHtml(x.seller || "Student")}
+
+            <br>
+
+            🎓 College:
+            ${escapeHtml(x.college || "Not provided")}
+
+            <br>
+
+            📍 Location:
+            ${escapeHtml(x.collegeLocation || "Not provided")}
+
+          </div>
+
+
+          ${
+            x.description
+            ?
+            `<div class="meta">
+              📝 ${escapeHtml(x.description)}
+            </div>`
+            :
+            ""
+          }
+
+
+          <span class="profile-pill">
+            Student Seller
+          </span>
+
+
+          <div
+            class="card-actions"
+            style="margin-top:12px"
+          >
+
+            ${contactButtons}
+
+            <button
+              class="btn primary small-btn"
+              onclick="showSellerInfo('${escapeHtml(String(x.seller || ""))}','${escapeHtml(String(x.college || ""))}','${escapeHtml(String(x.collegeLocation || ""))}')"
+            >
+              Seller Info
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    `;
+
+  });
+
+
+  document.getElementById("count").textContent =
+    data.length + " listings";
+
+}
+
+
+/* =========================
+   SEARCH + FILTER
+========================= */
+
+function filterCards(){
+
+  const q =
+    (
+      document.getElementById("search")?.value ||
+      ""
+    ).toLowerCase().trim();
+
+
+  const c =
+    document.getElementById("condition")?.value ||
+    "";
+
+
+  let data =
+    listings.filter(function(x){
+
+      const name =
+        String(x.name || "").toLowerCase();
+
+      const college =
+        String(x.college || "").toLowerCase();
+
+      const location =
+        String(x.collegeLocation || "").toLowerCase();
+
+      const matchesSearch =
+        !q ||
+        name.includes(q) ||
+        college.includes(q) ||
+        location.includes(q);
+
+      const matchesCondition =
+        !c || x.condition === c;
+
+      return (
+        matchesSearch &&
+        matchesCondition
+      );
+
+    });
+
+
+  const sort =
+    document.getElementById("sort")?.value ||
+    "new";
+
+
+  if(sort === "low"){
+
+    data.sort(function(a,b){
+
+      return Number(a.price || 0) -
+             Number(b.price || 0);
+
+    });
+
+  }
+
+
+  if(sort === "high"){
+
+    data.sort(function(a,b){
+
+      return Number(b.price || 0) -
+             Number(a.price || 0);
+
+    });
+
+  }
+
+
+  render(data);
+
+}
+
+
+/* =========================
+   HERO SEARCH
+========================= */
+
+function syncHeroSearch(){
+
+  document.getElementById("search").value =
+    document.getElementById("heroSearch").value;
+
+  document.getElementById("condition").value =
+    document.getElementById("heroCondition").value;
+
+  filterCards();
+
+}
+
+
+/* =========================
+   SELL MODAL
+========================= */
+
+function openModal(){
+
+  document.getElementById("modal").style.display =
+    "flex";
+
+}
+
+
+function closeModal(){
+
+  document.getElementById("modal").style.display =
+    "none";
+
+}
+
+
+/* =========================
+   ADD LISTING
+========================= */
+
+async function addListing(e){
+
+  e.preventDefault();
+
+
+  const whatsapp =
+    document.getElementById("whatsapp")
+    .value.trim();
+
+
+  const instagram =
+    document.getElementById("instagram")
+    .value.trim();
+
+
+  if(!whatsapp && !instagram){
+
+    alert(
+      "WhatsApp ya Instagram mein se kam se kam ek contact method dijiye."
+    );
+
+    return;
+
+  }
+
+
+  const listing = {
+
+    name:
+      document.getElementById("name")
+      .value.trim(),
+
+    price:
+      Number(
+        document.getElementById("price")
+        .value
+      ),
+
+    condition:
+      document.getElementById("cond")
+      .value,
+
+    seller:
+      document.getElementById("seller")
+      .value.trim(),
+
+    college:
+      document.getElementById("college")
+      .value.trim(),
+
+    collegeLocation:
+      document.getElementById("collegeLocation")
+      .value.trim(),
+
+    whatsapp:
+      whatsapp,
+
+    instagram:
+      instagram,
+
+    image:
+      selectedImage,
+
+    description:
+      document.getElementById("desc")
+      .value.trim(),
+
+    icon:
+      "📦",
+
+    createdAt:
+      firebase.firestore.FieldValue.serverTimestamp()
+
+  };
+
+
+  try{
+
+    showStatus("Publishing listing...");
+
+
+    await db
+      .collection("listings")
+      .add(listing);
+
+
+    alert(
+      "Listing published successfully!"
+    );
+
+
+    e.target.reset();
+
+    selectedImage = "";
+
+    document.getElementById("preview").style.display =
+      "none";
+
+
+    closeModal();
+
+
+    document
+      .getElementById("browse")
+      .scrollIntoView({
+        behavior:"smooth"
+      });
+
+
+  }catch(error){
+
+    console.error(error);
+
+    alert(
+      "Listing publish nahi hui.\n\n" +
+      "Firebase connection ya Firestore rules check karein."
+    );
+
+  }
+
+}
+
+
+/* =========================
+   SELLER INFO
+========================= */
+
+function showSellerInfo(
+  seller,
+  college,
+  location
+){
+
+  alert(
+
+    "Seller: " + seller +
+    "\nCollege: " + college +
+    "\nLocation: " + location
+
+  );
+
+}
+
+
+/* =========================
+   REQUIREMENT
+========================= */
+
+function openRequirement(){
+
+  document.getElementById("reqModal")
+    .style.display = "flex";
+
+}
+
+
+function closeRequirement(){
+
+  document.getElementById("reqModal")
+    .style.display = "none";
+
+}
+
+
+async function addRequirement(e){
+
+  e.preventDefault();
+
+
+  const req = {
+
+    name:
+      document.getElementById("reqName")
+      .value.trim(),
+
+    budget:
+      document.getElementById("reqBudget")
+      .value || "Any",
+
+    qty:
+      Number(
+        document.getElementById("reqQty")
+        .value || 1
+      ),
+
+    details:
+      document.getElementById("reqDetails")
+      .value.trim(),
+
+    contact:
+      document.getElementById("reqContact")
+      .value.trim(),
+
+    createdAt:
+      firebase.firestore.FieldValue.serverTimestamp()
+
+  };
+
+
+  try{
+
+    await db
+      .collection("requirements")
+      .add(req);
+
+
+    alert(
+      "Requirement posted successfully!"
+    );
+
+
+    e.target.reset();
+
+    closeRequirement();
+
+
+  }catch(error){
+
+    console.error(error);
+
+    alert(
+      "Requirement post nahi hui."
+    );
+
+  }
+
+}
+
+
+/* =========================
+   HTML SECURITY
+========================= */
+
+function escapeHtml(s){
+
+  return String(s).replace(
+    /[&<>"']/g,
+
+    function(m){
+
+      return {
+
+        "&":"&amp;",
+        "<":"&lt;",
+        ">":"&gt;",
+        '"':"&quot;",
+        "'":"&#039;"
+
+      }[m];
+
+    }
+
+  );
+
+}
+
+
+/* =========================
+   START
+========================= */
+
+loadListings();
+
+startRealtimeListings();
+
+</script>
+
 </body>
 </html>
