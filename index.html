@@ -3,367 +3,374 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-
-<title>Campus Components — Student Electronics Marketplace</title>
+<title>Campus Components — Student Marketplace</title>
 
 <style>
 *{box-sizing:border-box}
 
 body{
-margin:0;
-font-family:Arial,Helvetica,sans-serif;
-background:#f6f7fb;
-color:#172033
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:#f6f7fb;
+  color:#172033
 }
 
 header{
-background:#101828;
-color:white;
-padding:18px 7%;
-display:flex;
-align-items:center;
-justify-content:space-between;
-gap:20px;
-position:sticky;
-top:0;
-z-index:5
+  background:#101828;
+  color:white;
+  padding:16px 6%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+  position:sticky;
+  top:0;
+  z-index:10
 }
 
 .logo{
-font-size:22px;
-font-weight:800
+  font-size:22px;
+  font-weight:800
 }
 
 .logo span{
-color:#63b3ed
+  color:#63b3ed
 }
 
 nav{
-display:flex;
-gap:12px;
-align-items:center
-}
-
-nav a{
-color:#dbe4f0;
-text-decoration:none;
-font-size:14px
+  display:flex;
+  align-items:center;
+  gap:8px;
+  flex-wrap:wrap
 }
 
 .btn{
-border:0;
-border-radius:10px;
-padding:11px 17px;
-font-weight:700;
-cursor:pointer
+  border:0;
+  border-radius:9px;
+  padding:10px 15px;
+  font-weight:700;
+  cursor:pointer
 }
 
 .primary{
-background:#2f80ed;
-color:#fff
+  background:#2f80ed;
+  color:white
 }
 
 .secondary{
-background:#eaf2ff;
-color:#1558a6
+  background:#eaf2ff;
+  color:#1558a6
 }
 
 .danger{
-background:#fee4e2;
-color:#b42318
+  background:#fee4e2;
+  color:#b42318
+}
+
+.dark{
+  background:#344054;
+  color:white
 }
 
 .hero{
-padding:55px 7%;
-background:linear-gradient(135deg,#eaf3ff,#fff)
+  padding:50px 6%;
+  background:linear-gradient(135deg,#eaf3ff,#fff)
 }
 
 .hero h1{
-font-size:42px;
-max-width:720px;
-margin:0 0 12px
+  font-size:40px;
+  max-width:750px;
+  margin:0 0 12px
 }
 
 .hero p{
-font-size:18px;
-color:#536174;
-max-width:650px
+  font-size:18px;
+  color:#536174;
+  max-width:700px
 }
 
 .search{
-display:flex;
-gap:10px;
-max-width:900px;
-margin-top:25px
+  display:flex;
+  gap:10px;
+  max-width:900px;
+  margin-top:25px
 }
 
 .search input,
 .search select,
 .form input,
 .form select,
-.form textarea{
-width:100%;
-padding:13px;
-border:1px solid #d6dce5;
-border-radius:9px;
-background:#fff
+.form textarea,
+.toolbar input,
+.toolbar select{
+  width:100%;
+  padding:12px;
+  border:1px solid #d6dce5;
+  border-radius:9px;
+  background:white
 }
 
 .container{
-padding:35px 7%
+  padding:35px 6%
 }
 
 .section-head{
-display:flex;
-justify-content:space-between;
-align-items:center;
-gap:15px;
-margin-bottom:20px
-}
-
-.section-head h2{
-margin:0
-}
-
-.toolbar{
-display:flex;
-gap:10px;
-flex-wrap:wrap;
-margin-bottom:18px
-}
-
-.toolbar input,
-.toolbar select{
-padding:11px;
-border:1px solid #d6dce5;
-border-radius:9px;
-background:#fff
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+  margin-bottom:18px
 }
 
 .grid{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:18px
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:18px
 }
 
 .card{
-background:#fff;
-border:1px solid #e5e9f0;
-border-radius:14px;
-overflow:hidden;
-box-shadow:0 3px 12px #1018280b
+  background:white;
+  border:1px solid #e5e9f0;
+  border-radius:14px;
+  overflow:hidden;
+  box-shadow:0 3px 12px #1018280b
 }
 
 .pic{
-height:170px;
-background:#eef2f7;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:55px
+  height:170px;
+  background:#eef2f7;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:55px
 }
 
 .pic img{
-width:100%;
-height:100%;
-object-fit:cover
+  width:100%;
+  height:100%;
+  object-fit:cover
 }
 
 .card-body{
-padding:15px
+  padding:15px
 }
 
 .card h3{
-margin:0 0 8px;
-font-size:17px
+  margin:0 0 8px;
+  font-size:17px
 }
 
 .price{
-font-size:21px;
-font-weight:800;
-margin-bottom:8px
+  font-size:21px;
+  font-weight:800
 }
 
 .meta{
-font-size:13px;
-color:#687588;
-margin:7px 0 13px;
-line-height:1.6
+  font-size:13px;
+  color:#687588;
+  margin:8px 0 13px;
+  line-height:1.6
 }
 
 .badge{
-display:inline-block;
-background:#e9f8ef;
-color:#16834a;
-padding:5px 8px;
-border-radius:20px;
-font-size:11px;
-font-weight:700
+  display:inline-block;
+  background:#e9f8ef;
+  color:#16834a;
+  padding:5px 8px;
+  border-radius:20px;
+  font-size:11px;
+  font-weight:700
+}
+
+.location{
+  display:inline-block;
+  background:#fff4e5;
+  color:#9a5b00;
+  padding:5px 8px;
+  border-radius:20px;
+  font-size:11px;
+  font-weight:700;
+  margin-top:5px
 }
 
 .profile-pill{
-display:inline-block;
-padding:5px 8px;
-border-radius:20px;
-background:#eef6ff;
-color:#1558a6;
-font-size:11px;
-font-weight:700
+  display:inline-block;
+  padding:5px 8px;
+  border-radius:20px;
+  background:#eef6ff;
+  color:#1558a6;
+  font-size:11px;
+  font-weight:700
 }
 
 .card-actions{
-display:flex;
-gap:7px;
-flex-wrap:wrap;
-margin-top:12px
+  display:flex;
+  gap:7px;
+  flex-wrap:wrap
 }
 
 .small-btn{
-padding:8px 10px;
-font-size:12px
+  padding:8px 10px;
+  border-radius:8px;
+  font-size:12px
+}
+
+.toolbar{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-bottom:18px
 }
 
 .notice{
-padding:12px 15px;
-border-radius:10px;
-background:#fff8e6;
-color:#8a5b00;
-margin-bottom:20px;
-border:1px solid #f2dfaa
+  padding:13px 15px;
+  border-radius:10px;
+  background:#fff8e6;
+  color:#8a5b00;
+  margin-bottom:20px;
+  border:1px solid #f2dfaa
 }
 
 .empty{
-display:none;
-text-align:center;
-padding:30px;
-color:#667085
-}
-
-.loading{
-text-align:center;
-padding:30px;
-color:#667085
-}
-
-footer{
-padding:30px 7%;
-background:#101828;
-color:#cbd5e1;
-margin-top:30px
+  display:none;
+  text-align:center;
+  padding:35px;
+  color:#667085
 }
 
 .modal{
-display:none;
-position:fixed;
-inset:0;
-background:#0008;
-align-items:center;
-justify-content:center;
-z-index:20
+  display:none;
+  position:fixed;
+  inset:0;
+  background:#0008;
+  align-items:center;
+  justify-content:center;
+  z-index:100
 }
 
 .modal-box{
-background:#fff;
-border-radius:15px;
-padding:25px;
-width:min(560px,92%);
-max-height:90vh;
-overflow:auto
-}
-
-.modal-box h2{
-margin-top:0
-}
-
-.form{
-display:grid;
-gap:12px
+  background:white;
+  border-radius:15px;
+  padding:24px;
+  width:min(560px,94%);
+  max-height:92vh;
+  overflow:auto
 }
 
 .close{
-float:right;
-background:none;
-border:0;
-font-size:24px;
-cursor:pointer
+  float:right;
+  background:none;
+  border:0;
+  font-size:25px;
+  cursor:pointer
+}
+
+.form{
+  display:grid;
+  gap:12px
 }
 
 .upload-box{
-border:2px dashed #cbd5e1;
-border-radius:10px;
-padding:15px;
-text-align:center;
-background:#f8fafc
+  border:2px dashed #cbd5e1;
+  border-radius:10px;
+  padding:15px;
+  text-align:center;
+  background:#f8fafc
 }
 
 .upload-preview{
-width:100%;
-height:170px;
-object-fit:cover;
-border-radius:10px;
-margin-top:8px;
-display:none
+  width:100%;
+  height:180px;
+  object-fit:cover;
+  border-radius:10px;
+  margin-top:8px;
+  display:none
 }
 
-.buy-box{
-background:#f8fafc;
-border-radius:12px;
-padding:15px;
-margin:12px 0
+.contact-info{
+  background:#f8fafc;
+  border-radius:10px;
+  padding:15px;
+  margin-top:12px
 }
 
-.buy-row{
-display:flex;
-justify-content:space-between;
-margin:8px 0
+.contact-link{
+  display:block;
+  text-decoration:none;
+  margin-top:10px
 }
 
-.buy-total{
-font-size:20px;
-font-weight:800;
-border-top:1px solid #ddd;
-padding-top:10px
+.login-status{
+  font-size:12px;
+  color:#dbe4f0
 }
 
-.status{
-position:fixed;
-bottom:15px;
-right:15px;
-background:#101828;
-color:#fff;
-padding:11px 15px;
-border-radius:9px;
-font-size:13px;
-display:none;
-z-index:50
+.restricted{
+  background:#fff1f0;
+  color:#b42318;
+  padding:6px 9px;
+  border-radius:20px;
+  font-size:11px;
+  font-weight:700;
+  display:inline-block
+}
+
+.approved{
+  background:#e9f8ef;
+  color:#16834a;
+  padding:6px 9px;
+  border-radius:20px;
+  font-size:11px;
+  font-weight:700;
+  display:inline-block
+}
+
+footer{
+  padding:30px 6%;
+  background:#101828;
+  color:#cbd5e1;
+  margin-top:30px
+}
+
+#userPanel{
+  display:none
 }
 
 @media(max-width:900px){
-.grid{
-grid-template-columns:repeat(2,1fr)
-}
-.hero h1{
-font-size:34px
-}
+  .grid{
+    grid-template-columns:repeat(2,1fr)
+  }
+
+  .hero h1{
+    font-size:34px
+  }
 }
 
 @media(max-width:600px){
-header{
-padding:15px 4%
-}
-nav a{
-display:none
-}
-.hero,.container{
-padding-left:4%;
-padding-right:4%
-}
-.search{
-flex-direction:column
-}
-.grid{
-grid-template-columns:1fr
-}
+  header{
+    padding:13px 4%
+  }
+
+  nav a{
+    display:none
+  }
+
+  .hero,.container{
+    padding-left:4%;
+    padding-right:4%
+  }
+
+  .search{
+    flex-direction:column
+  }
+
+  .grid{
+    grid-template-columns:1fr
+  }
+
+  .logo{
+    font-size:18px
+  }
 }
 </style>
 </head>
@@ -376,18 +383,24 @@ grid-template-columns:1fr
 Campus<span>Components</span>
 </div>
 
-<nav>
-<a href="#browse">Browse</a>
-<a href="#how">How it works</a>
+<div class="login-status" id="loginStatus">
+Not logged in
+</div>
 
-<button class="btn secondary"
-onclick="openRequirement()">
-+ Need a Component
+<nav>
+
+<a href="#browse" style="color:white;text-decoration:none">Browse</a>
+
+<button class="btn secondary" onclick="openLogin()" id="loginBtn">
+Login
 </button>
 
-<button class="btn primary"
-onclick="openSell()">
+<button class="btn primary" onclick="openSell()">
 + Sell Component
+</button>
+
+<button class="btn secondary" onclick="openRequirement()">
++ Need Component
 </button>
 
 </nav>
@@ -402,35 +415,22 @@ Buy & Sell Electronics Components on Campus
 </h1>
 
 <p>
-Find Arduino boards, sensors, motors, modules and project
-components from students near your college.
+Find Arduino boards, sensors, motors, modules, lab equipment and useful student items from sellers near your college.
 </p>
 
 <div class="search">
 
 <input
 id="heroSearch"
-placeholder="Search MQ2, Arduino, sensor, motor..."
-oninput="syncSearch()"
+placeholder="Search MQ2, Arduino, NRF24L01, sensor..."
+oninput="syncHeroSearch()"
 >
 
-<select
-id="heroCondition"
-onchange="syncSearch()">
-
+<select id="heroCondition" onchange="syncHeroSearch()">
 <option value="">Any condition</option>
 <option>Working</option>
 <option>New</option>
-
 </select>
-
-<button
-class="btn primary"
-onclick="goBrowse()">
-
-Find Components
-
-</button>
 
 </div>
 
@@ -441,18 +441,17 @@ Find Components
 
 <div class="section-head">
 
-<h2>Components</h2>
+<h2>Components near you</h2>
 
 <span id="count" class="badge">
-Loading...
+0 listings
 </span>
 
 </div>
 
-
 <div class="notice">
 
-💡 Search any component. Listings from all sellers are shown here.
+💡 Search any component. Listings published by other students are loaded from Firebase automatically.
 
 </div>
 
@@ -461,46 +460,30 @@ Loading...
 
 <input
 id="search"
-placeholder="Search component, college or location..."
-oninput="filterListings()"
+placeholder="Search any component..."
+oninput="filterCards()"
 >
 
-<select
-id="condition"
-onchange="filterListings()">
-
+<select id="condition" onchange="filterCards()">
 <option value="">Any condition</option>
 <option>Working</option>
 <option>New</option>
-
 </select>
 
-<select
-id="sort"
-onchange="filterListings()">
-
+<select id="sort" onchange="filterCards()">
 <option value="new">Newest</option>
 <option value="low">Price: Low to High</option>
 <option value="high">Price: High to Low</option>
-
 </select>
 
-<button
-class="btn secondary"
-onclick="openRequirement()">
-
-+ Post Requirement
-
-</button>
+<select id="locationFilter" onchange="filterCards()">
+<option value="">All locations</option>
+</select>
 
 </div>
 
 
-<div id="loading" class="loading">
-Loading listings...
-</div>
-
-<div id="grid" class="grid"></div>
+<div class="grid" id="grid"></div>
 
 <div id="empty" class="empty">
 No matching components found.
@@ -509,60 +492,64 @@ No matching components found.
 </section>
 
 
-<section class="container" id="how">
-
-<div class="section-head">
-<h2>How it works</h2>
-</div>
-
-<div class="grid">
-
-<div class="card">
-<div class="card-body">
-<h3>1. List</h3>
-<p>
-Students list their components for free.
-</p>
-</div>
-</div>
-
-<div class="card">
-<div class="card-body">
-<h3>2. Search</h3>
-<p>
-Buyers search components from all sellers.
-</p>
-</div>
-</div>
-
-<div class="card">
-<div class="card-body">
-<h3>3. Buy</h3>
-<p>
-Buyer selects a component and starts an order.
-</p>
-</div>
-</div>
-
-<div class="card">
-<div class="card-body">
-<h3>4. Exchange</h3>
-<p>
-Buyer and seller complete the transaction.
-</p>
-</div>
-</div>
-
-</div>
-
-</section>
-
-
 <footer>
 
-CampusComponents — Student Electronics Marketplace
+<b>CampusComponents</b><br><br>
+
+Student electronics marketplace · Buy locally · Sell locally
+
+<br><br>
+
+Founder Platform · Commission based marketplace
 
 </footer>
+
+
+
+<!-- LOGIN MODAL -->
+
+<div class="modal" id="loginModal">
+
+<div class="modal-box">
+
+<button class="close" onclick="closeLogin()">×</button>
+
+<h2 id="authTitle">Login</h2>
+
+<form class="form" onsubmit="handleAuth(event)">
+
+<input
+id="authEmail"
+type="email"
+required
+placeholder="Email address"
+>
+
+<input
+id="authPassword"
+type="password"
+required
+minlength="6"
+placeholder="Password"
+>
+
+<button class="btn primary" type="submit" id="authSubmit">
+Login
+</button>
+
+</form>
+
+<br>
+
+<button class="btn secondary" onclick="toggleAuthMode()" id="toggleAuth">
+Create new account
+</button>
+
+<p id="authMessage"></p>
+
+</div>
+</div>
+
 
 
 <!-- SELL MODAL -->
@@ -571,19 +558,18 @@ CampusComponents — Student Electronics Marketplace
 
 <div class="modal-box">
 
-<button class="close"
-onclick="closeSell()">×</button>
+<button class="close" onclick="closeSell()">×</button>
 
-<h2>Sell a Component</h2>
+<h2 id="sellTitle">
+Sell a Component
+</h2>
 
-<form
-class="form"
-onsubmit="publishListing(event)">
+<form class="form" onsubmit="saveListing(event)">
 
 <input
 id="name"
 required
-placeholder="Component name e.g. MQ2 Gas Sensor"
+placeholder="Component name e.g. MQ2 Sensor"
 >
 
 <input
@@ -591,8 +577,14 @@ id="price"
 required
 type="number"
 min="1"
-placeholder="Price (₹)"
+placeholder="Price ₹"
+oninput="showCommission()"
 >
+
+<div id="commissionBox"
+style="background:#eef6ff;padding:12px;border-radius:10px">
+Platform commission will appear here.
+</div>
 
 <select id="cond" required>
 
@@ -600,16 +592,23 @@ placeholder="Price (₹)"
 Condition
 </option>
 
-<option>Working</option>
-<option>New</option>
+<option>
+Working
+</option>
+
+<option>
+New
+</option>
 
 </select>
+
 
 <input
 id="seller"
 required
-placeholder="Seller name"
+placeholder="Your name"
 >
+
 
 <input
 id="college"
@@ -617,21 +616,25 @@ required
 placeholder="College name"
 >
 
+
 <input
 id="collegeLocation"
 required
-placeholder="College location e.g. Noida"
+placeholder="College location e.g. Mathura, Noida"
 >
+
 
 <input
 id="whatsapp"
 placeholder="WhatsApp number"
 >
 
+
 <input
 id="instagram"
 placeholder="Instagram ID e.g. @username"
 >
+
 
 <div class="upload-box">
 
@@ -645,7 +648,6 @@ Upload component image
 id="image"
 type="file"
 accept="image/*"
-required
 onchange="previewImage(event)"
 >
 
@@ -656,113 +658,45 @@ class="upload-preview"
 
 </div>
 
+
 <textarea
 id="desc"
 rows="3"
 placeholder="Component description"
 ></textarea>
 
+
+<label>
+<input
+type="checkbox"
+id="restrictedCheck"
+>
+This item may be restricted
+</label>
+
+<small style="color:#667085">
+
+Examples of normal allowed student items:
+Lab coat, drafter scale, calculator, electronics components,
+project tools etc.
+
+Restricted items will require founder/team approval.
+
+</small>
+
+
 <button
 class="btn primary"
-type="submit">
-
+type="submit"
+>
 Publish Listing
-
 </button>
 
 </form>
 
 </div>
-
 </div>
 
-
-<!-- BUY MODAL -->
-
-<div class="modal" id="buyModal">
-
-<div class="modal-box">
-
-<button class="close"
-onclick="closeBuy()">×</button>
-
-<h2>Buy Component</h2>
-
-<div id="buyDetails"></div>
-
-<div class="form">
-
-<input
-id="buyerName"
-required
-placeholder="Your name"
->
-
-<input
-id="buyerPhone"
-required
-placeholder="Your WhatsApp number"
->
-
-<input
-id="buyerCollege"
-placeholder="Your college"
->
-
-<div class="buy-box">
-
-<div class="buy-row">
-
-<span>Component price</span>
-
-<strong id="buyPrice">
-₹0
-</strong>
-
-</div>
-
-<div class="buy-row">
-
-<span>Platform commission</span>
-
-<strong id="commission">
-₹0
-</strong>
-
-</div>
-
-<div class="buy-row buy-total">
-
-<span>Total</span>
-
-<strong id="total">
-₹0
-</strong>
-
-</div>
-
-</div>
-
-<button
-class="btn primary"
-onclick="startPayment()">
-
-Buy Now
-
-</button>
-
-<small style="color:#667085">
-
-Payment gateway will be connected through the secure
-server-side payment function.
-
-</small>
-
-</div>
-
-</div>
-
-</div>
 
 
 <!-- REQUIREMENT MODAL -->
@@ -771,25 +705,22 @@ server-side payment function.
 
 <div class="modal-box">
 
-<button class="close"
-onclick="closeRequirement()">×</button>
+<button class="close" onclick="closeRequirement()">×</button>
 
-<h2>Need a Component</h2>
+<h2>Post a Requirement</h2>
 
-<form
-class="form"
-onsubmit="postRequirement(event)">
+<form class="form" onsubmit="addRequirement(event)">
 
 <input
 id="reqName"
 required
-placeholder="Component required"
+placeholder="Component you need"
 >
 
 <input
 id="reqBudget"
 type="number"
-placeholder="Maximum budget (₹)"
+placeholder="Maximum budget ₹"
 >
 
 <input
@@ -803,7 +734,7 @@ placeholder="Quantity"
 <textarea
 id="reqDetails"
 rows="3"
-placeholder="Details"
+placeholder="Details / preferred condition"
 ></textarea>
 
 <input
@@ -814,34 +745,73 @@ placeholder="WhatsApp / Instagram"
 
 <button
 class="btn primary"
-type="submit">
-
+type="submit"
+>
 Post Requirement
-
 </button>
 
 </form>
 
 </div>
-
 </div>
 
 
-<div id="status" class="status"></div>
+
+<!-- CONTACT MODAL -->
+
+<div class="modal" id="contactModal">
+
+<div class="modal-box">
+
+<button class="close" onclick="closeContact()">×</button>
+
+<h2 id="contactTitle">
+Contact Seller
+</h2>
+
+<div id="contactBox" class="contact-info"></div>
+
+</div>
+</div>
 
 
-<!-- FIREBASE -->
 
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script type="module">
 
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+/* =====================================================
+   FIREBASE IMPORTS
+===================================================== */
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+
+import {
+getAuth,
+createUserWithEmailAndPassword,
+signInWithEmailAndPassword,
+signOut,
+onAuthStateChanged
+}
+from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
+import {
+getFirestore,
+collection,
+addDoc,
+getDocs,
+doc,
+updateDoc,
+deleteDoc,
+query,
+where,
+serverTimestamp
+}
+from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
 
-<script>
-
-/* ==============================
-   FIREBASE
-============================== */
+/* =====================================================
+   YOUR FIREBASE CONFIG
+===================================================== */
 
 const firebaseConfig = {
 
@@ -869,509 +839,79 @@ measurementId:
 };
 
 
-firebase.initializeApp(firebaseConfig);
+/* =====================================================
+   INITIALIZE
+===================================================== */
 
-const db =
-firebase.firestore();
+const app = initializeApp(firebaseConfig);
+
+const auth = getAuth(app);
+
+const db = getFirestore(app);
 
 
-/* ==============================
-   DATA
-============================== */
+/* =====================================================
+   FOUNDER EMAIL
+   IMPORTANT: CHANGE THIS
+===================================================== */
 
-let listings = [];
+const FOUNDER_EMAIL = "YOUR_ADMIN_EMAIL@gmail.com";
+
+
+/* =====================================================
+   VARIABLES
+===================================================== */
+
+let allListings = [];
 
 let selectedImage = "";
 
-let selectedProduct = null;
+let editingId = null;
 
+let authMode = "login";
 
-/* ==============================
-   STATUS
-============================== */
 
-function status(message){
+/* =====================================================
+   RESTRICTED ITEM DETECTION
+===================================================== */
 
-const box =
-document.getElementById("status");
+const restrictedWords = [
 
-box.textContent = message;
+"gun",
+"pistol",
+"rifle",
+"weapon",
+"ammunition",
+"drugs",
+"alcohol",
+"cigarette",
+"vape",
+"explosive",
+"bomb",
+"firecracker",
+"stolen",
+"fake id"
 
-box.style.display = "block";
+];
 
-setTimeout(function(){
 
-box.style.display = "none";
+function checkRestricted(name,description){
 
-},3000);
+const text =
+(name+" "+description).toLowerCase();
 
-}
-
-
-/* ==============================
-   IMAGE
-============================== */
-
-function previewImage(event){
-
-const file =
-event.target.files[0];
-
-if(!file){
-
-selectedImage = "";
-
-return;
-
-}
-
-const reader =
-new FileReader();
-
-reader.onload =
-function(e){
-
-selectedImage =
-e.target.result;
-
-const preview =
-document.getElementById("preview");
-
-preview.src =
-selectedImage;
-
-preview.style.display =
-"block";
-
-};
-
-reader.readAsDataURL(file);
-
-}
-
-
-/* ==============================
-   PUBLISH LISTING
-============================== */
-
-async function publishListing(e){
-
-e.preventDefault();
-
-const whatsapp =
-document.getElementById("whatsapp")
-.value.trim();
-
-const instagram =
-document.getElementById("instagram")
-.value.trim();
-
-if(!whatsapp && !instagram){
-
-alert(
-"WhatsApp ya Instagram mein se kam se kam ek contact method dijiye."
-);
-
-return;
-
-}
-
-
-const listing = {
-
-name:
-document.getElementById("name")
-.value.trim(),
-
-price:
-Number(
-document.getElementById("price")
-.value
-),
-
-condition:
-document.getElementById("cond")
-.value,
-
-seller:
-document.getElementById("seller")
-.value.trim(),
-
-college:
-document.getElementById("college")
-.value.trim(),
-
-collegeLocation:
-document.getElementById("collegeLocation")
-.value.trim(),
-
-whatsapp:
-whatsapp,
-
-instagram:
-instagram,
-
-description:
-document.getElementById("desc")
-.value.trim(),
-
-image:
-selectedImage,
-
-createdAt:
-firebase.firestore.FieldValue.serverTimestamp()
-
-};
-
-
-try{
-
-status("Publishing...");
-
-await db
-.collection("listings")
-.add(listing);
-
-alert(
-"Listing published successfully!"
-);
-
-e.target.reset();
-
-selectedImage = "";
-
-document.getElementById("preview")
-.style.display = "none";
-
-closeSell();
-
-status("Listing published");
-
-}catch(error){
-
-console.error(error);
-
-alert(
-"Listing publish nahi hui.\n\n" +
-error.message
-);
-
-}
-
-}
-
-
-/* ==============================
-   LOAD LISTINGS
-============================== */
-
-function listenListings(){
-
-db.collection("listings")
-.orderBy("createdAt","desc")
-.onSnapshot(
-
-function(snapshot){
-
-listings = [];
-
-snapshot.forEach(function(doc){
-
-listings.push({
-
-id:doc.id,
-
-...doc.data()
-
-});
-
-});
-
-document.getElementById("loading")
-.style.display = "none";
-
-filterListings();
-
-},
-
-function(error){
-
-console.error(error);
-
-document.getElementById("loading")
-.style.display = "none";
-
-alert(
-"Firebase listings load nahi ho rahi.\n\n" +
-error.message
-);
-
-}
-
+return restrictedWords.some(word =>
+text.includes(word)
 );
 
 }
 
 
-/* ==============================
-   SEARCH
-============================== */
-
-function filterListings(){
-
-const query =
-(
-document.getElementById("search")
-.value || ""
-)
-.toLowerCase()
-.trim();
-
-const condition =
-document.getElementById("condition")
-.value;
-
-let data =
-listings.filter(function(item){
-
-const searchable = [
-
-item.name,
-item.description,
-item.college,
-item.collegeLocation,
-item.seller
-
-]
-.join(" ")
-.toLowerCase();
-
-const searchMatch =
-!query ||
-searchable.includes(query);
-
-const conditionMatch =
-!condition ||
-item.condition === condition;
-
-return searchMatch &&
-conditionMatch;
-
-});
-
-
-const sort =
-document.getElementById("sort")
-.value;
-
-
-if(sort === "low"){
-
-data.sort(function(a,b){
-
-return Number(a.price) -
-Number(b.price);
-
-});
-
-}
-
-
-if(sort === "high"){
-
-data.sort(function(a,b){
-
-return Number(b.price) -
-Number(a.price);
-
-});
-
-}
-
-
-render(data);
-
-}
-
-
-/* ==============================
-   RENDER
-============================== */
-
-function render(data){
-
-const grid =
-document.getElementById("grid");
-
-grid.innerHTML = "";
-
-document.getElementById("count")
-.textContent =
-data.length + " listings";
-
-
-if(data.length === 0){
-
-document.getElementById("empty")
-.style.display = "block";
-
-return;
-
-}
-
-document.getElementById("empty")
-.style.display = "none";
-
-
-data.forEach(function(item){
-
-const image =
-item.image
-?
-`<img src="${item.image}" alt="Component">`
-:
-`📦`;
-
-
-const whatsapp =
-String(item.whatsapp || "")
-.replace(/\D/g,"");
-
-
-const instagram =
-String(item.instagram || "")
-.replace(/^@/,"");
-
-
-let contactButtons = "";
-
-
-if(whatsapp){
-
-contactButtons += `
-
-<a
-class="btn secondary small-btn"
-href="https://wa.me/${whatsapp}"
-target="_blank">
-
-WhatsApp
-
-</a>
-
-`;
-
-}
-
-
-if(instagram){
-
-contactButtons += `
-
-<a
-class="btn secondary small-btn"
-href="https://instagram.com/${instagram}"
-target="_blank">
-
-Instagram
-
-</a>
-
-`;
-
-}
-
-
-grid.innerHTML += `
-
-<div class="card">
-
-<div class="pic">
-${image}
-</div>
-
-<div class="card-body">
-
-<h3>
-${escapeHtml(item.name)}
-</h3>
-
-<div class="price">
-₹${Number(item.price)}
-</div>
-
-<div class="meta">
-
-<strong>
-${escapeHtml(item.condition || "")}
-</strong>
-
-<br>
-
-👤 Seller:
-${escapeHtml(item.seller || "")}
-
-<br>
-
-🎓 College:
-${escapeHtml(item.college || "")}
-
-<br>
-
-📍 Location:
-${escapeHtml(item.collegeLocation || "")}
-
-</div>
-
-
-${
-item.description
-?
-`
-<div class="meta">
-📝 ${escapeHtml(item.description)}
-</div>
-`
-:
-""
-}
-
-
-<span class="profile-pill">
-Student Seller
-</span>
-
-
-<div class="card-actions">
-
-<button
-class="btn primary small-btn"
-onclick="openBuy('${item.id}')">
-
-Buy Now
-
-</button>
-
-${contactButtons}
-
-</div>
-
-</div>
-
-</div>
-
-`;
-
-});
-
-}
-
-
-/* ==============================
-   BUY
-============================== */
-
-function getCommission(price){
+/* =====================================================
+   COMMISSION
+===================================================== */
+
+function calculateCommission(price){
 
 price = Number(price);
 
@@ -1392,383 +932,1216 @@ return price * 0.10;
 }
 
 
-function openBuy(id){
+function getCommissionRate(price){
 
-selectedProduct =
-listings.find(function(item){
+price = Number(price);
 
-return item.id === id;
+if(price < 200) return 3;
 
-});
+if(price < 500) return 5;
 
-
-if(!selectedProduct){
-
-return;
+return 10;
 
 }
 
+
+window.showCommission = function(){
 
 const price =
-Number(selectedProduct.price);
+Number(document.getElementById("price").value || 0);
 
-const commission =
-getCommission(price);
+if(!price){
 
-const total =
-price;
-
-
-document.getElementById("buyPrice")
-.textContent =
-"₹" + price.toFixed(2);
-
-
-document.getElementById("commission")
-.textContent =
-"₹" + commission.toFixed(2);
-
-
-document.getElementById("total")
-.textContent =
-"₹" + total.toFixed(2);
-
-
-document.getElementById("buyDetails")
-.innerHTML = `
-
-<div class="contact-info">
-
-<strong>
-${escapeHtml(selectedProduct.name)}
-</strong>
-
-<br><br>
-
-Seller:
-${escapeHtml(selectedProduct.seller)}
-
-<br>
-
-College:
-${escapeHtml(selectedProduct.college)}
-
-<br>
-
-Location:
-${escapeHtml(selectedProduct.collegeLocation)}
-
-</div>
-
-`;
-
-
-document.getElementById("buyModal")
-.style.display = "flex";
-
-}
-
-
-function closeBuy(){
-
-document.getElementById("buyModal")
-.style.display = "none";
-
-}
-
-
-/* ==============================
-   PAYMENT
-============================== */
-
-async function startPayment(){
-
-if(!selectedProduct){
+document.getElementById("commissionBox").innerHTML =
+"Platform commission will appear here.";
 
 return;
 
 }
 
+const rate = getCommissionRate(price);
 
-const buyerName =
-document.getElementById("buyerName")
-.value.trim();
+const commission = calculateCommission(price);
 
-const buyerPhone =
-document.getElementById("buyerPhone")
-.value.trim();
+const sellerAmount = price - commission;
 
-const buyerCollege =
-document.getElementById("buyerCollege")
-.value.trim();
+document.getElementById("commissionBox").innerHTML =
+
+`Platform Commission: <b>${rate}%</b>
+(₹${commission.toFixed(2)})<br>
+Seller receives: <b>₹${sellerAmount.toFixed(2)}</b>`;
+
+};
 
 
-if(!buyerName || !buyerPhone){
+/* =====================================================
+   IMAGE COMPRESSION
+===================================================== */
 
-alert(
-"Buyer name aur WhatsApp number required hai."
-);
+window.previewImage = function(event){
+
+const file = event.target.files[0];
+
+if(!file){
+
+selectedImage = "";
 
 return;
 
 }
 
+const reader = new FileReader();
 
-const price =
-Number(selectedProduct.price);
+reader.onload = function(e){
 
-const commission =
-getCommission(price);
+selectedImage = e.target.result;
+
+const img =
+document.getElementById("preview");
+
+img.src = selectedImage;
+
+img.style.display = "block";
+
+};
+
+reader.readAsDataURL(file);
+
+};
 
 
-/*
- IMPORTANT:
+/* =====================================================
+   AUTH
+===================================================== */
 
-Actual Razorpay payment should NOT be
-created directly from this frontend.
+window.openLogin = function(){
 
-The secure flow will be:
+document.getElementById("loginModal").style.display="flex";
 
-Browser
-   ↓
-Firebase Cloud Function
-   ↓
-Razorpay Orders API
-   ↓
-Razorpay Checkout
-   ↓
-Server signature verification
-   ↓
-Order marked paid
-*/
+};
 
+
+window.closeLogin = function(){
+
+document.getElementById("loginModal").style.display="none";
+
+};
+
+
+window.toggleAuthMode = function(){
+
+authMode =
+authMode === "login"
+? "signup"
+: "login";
+
+document.getElementById("authTitle").textContent =
+authMode === "login"
+? "Login"
+: "Create Account";
+
+document.getElementById("authSubmit").textContent =
+authMode === "login"
+? "Login"
+: "Create Account";
+
+document.getElementById("toggleAuth").textContent =
+authMode === "login"
+? "Create new account"
+: "Already have an account? Login";
+
+};
+
+
+window.handleAuth = async function(e){
+
+e.preventDefault();
+
+const email =
+document.getElementById("authEmail").value.trim();
+
+const password =
+document.getElementById("authPassword").value;
+
+const msg =
+document.getElementById("authMessage");
 
 try{
 
-const orderRef =
-await db.collection("orders").add({
+if(authMode === "signup"){
 
-productId:
-selectedProduct.id,
+await createUserWithEmailAndPassword(
+auth,
+email,
+password
+);
 
-productName:
-selectedProduct.name,
+msg.innerHTML =
+"Account created successfully!";
 
-seller:
-selectedProduct.seller,
+}else{
 
-sellerCollege:
-selectedProduct.college,
+await signInWithEmailAndPassword(
+auth,
+email,
+password
+);
 
-sellerLocation:
-selectedProduct.collegeLocation,
+msg.innerHTML =
+"Login successful!";
 
-price:
-price,
+setTimeout(closeLogin,500);
 
-commission:
-commission,
+}
 
-sellerAmount:
-price - commission,
+}catch(error){
 
-buyerName:
-buyerName,
+msg.style.color="#b42318";
 
-buyerPhone:
-buyerPhone,
+msg.innerHTML =
+error.message;
 
-buyerCollege:
-buyerCollege,
+}
 
-status:
-"payment_pending",
+};
 
-createdAt:
-firebase.firestore.FieldValue.serverTimestamp()
+
+/* =====================================================
+   AUTH STATE
+===================================================== */
+
+onAuthStateChanged(auth,(user)=>{
+
+const status =
+document.getElementById("loginStatus");
+
+const loginBtn =
+document.getElementById("loginBtn");
+
+if(user){
+
+status.innerHTML =
+"👤 "+user.email;
+
+loginBtn.textContent =
+"Logout";
+
+loginBtn.onclick = async ()=>{
+
+await signOut(auth);
+
+};
+
+}else{
+
+status.innerHTML =
+"Not logged in";
+
+loginBtn.textContent =
+"Login";
+
+loginBtn.onclick =
+window.openLogin;
+
+}
+
+renderListings();
 
 });
 
 
+/* =====================================================
+   SELL MODAL
+===================================================== */
+
+window.openSell = function(){
+
+if(!auth.currentUser){
+
+alert("Please login first.");
+
+openLogin();
+
+return;
+
+}
+
+editingId = null;
+
+document.getElementById("sellTitle").textContent =
+"Sell a Component";
+
+document.querySelector("#sellModal form").reset();
+
+selectedImage = "";
+
+document.getElementById("preview").style.display="none";
+
+document.getElementById("sellModal").style.display="flex";
+
+};
+
+
+window.closeSell = function(){
+
+document.getElementById("sellModal").style.display="none";
+
+};
+
+
+/* =====================================================
+   SAVE / UPDATE LISTING
+===================================================== */
+
+window.saveListing = async function(e){
+
+e.preventDefault();
+
+if(!auth.currentUser){
+
+alert("Please login first.");
+
+return;
+
+}
+
+const name =
+document.getElementById("name").value.trim();
+
+const price =
+Number(document.getElementById("price").value);
+
+const condition =
+document.getElementById("cond").value;
+
+const seller =
+document.getElementById("seller").value.trim();
+
+const college =
+document.getElementById("college").value.trim();
+
+const collegeLocation =
+document.getElementById("collegeLocation").value.trim();
+
+const whatsapp =
+document.getElementById("whatsapp").value.trim();
+
+const instagram =
+document.getElementById("instagram").value.trim();
+
+const desc =
+document.getElementById("desc").value.trim();
+
+let restricted =
+document.getElementById("restrictedCheck").checked;
+
+if(checkRestricted(name,desc)){
+
+restricted = true;
+
+}
+
+if(!whatsapp && !instagram){
+
+alert("Please provide WhatsApp or Instagram.");
+
+return;
+
+}
+
+
+/* IMAGE SIZE CHECK */
+
+if(selectedImage &&
+selectedImage.length > 900000){
+
 alert(
-
-"Order created successfully.\n\n" +
-
-"Order ID: " +
-orderRef.id +
-"\n\n" +
-
-"Commission: ₹" +
-commission.toFixed(2) +
-
-"\n\n" +
-
-"Payment gateway backend ab connect karna hai."
-
+"Image is too large. Please choose a smaller image."
 );
+
+return;
+
+}
+
+
+const commissionRate =
+getCommissionRate(price);
+
+const commission =
+calculateCommission(price);
+
+try{
+
+if(editingId){
+
+const old =
+allListings.find(x=>x.id===editingId);
+
+await updateDoc(
+doc(db,"listings",editingId),
+{
+
+name,
+price,
+condition,
+seller,
+college,
+collegeLocation,
+whatsapp,
+instagram,
+description:desc,
+
+image:
+selectedImage || old.image || "",
+
+restricted,
+
+/*
+   If restricted, only founder/team
+   should approve later.
+*/
+
+approved:
+restricted
+? (old.approved || false)
+: true,
+
+commissionRate,
+
+commissionAmount:commission,
+
+updatedAt:serverTimestamp()
+
+});
+
+alert("Listing updated successfully!");
+
+}else{
+
+await addDoc(
+collection(db,"listings"),
+{
+
+name,
+price,
+condition,
+seller,
+college,
+collegeLocation,
+whatsapp,
+instagram,
+description:desc,
+
+image:selectedImage || "",
+
+icon:"📦",
+
+ownerUid:auth.currentUser.uid,
+
+ownerEmail:auth.currentUser.email,
+
+restricted,
+
+approved:restricted ? false : true,
+
+commissionRate,
+
+commissionAmount:commission,
+
+createdAt:serverTimestamp()
+
+});
+
+if(restricted){
+
+alert(
+"Listing submitted for founder/team approval."
+);
+
+}else{
+
+alert(
+"Listing published successfully!"
+);
+
+}
+
+}
+
+closeSell();
+
+loadListings();
 
 }catch(error){
 
 console.error(error);
 
 alert(
-"Order create nahi hua.\n\n" +
-error.message
+"Could not save listing:\n"+error.message
 );
 
 }
 
+};
+
+
+/* =====================================================
+   LOAD FIREBASE LISTINGS
+===================================================== */
+
+async function loadListings(){
+
+try{
+
+const snap =
+await getDocs(collection(db,"listings"));
+
+allListings=[];
+
+snap.forEach(docSnap=>{
+
+allListings.push({
+
+id:docSnap.id,
+...docSnap.data()
+
+});
+
+});
+
+renderListings();
+
+updateLocationFilter();
+
+}catch(error){
+
+console.error(error);
+
+document.getElementById("grid").innerHTML =
+
+`<div style="padding:20px">
+❌ Firebase error:<br>${error.message}
+</div>`;
+
+}
+
 }
 
 
-/* ==============================
+/* =====================================================
+   RENDER
+===================================================== */
+
+function renderListings(){
+
+const grid =
+document.getElementById("grid");
+
+grid.innerHTML="";
+
+let data =
+getFilteredListings();
+
+if(!data.length){
+
+document.getElementById("empty").style.display="block";
+
+}else{
+
+document.getElementById("empty").style.display="none";
+
+}
+
+
+data.forEach(x=>{
+
+/*
+  Restricted listing is visible only
+  after approval.
+*/
+
+if(x.restricted && !x.approved){
+
+return;
+
+}
+
+const card =
+document.createElement("div");
+
+card.className="card";
+
+const imageHTML =
+x.image
+
+? `<img src="${x.image}">`
+
+: `<span>${x.icon || "📦"}</span>`;
+
+
+const own =
+auth.currentUser &&
+x.ownerUid === auth.currentUser.uid;
+
+
+const founder =
+auth.currentUser &&
+auth.currentUser.email === FOUNDER_EMAIL;
+
+
+let buttons = `
+
+<button
+class="btn secondary small-btn"
+onclick="contactSeller('${x.id}')">
+Message Seller
+</button>
+
+`;
+
+
+if(own){
+
+buttons += `
+
+<button
+class="btn secondary small-btn"
+onclick="editListing('${x.id}')">
+Edit
+</button>
+
+<button
+class="btn danger small-btn"
+onclick="deleteListing('${x.id}')">
+Delete
+</button>
+
+`;
+
+}
+
+
+if(founder && x.restricted && !x.approved){
+
+buttons += `
+
+<button
+class="btn primary small-btn"
+onclick="approveListing('${x.id}')">
+Approve
+</button>
+
+`;
+
+}
+
+
+card.innerHTML = `
+
+<div class="pic">
+${imageHTML}
+</div>
+
+<div class="card-body">
+
+<h3>
+${escapeHtml(x.name || "")}
+</h3>
+
+<div class="price">
+₹${Number(x.price || 0)}
+</div>
+
+<div class="meta">
+
+${escapeHtml(x.condition || "")}
+
+<br>
+
+Seller:
+${escapeHtml(x.seller || "")}
+
+<br>
+
+🏫
+${escapeHtml(x.college || "")}
+
+<br>
+
+📍
+${escapeHtml(x.collegeLocation || "")}
+
+<br><br>
+
+<span class="profile-pill">
+Student Seller
+</span>
+
+${x.restricted
+? `<br><span class="restricted">Approval Required</span>`
+: `<br><span class="approved">✓ Approved</span>`
+}
+
+</div>
+
+<div class="card-actions">
+
+${buttons}
+
+</div>
+
+</div>
+
+`;
+
+grid.appendChild(card);
+
+});
+
+
+document.getElementById("count").textContent =
+data.filter(x=>!x.restricted || x.approved).length
++" listings";
+
+}
+
+
+/* =====================================================
+   SEARCH
+===================================================== */
+
+function getFilteredListings(){
+
+const q =
+(document.getElementById("search")?.value || "")
+.toLowerCase()
+.trim();
+
+const condition =
+document.getElementById("condition")?.value || "";
+
+const location =
+document.getElementById("locationFilter")?.value || "";
+
+let data =
+allListings.filter(x=>{
+
+if(x.restricted && !x.approved)
+return false;
+
+
+/*
+  Search EVERY important field.
+  So MQ2, MQ-2, Smoke Sensor etc.
+  can be found.
+*/
+
+const searchable = [
+
+x.name,
+x.description,
+x.seller,
+x.college,
+x.collegeLocation,
+x.condition
+
+]
+.join(" ")
+.toLowerCase();
+
+const words =
+q.split(/\s+/).filter(Boolean);
+
+const matches =
+words.every(word =>
+searchable.includes(word)
+);
+
+return (
+
+matches &&
+
+(!condition ||
+x.condition === condition) &&
+
+(!location ||
+x.collegeLocation === location)
+
+);
+
+});
+
+
+const sort =
+document.getElementById("sort")?.value || "new";
+
+
+if(sort==="low"){
+
+data.sort(
+(a,b)=>
+Number(a.price)-Number(b.price)
+);
+
+}
+
+if(sort==="high"){
+
+data.sort(
+(a,b)=>
+Number(b.price)-Number(a.price)
+);
+
+}
+
+if(sort==="new"){
+
+data.sort(
+(a,b)=>
+getTime(b.createdAt) -
+getTime(a.createdAt)
+);
+
+}
+
+
+return data;
+
+}
+
+
+/* =====================================================
+   FILTER
+===================================================== */
+
+window.filterCards=function(){
+
+renderListings();
+
+};
+
+
+window.syncHeroSearch=function(){
+
+document.getElementById("search").value =
+document.getElementById("heroSearch").value;
+
+document.getElementById("condition").value =
+document.getElementById("heroCondition").value;
+
+renderListings();
+
+};
+
+
+/* =====================================================
+   LOCATION FILTER
+===================================================== */
+
+function updateLocationFilter(){
+
+const select =
+document.getElementById("locationFilter");
+
+const current =
+select.value;
+
+const locations =
+[
+
+...new Set(
+
+allListings
+
+.map(x=>x.collegeLocation)
+
+.filter(Boolean)
+
+)
+
+].sort();
+
+
+select.innerHTML =
+`<option value="">All locations</option>`;
+
+
+locations.forEach(location=>{
+
+select.innerHTML +=
+
+`<option value="${escapeAttribute(location)}">
+${escapeHtml(location)}
+</option>`;
+
+});
+
+
+select.value = current;
+
+}
+
+
+/* =====================================================
+   EDIT
+===================================================== */
+
+window.editListing=function(id){
+
+const x =
+allListings.find(item=>item.id===id);
+
+if(!x)return;
+
+if(!auth.currentUser ||
+x.ownerUid !== auth.currentUser.uid){
+
+alert("You can edit only your own listing.");
+
+return;
+
+}
+
+editingId=id;
+
+document.getElementById("sellTitle").textContent =
+"Edit Listing";
+
+document.getElementById("name").value =
+x.name || "";
+
+document.getElementById("price").value =
+x.price || "";
+
+document.getElementById("cond").value =
+x.condition || "";
+
+document.getElementById("seller").value =
+x.seller || "";
+
+document.getElementById("college").value =
+x.college || "";
+
+document.getElementById("collegeLocation").value =
+x.collegeLocation || "";
+
+document.getElementById("whatsapp").value =
+x.whatsapp || "";
+
+document.getElementById("instagram").value =
+x.instagram || "";
+
+document.getElementById("desc").value =
+x.description || "";
+
+document.getElementById("restrictedCheck").checked =
+x.restricted || false;
+
+selectedImage =
+x.image || "";
+
+if(x.image){
+
+document.getElementById("preview").src =
+x.image;
+
+document.getElementById("preview").style.display =
+"block";
+
+}else{
+
+document.getElementById("preview").style.display =
+"none";
+
+}
+
+showCommission();
+
+document.getElementById("sellModal").style.display =
+"flex";
+
+};
+
+
+/* =====================================================
+   DELETE
+===================================================== */
+
+window.deleteListing=async function(id){
+
+const x =
+allListings.find(item=>item.id===id);
+
+if(!x)return;
+
+if(!auth.currentUser ||
+x.ownerUid !== auth.currentUser.uid){
+
+alert("You can delete only your own listing.");
+
+return;
+
+}
+
+if(!confirm(
+"Delete this listing permanently?"
+))return;
+
+try{
+
+await deleteDoc(
+doc(db,"listings",id)
+);
+
+alert("Listing deleted.");
+
+loadListings();
+
+}catch(error){
+
+alert(error.message);
+
+}
+
+};
+
+
+/* =====================================================
+   FOUNDER APPROVAL
+===================================================== */
+
+window.approveListing=async function(id){
+
+if(!auth.currentUser ||
+auth.currentUser.email !== FOUNDER_EMAIL){
+
+alert("Only founder/admin can approve restricted listings.");
+
+return;
+
+}
+
+try{
+
+await updateDoc(
+
+doc(db,"listings",id),
+
+{
+
+approved:true,
+approvedBy:auth.currentUser.email,
+approvedAt:serverTimestamp()
+
+}
+
+);
+
+alert("Listing approved.");
+
+loadListings();
+
+}catch(error){
+
+alert(error.message);
+
+}
+
+};
+
+
+/* =====================================================
+   CONTACT SELLER
+===================================================== */
+
+window.contactSeller=function(id){
+
+const x =
+allListings.find(item=>item.id===id);
+
+if(!x)return;
+
+document.getElementById("contactTitle").textContent =
+"Contact "+(x.seller || "Seller");
+
+
+let html = `
+
+<b>${escapeHtml(x.name)}</b>
+
+<br>
+
+🏫 ${escapeHtml(x.college || "")}
+
+<br>
+
+📍 ${escapeHtml(x.collegeLocation || "")}
+
+`;
+
+
+if(x.whatsapp){
+
+const number =
+String(x.whatsapp)
+.replace(/\D/g,"");
+
+html += `
+
+<a
+class="contact-link"
+target="_blank"
+href="https://wa.me/${number}"
+>
+📱 Message on WhatsApp
+</a>
+
+`;
+
+}
+
+
+if(x.instagram){
+
+let insta =
+x.instagram.replace("@","");
+
+html += `
+
+<a
+class="contact-link"
+target="_blank"
+href="https://instagram.com/${encodeURIComponent(insta)}"
+>
+📸 Instagram
+</a>
+
+`;
+
+}
+
+
+document.getElementById("contactBox").innerHTML =
+html;
+
+document.getElementById("contactModal").style.display =
+"flex";
+
+};
+
+
+window.closeContact=function(){
+
+document.getElementById("contactModal").style.display =
+"none";
+
+};
+
+
+/* =====================================================
    REQUIREMENT
-============================== */
+===================================================== */
 
-function openRequirement(){
+window.openRequirement=function(){
 
-document.getElementById("reqModal")
-.style.display = "flex";
+if(!auth.currentUser){
 
-}
+alert("Please login first.");
 
+openLogin();
 
-function closeRequirement(){
-
-document.getElementById("reqModal")
-.style.display = "none";
+return;
 
 }
 
+document.getElementById("reqModal").style.display =
+"flex";
 
-async function postRequirement(e){
+};
+
+
+window.closeRequirement=function(){
+
+document.getElementById("reqModal").style.display =
+"none";
+
+};
+
+
+window.addRequirement=async function(e){
 
 e.preventDefault();
 
+if(!auth.currentUser){
 
-const requirement = {
+alert("Login first.");
+
+return;
+
+}
+
+const req={
 
 name:
-document.getElementById("reqName")
-.value.trim(),
+document.getElementById("reqName").value.trim(),
 
 budget:
-Number(
-document.getElementById("reqBudget")
-.value || 0
-),
+Number(document.getElementById("reqBudget").value || 0),
 
-quantity:
-Number(
-document.getElementById("reqQty")
-.value || 1
-),
+qty:
+Number(document.getElementById("reqQty").value || 1),
 
 details:
-document.getElementById("reqDetails")
-.value.trim(),
+document.getElementById("reqDetails").value.trim(),
 
 contact:
-document.getElementById("reqContact")
-.value.trim(),
+document.getElementById("reqContact").value.trim(),
+
+ownerUid:
+auth.currentUser.uid,
+
+ownerEmail:
+auth.currentUser.email,
 
 createdAt:
-firebase.firestore.FieldValue.serverTimestamp()
+serverTimestamp()
 
 };
 
 
 try{
 
-await db
-.collection("requirements")
-.add(requirement);
-
-alert(
-"Requirement posted successfully!"
+await addDoc(
+collection(db,"requirements"),
+req
 );
 
-e.target.reset();
+alert("Requirement posted successfully.");
 
 closeRequirement();
 
+document.querySelector("#reqModal form").reset();
+
 }catch(error){
 
-console.error(error);
-
-alert(
-"Requirement post nahi hui.\n\n" +
-error.message
-);
+alert(error.message);
 
 }
 
-}
+};
 
 
-/* ==============================
-   SELL MODAL
-============================== */
+/* =====================================================
+   HELPERS
+===================================================== */
 
-function openSell(){
+function escapeHtml(s){
 
-document.getElementById("sellModal")
-.style.display = "flex";
+return String(s ?? "").replace(
 
-}
-
-
-function closeSell(){
-
-document.getElementById("sellModal")
-.style.display = "none";
-
-}
-
-
-/* ==============================
-   HERO SEARCH
-============================== */
-
-function syncSearch(){
-
-document.getElementById("search")
-.value =
-document.getElementById("heroSearch")
-.value;
-
-document.getElementById("condition")
-.value =
-document.getElementById("heroCondition")
-.value;
-
-filterListings();
-
-}
-
-
-function goBrowse(){
-
-document.getElementById("browse")
-.scrollIntoView({
-behavior:"smooth"
-});
-
-}
-
-
-/* ==============================
-   SECURITY
-============================== */
-
-function escapeHtml(value){
-
-return String(value || "")
-.replace(
 /[&<>"']/g,
-function(char){
 
-return {
+m=>({
 
 "&":"&amp;",
 "<":"&lt;",
@@ -1776,19 +2149,41 @@ return {
 '"':"&quot;",
 "'":"&#039;"
 
-}[char];
+}[m])
 
-}
 );
 
 }
 
 
-/* ==============================
-   START APP
-============================== */
+function escapeAttribute(s){
 
-listenListings();
+return String(s ?? "")
+.replace(/"/g,"&quot;");
+
+}
+
+
+function getTime(timestamp){
+
+if(!timestamp)return 0;
+
+if(typeof timestamp.toMillis === "function"){
+
+return timestamp.toMillis();
+
+}
+
+return 0;
+
+}
+
+
+/* =====================================================
+   INITIAL LOAD
+===================================================== */
+
+loadListings();
 
 </script>
 
