@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Campus Components — Student Marketplace</title>
 
+<!-- Razorpay Checkout SDK -->
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
 <style>
 *{box-sizing:border-box}
 
@@ -976,7 +979,25 @@ getFirestore(app);
 ===================================================== */
 
 const FOUNDER_EMAIL =
-"singhadarsh7254@gmail.com";
+".................@gmail.com";
+
+
+
+/* =====================================================
+   RAZORPAY TEST KEY
+===================================================== */
+
+/*
+  This is ONLY the Razorpay Key ID.
+
+  NEVER put the Razorpay Key Secret here.
+
+  Actual Order creation and payment verification
+  will be handled by the backend in the next step.
+*/
+
+const RAZORPAY_KEY_ID =
+"rzp_test_TPoTlXUVgpEZcC";
 
 
 
@@ -1848,7 +1869,18 @@ x.ownerUid ===
 auth.currentUser.uid;
 
 
+/* =====================================================
+   BUY NOW BUTTON ADDED HERE
+===================================================== */
+
 let buttons = `
+
+<button
+class="btn primary small-btn"
+onclick="buyNow('${escapeAttribute(x.id)}')"
+>
+🛒 Buy Now
+</button>
 
 <button
 class="btn secondary small-btn"
@@ -2029,6 +2061,161 @@ visibleCount
 : "block";
 
 }
+
+
+
+/* =====================================================
+   BUY NOW — FRONTEND
+===================================================== */
+
+async function buyNow(id){
+
+const listing =
+allListings.find(
+item => item.id === id
+);
+
+
+if(!listing){
+
+alert(
+"Listing not found."
+);
+
+return;
+
+}
+
+
+/*
+  User must be logged in.
+*/
+
+if(!auth.currentUser){
+
+alert(
+"Please login first to buy."
+);
+
+openLogin();
+
+return;
+
+}
+
+
+/*
+  Restricted listing protection.
+*/
+
+if(
+listing.restricted &&
+!listing.approved
+){
+
+alert(
+"This listing is waiting for founder approval."
+);
+
+return;
+
+}
+
+
+/*
+  Validate price.
+*/
+
+const price =
+Number(listing.price || 0);
+
+if(!price || price < 1){
+
+alert(
+"Invalid listing price."
+);
+
+return;
+
+}
+
+
+/*
+  Prevent owner from buying own listing.
+*/
+
+if(
+listing.ownerUid ===
+auth.currentUser.uid
+){
+
+alert(
+"You cannot buy your own listing."
+);
+
+return;
+
+}
+
+
+/*
+  Calculate commission for display.
+*/
+
+const commissionRate =
+getCommissionRate(price);
+
+const commissionAmount =
+calculateCommission(price);
+
+const sellerAmount =
+price - commissionAmount;
+
+
+/*
+  CURRENT STAGE
+
+  We DO NOT create the Razorpay order
+  directly from the browser.
+
+  That must happen on the backend.
+
+  The backend will later return:
+
+  orderId
+  amount
+  currency
+
+  Then Razorpay Checkout will open.
+*/
+
+alert(
+
+"Buy Now selected!\n\n" +
+
+"Component: " +
+(listing.name || "Component") +
+
+"\nPrice: ₹" +
+price.toLocaleString("en-IN") +
+
+"\nPlatform commission: " +
+commissionRate +
+"% (₹" +
+commissionAmount.toFixed(2) +
+")" +
+
+"\nSeller amount: ₹" +
+sellerAmount.toFixed(2) +
+
+"\n\nRazorpay Test Checkout will be connected in the next step."
+
+);
+
+}
+
+window.buyNow =
+buyNow;
 
 
 
@@ -2617,6 +2804,7 @@ await loadListings();
 }catch(error){
 
 alert(
+"Rejection failed:\n"+
 error.message
 );
 
