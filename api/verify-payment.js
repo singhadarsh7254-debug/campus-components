@@ -1,6 +1,7 @@
 const crypto = require("crypto");
 
 module.exports = async function handler(req, res) {
+
   if (req.method !== "POST") {
     return res.status(405).json({
       error: "Method not allowed"
@@ -8,6 +9,7 @@ module.exports = async function handler(req, res) {
   }
 
   try {
+
     const {
       razorpay_order_id,
       razorpay_payment_id,
@@ -26,7 +28,9 @@ module.exports = async function handler(req, res) {
     }
 
     const body =
-      razorpay_order_id + "|" + razorpay_payment_id;
+      razorpay_order_id +
+      "|" +
+      razorpay_payment_id;
 
     const expectedSignature =
       crypto
@@ -54,11 +58,16 @@ module.exports = async function handler(req, res) {
     });
 
   } catch (error) {
-    console.error(error);
+
+    console.error(
+      "Payment verification error:",
+      error
+    );
 
     return res.status(500).json({
       verified: false,
       error: "Server verification error"
     });
+
   }
 };
