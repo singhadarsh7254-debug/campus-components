@@ -3,9 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
+
 <title>Campus Components — Student Marketplace</title>
 
-<!-- Razorpay Checkout SDK -->
+<!-- Razorpay Checkout -->
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
 <style>
@@ -348,6 +349,14 @@ font-weight:700;
 display:inline-block
 }
 
+.buy-box{
+background:#eef6ff;
+border:1px solid #cfe2ff;
+padding:12px;
+border-radius:10px;
+margin:12px 0
+}
+
 footer{
 padding:30px 6%;
 background:#101828;
@@ -436,7 +445,7 @@ Buy & Sell Electronics Components on Campus
 </h1>
 
 <p>
-Find Arduino boards, sensors, motors, modules, lab equipment and useful student items from sellers near your college.
+Find Arduino boards, sensors, motors, lab equipment and useful student items from sellers near your college.
 </p>
 
 <div class="search">
@@ -979,25 +988,19 @@ getFirestore(app);
 ===================================================== */
 
 const FOUNDER_EMAIL =
-".................@gmail.com";
+"singhadarsh7254@gmail.com";
 
 
 
 /* =====================================================
-   RAZORPAY TEST KEY
+   RAZORPAY
 ===================================================== */
 
-/*
-  This is ONLY the Razorpay Key ID.
-
-  NEVER put the Razorpay Key Secret here.
-
-  Actual Order creation and payment verification
-  will be handled by the backend in the next step.
-*/
-
 const RAZORPAY_KEY_ID =
-"rzp_test_TPoTlXUVgpEZcC";
+"rzp_test_TQ18hydD3XfsCN";
+
+const VERCEL_API =
+"https://campus-components.vercel.app";
 
 
 
@@ -1507,10 +1510,6 @@ return;
 }
 
 
-/* =====================================================
-   IMPORTANT OWNERSHIP DATA
-===================================================== */
-
 const ownerUid =
 auth.currentUser.uid;
 
@@ -1528,10 +1527,6 @@ calculateCommission(price);
 
 try{
 
-
-/* =====================================================
-   UPDATE
-===================================================== */
 
 if(editingId){
 
@@ -1563,10 +1558,6 @@ return;
 }
 
 
-/*
-  Owner UID is deliberately NOT changed.
-*/
-
 await updateDoc(
 
 doc(
@@ -1596,12 +1587,6 @@ old.image ||
 
 restricted,
 
-/*
- Normal listing remains approved.
- Restricted listing stays pending
- unless founder already approved it.
-*/
-
 approved:
 restricted
 ? Boolean(old.approved)
@@ -1626,10 +1611,6 @@ alert(
 
 }else{
 
-
-/* =====================================================
-   CREATE
-===================================================== */
 
 const listingData = {
 
@@ -1657,18 +1638,11 @@ selectedImage || "",
 icon:
 "📦",
 
-
-/*
-  THIS FIELD FIXES YOUR RULE:
-  request.resource.data.ownerUid
-*/
-
 ownerUid:
 ownerUid,
 
 ownerEmail:
 ownerEmail,
-
 
 restricted,
 
@@ -1677,11 +1651,9 @@ restricted
 ? false
 : true,
 
-
 commissionRate,
 
 commissionAmount,
-
 
 createdAt:
 serverTimestamp(),
@@ -1798,6 +1770,325 @@ ${escapeHtml(error.message)}
 
 
 /* =====================================================
+   RAZORPAY BUY NOW
+===================================================== */
+
+async function buyNow(id){
+
+const listing =
+allListings.find(
+item=>item.id===id
+);
+
+
+if(!listing){
+
+alert(
+"Listing not found."
+);
+
+return;
+
+}
+
+
+if(!auth.currentUser){
+
+alert(
+"Please login first to buy."
+);
+
+openLogin();
+
+return;
+
+}
+
+
+/*
+  Seller cannot buy their own listing.
+*/
+
+if(
+listing.ownerUid ===
+auth.currentUser.uid
+){
+
+alert(
+"You cannot buy your own listing."
+);
+
+return;
+
+}
+
+
+const price =
+Number(listing.price || 0);
+
+
+if(!price || price < 1){
+
+alert(
+"Invalid listing price."
+);
+
+return;
+
+}
+
+
+/*
+  Restricted/unapproved listings
+  cannot be purchased.
+*/
+
+if(
+listing.restricted &&
+!listing.approved
+){
+
+alert(
+"This listing is waiting for founder approval."
+);
+
+return;
+
+}
+
+
+try{
+
+
+/*
+  Ask our Vercel backend
+  to create the Razorpay order.
+*/
+
+const response =
+await fetch(
+
+VERCEL_API +
+"/api/create-order",
+
+{
+
+method:
+"POST",
+
+headers:{
+"Content-Type":
+"application/json"
+},
+
+body:
+JSON.stringify({
+
+amount:
+price,
+
+listingId:
+listing.id
+
+})
+
+}
+
+);
+
+
+const orderData =
+await response.json();
+
+
+if(!response.ok){
+
+throw new Error(
+
+orderData.error ||
+"Could not create payment order."
+
+);
+
+}
+
+
+/*
+  Razorpay Checkout
+*/
+
+const options = {
+
+key:
+RAZORPAY_KEY_ID,
+
+amount:
+orderData.amount,
+
+currency:
+orderData.currency || "INR",
+
+name:
+"CampusComponents",
+
+description:
+listing.name ||
+"CampusComponents purchase",
+
+order_id:
+orderData.orderId,
+
+prefill:{
+email:
+auth.currentUser.email || ""
+},
+
+notes:{
+listingId:
+listing.id,
+
+sellerUid:
+listing.ownerUid || ""
+},
+
+theme:{
+color:
+"#2f80ed"
+},
+
+
+/*
+  After Razorpay reports success,
+  verify the signature on our server.
+*/
+
+handler:
+async function(payment){
+
+try{
+
+
+const verifyResponse =
+await fetch(
+
+VERCEL_API +
+"/api/verify-payment",
+
+{
+
+method:
+"POST",
+
+headers:{
+"Content-Type":
+"application/json"
+},
+
+body:
+JSON.stringify(payment)
+
+}
+
+);
+
+
+const result =
+await verifyResponse.json();
+
+
+if(
+verifyResponse.ok &&
+result.verified
+){
+
+alert(
+
+"Payment successful! 🎉\n\n"+
+"Payment ID: "+
+result.paymentId
+
+);
+
+}else{
+
+alert(
+
+"Payment could not be verified."
+
+);
+
+}
+
+
+}catch(error){
+
+console.error(error);
+
+alert(
+"Payment verification error."
+);
+
+}
+
+}
+
+};
+
+
+const razorpay =
+new Razorpay(options);
+
+
+/*
+  Handle checkout failure.
+*/
+
+razorpay.on(
+"payment.failed",
+function(response){
+
+console.error(
+"Payment failed:",
+response.error
+);
+
+alert(
+
+"Payment failed.\n\n"+
+(
+response.error.description ||
+"Please try again."
+)
+
+);
+
+});
+
+
+razorpay.open();
+
+
+}catch(error){
+
+console.error(error);
+
+alert(
+
+"Could not start payment:\n\n"+
+error.message
+
+);
+
+}
+
+}
+
+window.buyNow =
+buyNow;
+
+
+
+/* =====================================================
    RENDER
 ===================================================== */
 
@@ -1813,21 +2104,11 @@ const data =
 getFilteredListings();
 
 
-/*
-  Count only visible listings.
-*/
-
 let visibleCount=0;
 
 
 data.forEach(x=>{
 
-
-/*
-  IMPORTANT:
-  Founder can see pending restricted listings.
-  Normal users cannot.
-*/
 
 const founder =
 auth.currentUser &&
@@ -1869,17 +2150,13 @@ x.ownerUid ===
 auth.currentUser.uid;
 
 
-/* =====================================================
-   BUY NOW BUTTON ADDED HERE
-===================================================== */
-
 let buttons = `
 
 <button
 class="btn primary small-btn"
 onclick="buyNow('${escapeAttribute(x.id)}')"
 >
-🛒 Buy Now
+💳 Buy Now
 </button>
 
 <button
@@ -1986,6 +2263,25 @@ Founder Review
 }
 
 
+const commissionRate =
+Number(
+x.commissionRate ||
+getCommissionRate(x.price)
+);
+
+
+const commissionAmount =
+Number(
+x.commissionAmount ||
+calculateCommission(x.price)
+);
+
+
+const sellerAmount =
+Number(x.price || 0) -
+commissionAmount;
+
+
 card.innerHTML = `
 
 <div class="pic">
@@ -2000,6 +2296,18 @@ ${escapeHtml(x.name || "")}
 
 <div class="price">
 ₹${Number(x.price || 0).toLocaleString("en-IN")}
+</div>
+
+<div class="buy-box">
+
+Platform commission:
+<b>${commissionRate}%</b>
+
+<br>
+
+Seller receives:
+<b>₹${sellerAmount.toFixed(2)}</b>
+
 </div>
 
 <div class="meta">
@@ -2065,161 +2373,6 @@ visibleCount
 
 
 /* =====================================================
-   BUY NOW — FRONTEND
-===================================================== */
-
-async function buyNow(id){
-
-const listing =
-allListings.find(
-item => item.id === id
-);
-
-
-if(!listing){
-
-alert(
-"Listing not found."
-);
-
-return;
-
-}
-
-
-/*
-  User must be logged in.
-*/
-
-if(!auth.currentUser){
-
-alert(
-"Please login first to buy."
-);
-
-openLogin();
-
-return;
-
-}
-
-
-/*
-  Restricted listing protection.
-*/
-
-if(
-listing.restricted &&
-!listing.approved
-){
-
-alert(
-"This listing is waiting for founder approval."
-);
-
-return;
-
-}
-
-
-/*
-  Validate price.
-*/
-
-const price =
-Number(listing.price || 0);
-
-if(!price || price < 1){
-
-alert(
-"Invalid listing price."
-);
-
-return;
-
-}
-
-
-/*
-  Prevent owner from buying own listing.
-*/
-
-if(
-listing.ownerUid ===
-auth.currentUser.uid
-){
-
-alert(
-"You cannot buy your own listing."
-);
-
-return;
-
-}
-
-
-/*
-  Calculate commission for display.
-*/
-
-const commissionRate =
-getCommissionRate(price);
-
-const commissionAmount =
-calculateCommission(price);
-
-const sellerAmount =
-price - commissionAmount;
-
-
-/*
-  CURRENT STAGE
-
-  We DO NOT create the Razorpay order
-  directly from the browser.
-
-  That must happen on the backend.
-
-  The backend will later return:
-
-  orderId
-  amount
-  currency
-
-  Then Razorpay Checkout will open.
-*/
-
-alert(
-
-"Buy Now selected!\n\n" +
-
-"Component: " +
-(listing.name || "Component") +
-
-"\nPrice: ₹" +
-price.toLocaleString("en-IN") +
-
-"\nPlatform commission: " +
-commissionRate +
-"% (₹" +
-commissionAmount.toFixed(2) +
-")" +
-
-"\nSeller amount: ₹" +
-sellerAmount.toFixed(2) +
-
-"\n\nRazorpay Test Checkout will be connected in the next step."
-
-);
-
-}
-
-window.buyNow =
-buyNow;
-
-
-
-/* =====================================================
    SEARCH
 ===================================================== */
 
@@ -2248,10 +2401,6 @@ let data =
 allListings.filter(x=>{
 
 
-/*
-  Search ALL relevant listing fields.
-*/
-
 const searchable = [
 
 x.name,
@@ -2277,18 +2426,6 @@ const words =
 q.split(/\s+/)
 .filter(Boolean);
 
-
-/*
-  Every typed word must be present.
-  Therefore:
-  MQ2
-  MQ-2
-  Arduino
-  Ultrasonic Sensor
-  Mathura
-  etc.
-  will work.
-*/
 
 const matches =
 words.every(
