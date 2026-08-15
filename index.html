@@ -1980,113 +1980,235 @@ method:
 "POST",
 
 headers:{
-"Content-Type":
-"application/json"
-},
+async function buyNow(id){
 
-body:
-JSON.stringify(payment)
+    const listing = allListings.find(
+        item => item.id === id
+    );
+
+    if(!listing){
+        alert("Listing not found.");
+        return;
+    }
+
+    if(!auth.currentUser){
+        alert("Please login first to buy.");
+        openLogin();
+        return;
+    }
+
+    if(listing.restricted && !listing.approved){
+        alert(
+            "This listing is waiting for founder approval."
+        );
+        return;
+    }
+
+    const price = Number(listing.price || 0);
+
+    if(!price || price < 1){
+        alert("Invalid listing price.");
+        return;
+    }
+
+    if(listing.ownerUid === auth.currentUser.uid){
+        alert("You cannot buy your own listing.");
+        return;
+    }
+
+    try {
+
+        /* CREATE RAZORPAY ORDER */
+
+        const response = await fetch(
+            "/api/create-order",
+            {
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+
+                    amount: price,
+
+                    listingId: listing.id,
+
+                    productName:
+                        listing.name || "Campus Component",
+
+                    buyerEmail:
+                        auth.currentUser.email || "",
+
+                    sellerUid:
+                        listing.ownerUid || ""
+
+                })
+            }
+        );
+
+        const data = await response.json();
+
+        if(!response.ok){
+            throw new Error(
+                data.error ||
+                "Unable to create payment order."
+            );
+        }
+
+
+        /* OPEN RAZORPAY */
+
+        const options = {
+
+            key: RAZORPAY_KEY_ID,
+
+            amount: data.amount,
+
+            currency:
+                data.currency || "INR",
+
+            name:
+                "CampusComponents",
+
+            description:
+                listing.name || "Campus Component",
+
+            order_id:
+                data.orderId,
+
+            prefill: {
+
+                email:
+                    auth.currentUser.email || ""
+
+            },
+
+            theme: {
+
+                color: "#2f80ed"
+
+            },
+
+
+            /* PAYMENT SUCCESS */
+
+            handler:
+            async function(paymentResponse){
+
+                try {
+
+                    const verifyResponse =
+                        await fetch(
+                            "/api/verify-payment",
+                            {
+
+                                method: "POST",
+
+                                headers: {
+                                    "Content-Type":
+                                        "application/json"
+                                },
+
+                                body:
+                                JSON.stringify({
+
+                                    razorpay_order_id:
+                                        paymentResponse
+                                        .razorpay_order_id,
+
+                                    razorpay_payment_id:
+                                        paymentResponse
+                                        .razorpay_payment_id,
+
+                                    razorpay_signature:
+                                        paymentResponse
+                                        .razorpay_signature
+
+                                })
+
+                            }
+                        );
+
+
+                    const verifyData =
+                        await verifyResponse.json();
+
+
+                    if(
+                        !verifyResponse.ok ||
+                        !verifyData.verified
+                    ){
+
+                        alert(
+                            "Payment received, but verification failed.\n\n" +
+                            (
+                                verifyData.error ||
+                                "Please contact support."
+                            )
+                        );
+
+                        return;
+
+                    }
+
+
+                    /* VERIFIED */
+
+                    alert(
+                        "🎉 Payment successful!\n\n" +
+                        "Payment ID:\n" +
+                        paymentResponse
+                        .razorpay_payment_id +
+                        "\n\n" +
+                        "Payment has been verified successfully."
+                    );
+
+
+                } catch(error){
+
+                    console.error(
+                        "Verification error:",
+                        error
+                    );
+
+                    alert(
+                        "Payment was completed, but verification could not be completed.\n\n" +
+                        error.message
+                    );
+
+                }
+
+            }
+
+        };
+
+
+        const razorpay =
+            new Razorpay(options);
+
+
+        razorpay.open();
+
+
+    } catch(error){
+
+        console.error(
+            "Payment error:",
+            error
+        );
+
+        alert(
+            "Could not start payment.\n\n" +
+            error.message
+        );
+
+    }
 
 }
 
-);
-
-
-const result =
-await verifyResponse.json();
-
-
-if(
-verifyResponse.ok &&
-result.verified
-){
-
-alert(
-
-"Payment successful! 🎉\n\n"+
-"Payment ID: "+
-result.paymentId
-
-);
-
-}else{
-
-alert(
-
-"Payment could not be verified."
-
-);
-
-}
-
-
-}catch(error){
-
-console.error(error);
-
-alert(
-"Payment verification error."
-);
-
-}
-
-}
-
-};
-
-
-const razorpay =
-new Razorpay(options);
-
-
-/*
-  Handle checkout failure.
-*/
-
-razorpay.on(
-"payment.failed",
-function(response){
-
-console.error(
-"Payment failed:",
-response.error
-);
-
-alert(
-
-"Payment failed.\n\n"+
-(
-response.error.description ||
-"Please try again."
-)
-
-);
-
-});
-
-
-razorpay.open();
-
-
-}catch(error){
-
-console.error(error);
-
-alert(
-
-"Could not start payment:\n\n"+
-error.message
-
-);
-
-}
-
-}
-
-window.buyNow =
-buyNow;
-
-
+window.buyNow = buyNow;
 
 /* =====================================================
    RENDER
