@@ -3,10 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-
 <title>Campus Components — Student Marketplace</title>
 
-<!-- Razorpay Checkout -->
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
 <style>
@@ -349,14 +347,6 @@ font-weight:700;
 display:inline-block
 }
 
-.buy-box{
-background:#eef6ff;
-border:1px solid #cfe2ff;
-padding:12px;
-border-radius:10px;
-margin:12px 0
-}
-
 footer{
 padding:30px 6%;
 background:#101828;
@@ -437,7 +427,6 @@ Login
 
 </header>
 
-
 <section class="hero">
 
 <h1>
@@ -445,7 +434,7 @@ Buy & Sell Electronics Components on Campus
 </h1>
 
 <p>
-Find Arduino boards, sensors, motors, lab equipment and useful student items from sellers near your college.
+Find Arduino boards, sensors, motors, modules, lab equipment and useful student items from sellers near your college.
 </p>
 
 <div class="search">
@@ -483,7 +472,6 @@ Find Components
 
 </section>
 
-
 <section class="container" id="browse">
 
 <div class="section-head">
@@ -503,7 +491,6 @@ Components near you
 💡 Search any component. Listings from students are loaded from Firebase automatically.
 
 </div>
-
 
 <div class="toolbar">
 
@@ -529,7 +516,6 @@ New
 
 </select>
 
-
 <select id="sort" onchange="filterCards()">
 
 <option value="new">
@@ -546,7 +532,6 @@ Price: High to Low
 
 </select>
 
-
 <select id="locationFilter" onchange="filterCards()">
 
 <option value="">
@@ -557,7 +542,6 @@ All locations
 
 </div>
 
-
 <div class="grid" id="grid"></div>
 
 <div id="empty" class="empty">
@@ -565,7 +549,6 @@ No matching components found.
 </div>
 
 </section>
-
 
 <footer>
 
@@ -580,8 +563,6 @@ Student electronics marketplace · Buy locally · Sell locally
 Founder Platform · Tiered Platform Commission
 
 </footer>
-
-
 
 <!-- LOGIN -->
 
@@ -640,8 +621,6 @@ Create new account
 
 </div>
 
-
-
 <!-- SELL -->
 
 <div class="modal" id="sellModal">
@@ -683,7 +662,6 @@ style="background:#eef6ff;padding:12px;border-radius:10px"
 Platform commission will appear here.
 </div>
 
-
 <select id="cond" required>
 
 <option value="">
@@ -699,7 +677,6 @@ New
 </option>
 
 </select>
-
 
 <input
 id="seller"
@@ -729,7 +706,6 @@ id="instagram"
 placeholder="Instagram ID e.g. @username"
 >
 
-
 <div class="upload-box">
 
 <strong>
@@ -752,13 +728,11 @@ class="upload-preview"
 
 </div>
 
-
 <textarea
 id="desc"
 rows="3"
 placeholder="Component description"
 ></textarea>
-
 
 <label>
 
@@ -770,7 +744,6 @@ id="restrictedCheck"
 This item may need approval
 
 </label>
-
 
 <small style="color:#667085">
 
@@ -784,7 +757,6 @@ will require founder/team approval.
 
 </small>
 
-
 <button
 class="btn primary"
 type="submit"
@@ -797,8 +769,6 @@ Publish Listing
 </div>
 
 </div>
-
-
 
 <!-- REQUIREMENT -->
 
@@ -867,8 +837,6 @@ Post Requirement
 
 </div>
 
-
-
 <!-- CONTACT -->
 
 <div class="modal" id="contactModal">
@@ -896,20 +864,13 @@ class="contact-info"
 
 </div>
 
-
-
 <script type="module">
-
-/* =====================================================
-   FIREBASE IMPORTS
-===================================================== */
 
 import {
 initializeApp
 }
 from
 "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
-
 
 import {
 getAuth,
@@ -920,7 +881,6 @@ onAuthStateChanged
 }
 from
 "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
-
 
 import {
 getFirestore,
@@ -934,7 +894,6 @@ serverTimestamp
 }
 from
 "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
-
 
 
 /* =====================================================
@@ -967,11 +926,6 @@ measurementId:
 };
 
 
-
-/* =====================================================
-   INITIALIZE
-===================================================== */
-
 const app =
 initializeApp(firebaseConfig);
 
@@ -982,7 +936,6 @@ const db =
 getFirestore(app);
 
 
-
 /* =====================================================
    FOUNDER
 ===================================================== */
@@ -991,17 +944,12 @@ const FOUNDER_EMAIL =
 "singhadarsh7254@gmail.com";
 
 
-
 /* =====================================================
-   RAZORPAY
+   RAZORPAY TEST KEY ID
 ===================================================== */
 
 const RAZORPAY_KEY_ID =
 "rzp_test_TQ18hydD3XfsCN";
-
-const VERCEL_API =
-"https://campus-components.vercel.app";
-
 
 
 /* =====================================================
@@ -1015,7 +963,6 @@ let selectedImage = "";
 let editingId = null;
 
 let authMode = "login";
-
 
 
 /* =====================================================
@@ -1041,7 +988,6 @@ const restrictedWords = [
 ];
 
 
-
 function checkRestricted(name,description){
 
 const text =
@@ -1052,7 +998,6 @@ word => text.includes(word)
 );
 
 }
-
 
 
 /* =====================================================
@@ -1124,7 +1069,6 @@ window.showCommission =
 showCommission;
 
 
-
 /* =====================================================
    IMAGE
 ===================================================== */
@@ -1184,7 +1128,6 @@ window.previewImage =
 previewImage;
 
 
-
 /* =====================================================
    AUTH UI
 ===================================================== */
@@ -1240,7 +1183,6 @@ authMode==="login"
 
 window.toggleAuthMode =
 toggleAuthMode;
-
 
 
 async function handleAuth(e){
@@ -1308,7 +1250,6 @@ window.handleAuth =
 handleAuth;
 
 
-
 /* =====================================================
    AUTH STATE
 ===================================================== */
@@ -1360,7 +1301,6 @@ renderListings();
 );
 
 
-
 /* =====================================================
    SELL MODAL
 ===================================================== */
@@ -1407,7 +1347,6 @@ window.openSell =
 openSell;
 
 
-
 function closeSell(){
 
 document.getElementById("sellModal")
@@ -1419,9 +1358,8 @@ window.closeSell =
 closeSell;
 
 
-
 /* =====================================================
-   SAVE / UPDATE
+   SAVE / UPDATE LISTING
 ===================================================== */
 
 async function saveListing(e){
@@ -1435,7 +1373,6 @@ alert("Please login first.");
 return;
 
 }
-
 
 const name =
 document.getElementById("name")
@@ -1475,18 +1412,15 @@ const description =
 document.getElementById("desc")
 .value.trim();
 
-
 let restricted =
 document.getElementById("restrictedCheck")
 .checked;
-
 
 if(checkRestricted(name,description)){
 
 restricted=true;
 
 }
-
 
 if(!whatsapp && !instagram){
 
@@ -1498,7 +1432,6 @@ return;
 
 }
 
-
 if(!price || price < 1){
 
 alert(
@@ -1509,13 +1442,11 @@ return;
 
 }
 
-
 const ownerUid =
 auth.currentUser.uid;
 
 const ownerEmail =
 auth.currentUser.email || "";
-
 
 const commissionRate =
 getCommissionRate(price);
@@ -1523,10 +1454,7 @@ getCommissionRate(price);
 const commissionAmount =
 calculateCommission(price);
 
-
-
 try{
-
 
 if(editingId){
 
@@ -1534,7 +1462,6 @@ const old =
 allListings.find(
 x=>x.id===editingId
 );
-
 
 if(!old){
 
@@ -1546,7 +1473,6 @@ return;
 
 }
 
-
 if(old.ownerUid !== ownerUid){
 
 alert(
@@ -1556,7 +1482,6 @@ alert(
 return;
 
 }
-
 
 await updateDoc(
 
@@ -1574,10 +1499,8 @@ condition,
 seller,
 college,
 collegeLocation,
-
 whatsapp,
 instagram,
-
 description,
 
 image:
@@ -1593,7 +1516,6 @@ restricted
 : true,
 
 commissionRate,
-
 commissionAmount,
 
 updatedAt:
@@ -1603,33 +1525,22 @@ serverTimestamp()
 
 );
 
-
 alert(
 "Listing updated successfully!"
 );
 
-
 }else{
-
 
 const listingData = {
 
 name,
-
 price,
-
 condition,
-
 seller,
-
 college,
-
 collegeLocation,
-
 whatsapp,
-
 instagram,
-
 description,
 
 image:
@@ -1652,7 +1563,6 @@ restricted
 : true,
 
 commissionRate,
-
 commissionAmount,
 
 createdAt:
@@ -1663,18 +1573,10 @@ serverTimestamp()
 
 };
 
-
 await addDoc(
-
-collection(
-db,
-"listings"
-),
-
+collection(db,"listings"),
 listingData
-
 );
-
 
 if(restricted){
 
@@ -1692,11 +1594,9 @@ alert(
 
 }
 
-
 closeSell();
 
 await loadListings();
-
 
 }catch(error){
 
@@ -1713,7 +1613,6 @@ error.message
 
 window.saveListing =
 saveListing;
-
 
 
 /* =====================================================
@@ -1745,11 +1644,9 @@ docSnap.id,
 
 });
 
-
 updateLocationFilter();
 
 renderListings();
-
 
 }catch(error){
 
@@ -1768,448 +1665,6 @@ ${escapeHtml(error.message)}
 }
 
 
-
-/* =====================================================
-   RAZORPAY BUY NOW
-===================================================== */
-
-async function buyNow(id){
-
-const listing =
-allListings.find(
-item=>item.id===id
-);
-
-
-if(!listing){
-
-alert(
-"Listing not found."
-);
-
-return;
-
-}
-
-
-if(!auth.currentUser){
-
-alert(
-"Please login first to buy."
-);
-
-openLogin();
-
-return;
-
-}
-
-
-/*
-  Seller cannot buy their own listing.
-*/
-
-if(
-listing.ownerUid ===
-auth.currentUser.uid
-){
-
-alert(
-"You cannot buy your own listing."
-);
-
-return;
-
-}
-
-
-const price =
-Number(listing.price || 0);
-
-
-if(!price || price < 1){
-
-alert(
-"Invalid listing price."
-);
-
-return;
-
-}
-
-
-/*
-  Restricted/unapproved listings
-  cannot be purchased.
-*/
-
-if(
-listing.restricted &&
-!listing.approved
-){
-
-alert(
-"This listing is waiting for founder approval."
-);
-
-return;
-
-}
-
-
-try{
-
-
-/*
-  Ask our Vercel backend
-  to create the Razorpay order.
-*/
-
-const response =
-await fetch(
-
-VERCEL_API +
-"/api/create-order",
-
-{
-
-method:
-"POST",
-
-headers:{
-"Content-Type":
-"application/json"
-},
-
-body:
-JSON.stringify({
-
-amount:
-price,
-
-listingId:
-listing.id
-
-})
-
-}
-
-);
-
-
-const orderData =
-await response.json();
-
-
-if(!response.ok){
-
-throw new Error(
-
-orderData.error ||
-"Could not create payment order."
-
-);
-
-}
-
-
-/*
-  Razorpay Checkout
-*/
-
-const options = {
-
-key:
-RAZORPAY_KEY_ID,
-
-amount:
-orderData.amount,
-
-currency:
-orderData.currency || "INR",
-
-name:
-"CampusComponents",
-
-description:
-listing.name ||
-"CampusComponents purchase",
-
-order_id:
-orderData.orderId,
-
-prefill:{
-email:
-auth.currentUser.email || ""
-},
-
-notes:{
-listingId:
-listing.id,
-
-sellerUid:
-listing.ownerUid || ""
-},
-
-theme:{
-color:
-"#2f80ed"
-},
-
-
-/*
-  After Razorpay reports success,
-  verify the signature on our server.
-*/
-
-handler:
-async function(payment){
-
-try{
-
-
-const verifyResponse =
-await fetch(
-
-VERCEL_API +
-"/api/verify-payment",
-
-{
-
-method:
-"POST",
-
-headers:{
-async function buyNow(id){
-
-    const listing = allListings.find(
-        item => item.id === id
-    );
-
-    if(!listing){
-        alert("Listing not found.");
-        return;
-    }
-
-    if(!auth.currentUser){
-        alert("Please login first to buy.");
-        openLogin();
-        return;
-    }
-
-    if(listing.restricted && !listing.approved){
-        alert(
-            "This listing is waiting for founder approval."
-        );
-        return;
-    }
-
-    const price = Number(listing.price || 0);
-
-    if(!price || price < 1){
-        alert("Invalid listing price.");
-        return;
-    }
-
-    if(listing.ownerUid === auth.currentUser.uid){
-        alert("You cannot buy your own listing.");
-        return;
-    }
-
-    try {
-
-        /* CREATE RAZORPAY ORDER */
-
-        const response = await fetch(
-            "/api/create-order",
-            {
-                method: "POST",
-
-                headers: {
-                    "Content-Type": "application/json"
-                },
-
-                body: JSON.stringify({
-
-                    amount: price,
-
-                    listingId: listing.id,
-
-                    productName:
-                        listing.name || "Campus Component",
-
-                    buyerEmail:
-                        auth.currentUser.email || "",
-
-                    sellerUid:
-                        listing.ownerUid || ""
-
-                })
-            }
-        );
-
-        const data = await response.json();
-
-        if(!response.ok){
-            throw new Error(
-                data.error ||
-                "Unable to create payment order."
-            );
-        }
-
-
-        /* OPEN RAZORPAY */
-
-        const options = {
-
-            key: RAZORPAY_KEY_ID,
-
-            amount: data.amount,
-
-            currency:
-                data.currency || "INR",
-
-            name:
-                "CampusComponents",
-
-            description:
-                listing.name || "Campus Component",
-
-            order_id:
-                data.orderId,
-
-            prefill: {
-
-                email:
-                    auth.currentUser.email || ""
-
-            },
-
-            theme: {
-
-                color: "#2f80ed"
-
-            },
-
-
-            /* PAYMENT SUCCESS */
-
-            handler:
-            async function(paymentResponse){
-
-                try {
-
-                    const verifyResponse =
-                        await fetch(
-                            "/api/verify-payment",
-                            {
-
-                                method: "POST",
-
-                                headers: {
-                                    "Content-Type":
-                                        "application/json"
-                                },
-
-                                body:
-                                JSON.stringify({
-
-                                    razorpay_order_id:
-                                        paymentResponse
-                                        .razorpay_order_id,
-
-                                    razorpay_payment_id:
-                                        paymentResponse
-                                        .razorpay_payment_id,
-
-                                    razorpay_signature:
-                                        paymentResponse
-                                        .razorpay_signature
-
-                                })
-
-                            }
-                        );
-
-
-                    const verifyData =
-                        await verifyResponse.json();
-
-
-                    if(
-                        !verifyResponse.ok ||
-                        !verifyData.verified
-                    ){
-
-                        alert(
-                            "Payment received, but verification failed.\n\n" +
-                            (
-                                verifyData.error ||
-                                "Please contact support."
-                            )
-                        );
-
-                        return;
-
-                    }
-
-
-                    /* VERIFIED */
-
-                    alert(
-                        "🎉 Payment successful!\n\n" +
-                        "Payment ID:\n" +
-                        paymentResponse
-                        .razorpay_payment_id +
-                        "\n\n" +
-                        "Payment has been verified successfully."
-                    );
-
-
-                } catch(error){
-
-                    console.error(
-                        "Verification error:",
-                        error
-                    );
-
-                    alert(
-                        "Payment was completed, but verification could not be completed.\n\n" +
-                        error.message
-                    );
-
-                }
-
-            }
-
-        };
-
-
-        const razorpay =
-            new Razorpay(options);
-
-
-        razorpay.open();
-
-
-    } catch(error){
-
-        console.error(
-            "Payment error:",
-            error
-        );
-
-        alert(
-            "Could not start payment.\n\n" +
-            error.message
-        );
-
-    }
-
-}
-
-window.buyNow = buyNow;
-
 /* =====================================================
    RENDER
 ===================================================== */
@@ -2221,22 +1676,17 @@ document.getElementById("grid");
 
 grid.innerHTML="";
 
-
 const data =
 getFilteredListings();
 
-
 let visibleCount=0;
 
-
 data.forEach(x=>{
-
 
 const founder =
 auth.currentUser &&
 auth.currentUser.email ===
 FOUNDER_EMAIL;
-
 
 if(
 x.restricted &&
@@ -2248,15 +1698,12 @@ return;
 
 }
 
-
 visibleCount++;
-
 
 const card =
 document.createElement("div");
 
 card.className="card";
-
 
 const imageHTML =
 x.image
@@ -2265,12 +1712,15 @@ x.image
 
 : `<span>${escapeHtml(x.icon || "📦")}</span>`;
 
-
 const own =
 auth.currentUser &&
 x.ownerUid ===
 auth.currentUser.uid;
 
+
+/* =====================================================
+   BUY NOW BUTTON
+===================================================== */
 
 let buttons = `
 
@@ -2289,7 +1739,6 @@ Message Seller
 </button>
 
 `;
-
 
 if(own){
 
@@ -2312,7 +1761,6 @@ Delete
 `;
 
 }
-
 
 if(
 founder &&
@@ -2340,9 +1788,7 @@ Reject
 
 }
 
-
 let statusBadge="";
-
 
 if(
 x.restricted &&
@@ -2370,7 +1816,6 @@ statusBadge =
 
 }
 
-
 if(
 founder &&
 x.restricted &&
@@ -2383,26 +1828,6 @@ Founder Review
 </span>`;
 
 }
-
-
-const commissionRate =
-Number(
-x.commissionRate ||
-getCommissionRate(x.price)
-);
-
-
-const commissionAmount =
-Number(
-x.commissionAmount ||
-calculateCommission(x.price)
-);
-
-
-const sellerAmount =
-Number(x.price || 0) -
-commissionAmount;
-
 
 card.innerHTML = `
 
@@ -2418,18 +1843,6 @@ ${escapeHtml(x.name || "")}
 
 <div class="price">
 ₹${Number(x.price || 0).toLocaleString("en-IN")}
-</div>
-
-<div class="buy-box">
-
-Platform commission:
-<b>${commissionRate}%</b>
-
-<br>
-
-Seller receives:
-<b>₹${sellerAmount.toFixed(2)}</b>
-
 </div>
 
 <div class="meta">
@@ -2473,16 +1886,13 @@ ${buttons}
 
 `;
 
-
 grid.appendChild(card);
 
 });
 
-
 document.getElementById("count")
 .textContent =
 visibleCount+" listings";
-
 
 document.getElementById("empty")
 .style.display =
@@ -2492,6 +1902,340 @@ visibleCount
 
 }
 
+
+/* =====================================================
+   BUY NOW — CREATE ORDER + RAZORPAY + VERIFY
+===================================================== */
+
+async function buyNow(id){
+
+const listing =
+allListings.find(
+item => item.id === id
+);
+
+if(!listing){
+
+alert(
+"Listing not found."
+);
+
+return;
+
+}
+
+if(!auth.currentUser){
+
+alert(
+"Please login first to buy."
+);
+
+openLogin();
+
+return;
+
+}
+
+if(
+listing.restricted &&
+!listing.approved
+){
+
+alert(
+"This listing is waiting for founder approval."
+);
+
+return;
+
+}
+
+const price =
+Number(listing.price || 0);
+
+if(!price || price < 1){
+
+alert(
+"Invalid listing price."
+);
+
+return;
+
+}
+
+if(
+listing.ownerUid ===
+auth.currentUser.uid
+){
+
+alert(
+"You cannot buy your own listing."
+);
+
+return;
+
+}
+
+
+try{
+
+/* =====================================================
+   CREATE ORDER
+===================================================== */
+
+const response =
+await fetch(
+"/api/create-order",
+{
+
+method:"POST",
+
+headers:{
+"Content-Type":
+"application/json"
+},
+
+body:
+JSON.stringify({
+
+amount:
+price,
+
+listingId:
+listing.id,
+
+productName:
+listing.name ||
+"Campus Component",
+
+buyerEmail:
+auth.currentUser.email ||
+"",
+
+sellerUid:
+listing.ownerUid ||
+""
+
+})
+
+}
+);
+
+
+const data =
+await response.json();
+
+
+if(!response.ok){
+
+throw new Error(
+data.error ||
+"Unable to create payment order."
+);
+
+}
+
+
+/* =====================================================
+   RAZORPAY CHECKOUT
+===================================================== */
+
+const options = {
+
+key:
+RAZORPAY_KEY_ID,
+
+amount:
+data.amount,
+
+currency:
+data.currency ||
+"INR",
+
+name:
+"CampusComponents",
+
+description:
+listing.name ||
+"Campus Component",
+
+order_id:
+data.orderId,
+
+prefill:{
+
+email:
+auth.currentUser.email ||
+""
+
+},
+
+theme:{
+
+color:
+"#2f80ed"
+
+},
+
+
+/* =====================================================
+   PAYMENT SUCCESS
+===================================================== */
+
+handler:
+async function(paymentResponse){
+
+try{
+
+const verifyResponse =
+await fetch(
+"/api/verify-payment",
+{
+
+method:"POST",
+
+headers:{
+"Content-Type":
+"application/json"
+},
+
+body:
+JSON.stringify({
+
+razorpay_order_id:
+paymentResponse
+.razorpay_order_id,
+
+razorpay_payment_id:
+paymentResponse
+.razorpay_payment_id,
+
+razorpay_signature:
+paymentResponse
+.razorpay_signature
+
+})
+
+}
+);
+
+
+const verifyData =
+await verifyResponse.json();
+
+
+if(
+!verifyResponse.ok ||
+!verifyData.verified
+){
+
+alert(
+
+"Payment received, but verification failed.\n\n"+
+(
+verifyData.error ||
+"Please contact support."
+)
+
+);
+
+return;
+
+}
+
+
+/* =====================================================
+   VERIFIED SUCCESS
+===================================================== */
+
+alert(
+
+"🎉 Payment successful!\n\n"+
+
+"Payment ID:\n"+
+paymentResponse
+.razorpay_payment_id+
+
+"\n\n"+
+
+"Payment has been verified successfully."
+
+);
+
+
+}catch(error){
+
+console.error(
+"Verification error:",
+error
+);
+
+alert(
+
+"Payment was completed, but verification could not be completed.\n\n"+
+error.message
+
+);
+
+}
+
+}
+
+};
+
+
+const razorpay =
+new Razorpay(options);
+
+
+razorpay.on(
+"payment.failed",
+function(response){
+
+console.error(
+"Razorpay payment failed:",
+response
+);
+
+alert(
+
+"Payment failed.\n\n"+
+(
+response.error &&
+response.error.description
+?
+response.error.description
+:
+"Please try another payment method."
+)
+
+);
+
+});
+
+
+razorpay.open();
+
+
+}catch(error){
+
+console.error(
+"Payment error:",
+error
+);
+
+alert(
+
+"Could not start payment.\n\n"+
+error.message
+
+);
+
+}
+
+}
+
+window.buyNow =
+buyNow;
 
 
 /* =====================================================
@@ -2508,53 +2252,40 @@ document.getElementById("search")
 .toLowerCase()
 .trim();
 
-
 const condition =
 document.getElementById("condition")
 ?.value || "";
-
 
 const location =
 document.getElementById("locationFilter")
 ?.value || "";
 
-
 let data =
 allListings.filter(x=>{
-
 
 const searchable = [
 
 x.name,
-
 x.description,
-
 x.seller,
-
 x.college,
-
 x.collegeLocation,
-
 x.condition,
-
 x.instagram
 
 ]
 .join(" ")
 .toLowerCase();
 
-
 const words =
 q.split(/\s+/)
 .filter(Boolean);
-
 
 const matches =
 words.every(
 word =>
 searchable.includes(word)
 );
-
 
 return (
 
@@ -2570,11 +2301,9 @@ x.collegeLocation === location)
 
 });
 
-
 const sort =
 document.getElementById("sort")
 ?.value || "new";
-
 
 if(sort==="low"){
 
@@ -2586,7 +2315,6 @@ Number(b.price || 0)
 
 }
 
-
 if(sort==="high"){
 
 data.sort(
@@ -2597,7 +2325,6 @@ Number(a.price || 0)
 
 }
 
-
 if(sort==="new"){
 
 data.sort(
@@ -2607,7 +2334,6 @@ getTime(a.createdAt)
 );
 
 }
-
 
 return data;
 
@@ -2620,7 +2346,6 @@ function(){
 renderListings();
 
 };
-
 
 
 function syncHeroSearch(){
@@ -2643,7 +2368,6 @@ window.syncHeroSearch =
 syncHeroSearch;
 
 
-
 /* =====================================================
    LOCATION
 ===================================================== */
@@ -2655,10 +2379,8 @@ document.getElementById(
 "locationFilter"
 );
 
-
 const current =
 select.value;
-
 
 const locations =
 [
@@ -2676,12 +2398,10 @@ x=>x.collegeLocation
 ]
 .sort();
 
-
 select.innerHTML =
 `<option value="">
 All locations
 </option>`;
-
 
 locations.forEach(
 location=>{
@@ -2699,7 +2419,6 @@ select.appendChild(option);
 
 });
 
-
 if(
 locations.includes(current)
 ){
@@ -2710,7 +2429,6 @@ current;
 }
 
 }
-
 
 
 /* =====================================================
@@ -2724,9 +2442,7 @@ allListings.find(
 item=>item.id===id
 );
 
-
 if(!x)return;
-
 
 if(
 !auth.currentUser ||
@@ -2742,75 +2458,60 @@ return;
 
 }
 
-
 editingId=id;
-
 
 document.getElementById(
 "sellTitle"
 ).textContent =
 "Edit Listing";
 
-
 document.getElementById("name")
 .value =
 x.name || "";
-
 
 document.getElementById("price")
 .value =
 x.price || "";
 
-
 document.getElementById("cond")
 .value =
 x.condition || "";
-
 
 document.getElementById("seller")
 .value =
 x.seller || "";
 
-
 document.getElementById("college")
 .value =
 x.college || "";
-
 
 document.getElementById(
 "collegeLocation"
 ).value =
 x.collegeLocation || "";
 
-
 document.getElementById("whatsapp")
 .value =
 x.whatsapp || "";
-
 
 document.getElementById("instagram")
 .value =
 x.instagram || "";
 
-
 document.getElementById("desc")
 .value =
 x.description || "";
-
 
 document.getElementById(
 "restrictedCheck"
 ).checked =
 Boolean(x.restricted);
 
-
 selectedImage =
 x.image || "";
 
-
 const preview =
 document.getElementById("preview");
-
 
 if(x.image){
 
@@ -2829,9 +2530,7 @@ preview.style.display =
 
 }
 
-
 showCommission();
-
 
 document.getElementById("sellModal")
 .style.display="flex";
@@ -2840,7 +2539,6 @@ document.getElementById("sellModal")
 
 window.editListing =
 editListing;
-
 
 
 /* =====================================================
@@ -2854,9 +2552,7 @@ allListings.find(
 item=>item.id===id
 );
 
-
 if(!x)return;
-
 
 if(
 !auth.currentUser ||
@@ -2872,7 +2568,6 @@ return;
 
 }
 
-
 if(
 !confirm(
 "Delete this listing permanently?"
@@ -2883,21 +2578,17 @@ return;
 
 }
 
-
 try{
 
 await deleteDoc(
 doc(db,"listings",id)
 );
 
-
 alert(
 "Listing deleted successfully."
 );
 
-
 await loadListings();
-
 
 }catch(error){
 
@@ -2911,7 +2602,6 @@ error.message
 
 window.deleteListing =
 deleteListing;
-
 
 
 /* =====================================================
@@ -2933,7 +2623,6 @@ alert(
 return;
 
 }
-
 
 try{
 
@@ -2965,14 +2654,11 @@ serverTimestamp()
 
 );
 
-
 alert(
 "Listing approved successfully."
 );
 
-
 await loadListings();
-
 
 }catch(error){
 
@@ -2989,7 +2675,6 @@ window.approveListing =
 approveListing;
 
 
-
 /* =====================================================
    FOUNDER REJECT
 ===================================================== */
@@ -3003,13 +2688,12 @@ FOUNDER_EMAIL
 ){
 
 alert(
-"Only founder/admin can reject listings."
+"Only founder/admin can reject restricted listings."
 );
 
 return;
 
 }
-
 
 if(
 !confirm(
@@ -3020,7 +2704,6 @@ if(
 return;
 
 }
-
 
 try{
 
@@ -3051,14 +2734,11 @@ serverTimestamp()
 
 );
 
-
 alert(
 "Listing rejected."
 );
 
-
 await loadListings();
-
 
 }catch(error){
 
@@ -3075,7 +2755,6 @@ window.rejectListing =
 rejectListing;
 
 
-
 /* =====================================================
    CONTACT
 ===================================================== */
@@ -3087,15 +2766,12 @@ allListings.find(
 item=>item.id===id
 );
 
-
 if(!x)return;
-
 
 document.getElementById(
 "contactTitle"
 ).textContent =
 "Contact "+(x.seller || "Seller");
-
 
 let html = `
 
@@ -3115,13 +2791,11 @@ ${escapeHtml(x.collegeLocation || "")}
 
 `;
 
-
 if(x.whatsapp){
 
 const number =
 String(x.whatsapp)
 .replace(/\D/g,"");
-
 
 if(number){
 
@@ -3142,13 +2816,11 @@ href="https://wa.me/${number}"
 
 }
 
-
 if(x.instagram){
 
 const insta =
 String(x.instagram)
 .replace(/^@/,"");
-
 
 html += `
 
@@ -3165,12 +2837,10 @@ href="https://instagram.com/${encodeURIComponent(insta)}"
 
 }
 
-
 document.getElementById(
 "contactBox"
 ).innerHTML =
 html;
-
 
 document.getElementById(
 "contactModal"
@@ -3181,7 +2851,6 @@ document.getElementById(
 
 window.contactSeller =
 contactSeller;
-
 
 
 function closeContact(){
@@ -3195,7 +2864,6 @@ document.getElementById(
 
 window.closeContact =
 closeContact;
-
 
 
 /* =====================================================
@@ -3227,7 +2895,6 @@ window.openRequirement =
 openRequirement;
 
 
-
 function closeRequirement(){
 
 document.getElementById(
@@ -3241,11 +2908,9 @@ window.closeRequirement =
 closeRequirement;
 
 
-
 async function addRequirement(e){
 
 e.preventDefault();
-
 
 if(!auth.currentUser){
 
@@ -3256,7 +2921,6 @@ alert(
 return;
 
 }
-
 
 const req = {
 
@@ -3300,7 +2964,6 @@ serverTimestamp()
 
 };
 
-
 try{
 
 await addDoc(
@@ -3311,21 +2974,17 @@ db,
 req
 );
 
-
 alert(
 "Requirement posted successfully."
 );
 
-
 closeRequirement();
-
 
 document
 .querySelector(
 "#reqModal form"
 )
 .reset();
-
 
 }catch(error){
 
@@ -3340,7 +2999,6 @@ error.message
 
 window.addRequirement =
 addRequirement;
-
 
 
 /* =====================================================
@@ -3385,7 +3043,6 @@ function getTime(timestamp){
 if(!timestamp)
 return 0;
 
-
 if(
 typeof timestamp.toMillis ===
 "function"
@@ -3395,11 +3052,9 @@ return timestamp.toMillis();
 
 }
 
-
 return 0;
 
 }
-
 
 
 /* =====================================================
