@@ -1,6 +1,7 @@
-const Razorpay = require("razorpay");
+import Razorpay from "razorpay";
 
-module.exports = async function handler(req, res) {
+export default async function handler(req, res) {
+
   if (req.method !== "POST") {
     return res.status(405).json({
       error: "Method not allowed"
@@ -8,11 +9,16 @@ module.exports = async function handler(req, res) {
   }
 
   try {
-    const { amount, listingId } = req.body;
 
-    const price = Number(amount);
+    const {
+      amount,
+      listingId,
+      productName,
+      buyerEmail,
+      sellerUid
+    } = req.body || {};
 
-    if (!Number.isFinite(price) || price < 1) {
+    if (!amount || Number(amount) <= 0) {
       return res.status(400).json({
         error: "Invalid amount"
       });
@@ -20,34 +26,99 @@ module.exports = async function handler(req, res) {
 
     if (!listingId) {
       return res.status(400).json({
-        error: "Missing listingId"
+        error: "Listing ID is required"
+      });
+    }
+
+    const keyId =
+      process.env.RAZORPAY_KEY_ID;
+
+    const keySecret =
+      process.env.RAZORPAY_KEY_SECRET;
+
+    if (!keyId || !keySecret) {
+      return res.status(500).json({
+        error:
+          "Razorpay configuration is missing on server."
       });
     }
 
     const razorpay = new Razorpay({
-      key_id: process.env.RAZORPAY_KEY_ID,
-      key_secret: process.env.RAZORPAY_KEY_SECRET
+      key_id: keyId,
+      key_secret: keySecret
     });
 
-    const order = await razorpay.orders.create({
-      amount: Math.round(price * 100),
-      currency: "INR",
-      receipt: `cc_${Date.now()}`
-    });
+    const amountInPaise =
+      Math.round(Number(amount) * 100);
+
+    const order =
+      await razorpay.orders.create({
+
+        amount: amountInPaise,
+
+        currency: "INR",
+
+        receipt:
+          `cc_${String(listingId).slice(0, 20)}_${Date.now()}`,
+
+        notes: {
+
+          listingId:
+            String(listingId),
+
+          productName:
+            String(
+              productName ||
+              "Campus Component"
+            ).slice(0, 200),
+
+          buyerEmail:
+            String(
+              buyerEmail || ""
+            ).slice(0, 200),
+
+          sellerUid:
+            String(
+              sellerUid || ""
+            ).slice(0, 200)
+
+        }
+
+      });
 
     return res.status(200).json({
-      orderId: order.id,
-      amount: order.amount,
-      currency: order.currency,
-      keyId: process.env.RAZORPAY_KEY_ID,
-      listingId
+
+      success: true,
+
+      orderId:
+        order.id,
+
+      amount:
+        order.amount,
+
+      currency:
+        order.currency
+
     });
 
   } catch (error) {
-    console.error(error);
+
+    console.error(
+      "Razorpay order creation failed:",
+      error
+    );
 
     return res.status(500).json({
-      error: "Unable to create Razorpay order"
+
+      success: false,
+
+      error:
+        error?.error?.description ||
+        error?.message ||
+        "Failed to create Razorpay order."
+
     });
+
   }
-};
+
+}
