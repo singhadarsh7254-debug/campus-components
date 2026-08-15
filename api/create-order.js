@@ -59,7 +59,7 @@ export default async function handler(req, res) {
         currency: "INR",
 
         receipt:
-          `cc_${String(listingId).slice(0, 20)}_${Date.now()}`,
+          `cc_${String(listingId).slice(0,20)}_${Date.now()}`,
 
         notes: {
 
@@ -68,19 +68,18 @@ export default async function handler(req, res) {
 
           productName:
             String(
-              productName ||
-              "Campus Component"
-            ).slice(0, 200),
+              productName || "Campus Component"
+            ).slice(0,200),
 
           buyerEmail:
             String(
               buyerEmail || ""
-            ).slice(0, 200),
+            ).slice(0,200),
 
           sellerUid:
             String(
               sellerUid || ""
-            ).slice(0, 200)
+            ).slice(0,200)
 
         }
 
