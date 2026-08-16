@@ -427,6 +427,7 @@ Login
 
 </header>
 
+
 <section class="hero">
 
 <h1>
@@ -471,6 +472,7 @@ Find Components
 </div>
 
 </section>
+
 
 <section class="container" id="browse">
 
@@ -550,6 +552,7 @@ No matching components found.
 
 </section>
 
+
 <footer>
 
 <b>CampusComponents</b>
@@ -563,6 +566,7 @@ Student electronics marketplace · Buy locally · Sell locally
 Founder Platform · Tiered Platform Commission
 
 </footer>
+
 
 <!-- LOGIN -->
 
@@ -620,6 +624,7 @@ Create new account
 </div>
 
 </div>
+
 
 <!-- SELL -->
 
@@ -770,6 +775,7 @@ Publish Listing
 
 </div>
 
+
 <!-- REQUIREMENT -->
 
 <div class="modal" id="reqModal">
@@ -837,6 +843,7 @@ Post Requirement
 
 </div>
 
+
 <!-- CONTACT -->
 
 <div class="modal" id="contactModal">
@@ -864,6 +871,7 @@ class="contact-info"
 
 </div>
 
+
 <script type="module">
 
 import {
@@ -871,6 +879,7 @@ initializeApp
 }
 from
 "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+
 
 import {
 getAuth,
@@ -881,6 +890,7 @@ onAuthStateChanged
 }
 from
 "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
 
 import {
 getFirestore,
@@ -945,7 +955,7 @@ const FOUNDER_EMAIL =
 
 
 /* =====================================================
-   RAZORPAY TEST KEY ID
+   RAZORPAY TEST KEY
 ===================================================== */
 
 const RAZORPAY_KEY_ID =
@@ -1718,10 +1728,6 @@ x.ownerUid ===
 auth.currentUser.uid;
 
 
-/* =====================================================
-   BUY NOW BUTTON
-===================================================== */
-
 let buttons = `
 
 <button
@@ -1904,7 +1910,11 @@ visibleCount
 
 
 /* =====================================================
-   BUY NOW — CREATE ORDER + RAZORPAY + VERIFY
+   BUY NOW
+   CREATE ORDER
+   RAZORPAY
+   VERIFY PAYMENT
+   SAVE ORDER
 ===================================================== */
 
 async function buyNow(id){
@@ -1979,7 +1989,7 @@ return;
 try{
 
 /* =====================================================
-   CREATE ORDER
+   CREATE RAZORPAY ORDER
 ===================================================== */
 
 const response =
@@ -2036,7 +2046,7 @@ data.error ||
 
 
 /* =====================================================
-   RAZORPAY CHECKOUT
+   RAZORPAY OPTIONS
 ===================================================== */
 
 const options = {
@@ -2086,6 +2096,10 @@ async function(paymentResponse){
 
 try{
 
+/* =====================================================
+   VERIFY PAYMENT
+===================================================== */
+
 const verifyResponse =
 await fetch(
 "/api/verify-payment",
@@ -2102,16 +2116,13 @@ body:
 JSON.stringify({
 
 razorpay_order_id:
-paymentResponse
-.razorpay_order_id,
+paymentResponse.razorpay_order_id,
 
 razorpay_payment_id:
-paymentResponse
-.razorpay_payment_id,
+paymentResponse.razorpay_payment_id,
 
 razorpay_signature:
-paymentResponse
-.razorpay_signature
+paymentResponse.razorpay_signature
 
 })
 
@@ -2122,6 +2133,10 @@ paymentResponse
 const verifyData =
 await verifyResponse.json();
 
+
+/* =====================================================
+   VERIFICATION FAILED
+===================================================== */
 
 if(
 !verifyResponse.ok ||
@@ -2144,7 +2159,75 @@ return;
 
 
 /* =====================================================
-   VERIFIED SUCCESS
+   CALCULATE COMMISSION
+===================================================== */
+
+const commissionRate =
+getCommissionRate(price);
+
+const commissionAmount =
+calculateCommission(price);
+
+const sellerAmount =
+price - commissionAmount;
+
+
+/* =====================================================
+   SAVE ORDER TO FIRESTORE
+===================================================== */
+
+await addDoc(
+collection(db, "orders"),
+{
+
+buyerUid:
+auth.currentUser.uid,
+
+buyerEmail:
+auth.currentUser.email || "",
+
+sellerUid:
+listing.ownerUid || "",
+
+sellerEmail:
+listing.ownerEmail || "",
+
+listingId:
+listing.id,
+
+productName:
+listing.name || "",
+
+amount:
+price,
+
+commissionRate:
+commissionRate,
+
+commissionAmount:
+commissionAmount,
+
+sellerAmount:
+sellerAmount,
+
+razorpayOrderId:
+paymentResponse.razorpay_order_id,
+
+razorpayPaymentId:
+paymentResponse.razorpay_payment_id,
+
+status:
+"paid",
+
+createdAt:
+serverTimestamp()
+
+}
+);
+
+
+/* =====================================================
+   FINAL SUCCESS
 ===================================================== */
 
 alert(
@@ -2152,8 +2235,16 @@ alert(
 "🎉 Payment successful!\n\n"+
 
 "Payment ID:\n"+
-paymentResponse
-.razorpay_payment_id+
+paymentResponse.razorpay_payment_id+
+
+"\n\n"+
+
+"Order saved successfully."+
+
+"\n\n"+
+
+"Seller Amount: ₹"+
+sellerAmount.toFixed(2)+
 
 "\n\n"+
 
@@ -2165,13 +2256,13 @@ paymentResponse
 }catch(error){
 
 console.error(
-"Verification error:",
+"Payment verification/order error:",
 error
 );
 
 alert(
 
-"Payment was completed, but verification could not be completed.\n\n"+
+"Payment was completed, but order saving failed.\n\n"+
 error.message
 
 );
@@ -2183,9 +2274,17 @@ error.message
 };
 
 
+/* =====================================================
+   RAZORPAY INSTANCE
+===================================================== */
+
 const razorpay =
 new Razorpay(options);
 
+
+/* =====================================================
+   PAYMENT FAILED
+===================================================== */
 
 razorpay.on(
 "payment.failed",
@@ -2212,6 +2311,10 @@ response.error.description
 
 });
 
+
+/* =====================================================
+   OPEN CHECKOUT
+===================================================== */
 
 razorpay.open();
 
@@ -2301,9 +2404,11 @@ x.collegeLocation === location)
 
 });
 
+
 const sort =
 document.getElementById("sort")
 ?.value || "new";
+
 
 if(sort==="low"){
 
@@ -2315,6 +2420,7 @@ Number(b.price || 0)
 
 }
 
+
 if(sort==="high"){
 
 data.sort(
@@ -2325,6 +2431,7 @@ Number(a.price || 0)
 
 }
 
+
 if(sort==="new"){
 
 data.sort(
@@ -2334,6 +2441,7 @@ getTime(a.createdAt)
 );
 
 }
+
 
 return data;
 
@@ -2791,6 +2899,7 @@ ${escapeHtml(x.collegeLocation || "")}
 
 `;
 
+
 if(x.whatsapp){
 
 const number =
@@ -2816,6 +2925,7 @@ href="https://wa.me/${number}"
 
 }
 
+
 if(x.instagram){
 
 const insta =
@@ -2837,6 +2947,7 @@ href="https://instagram.com/${encodeURIComponent(insta)}"
 
 }
 
+
 document.getElementById(
 "contactBox"
 ).innerHTML =
@@ -2848,6 +2959,7 @@ document.getElementById(
 "flex";
 
 }
+
 
 window.contactSeller =
 contactSeller;
@@ -2922,6 +3034,7 @@ return;
 
 }
 
+
 const req = {
 
 name:
@@ -2963,6 +3076,7 @@ createdAt:
 serverTimestamp()
 
 };
+
 
 try{
 
