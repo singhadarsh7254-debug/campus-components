@@ -3,525 +3,118 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Campus Components — Student Marketplace</title>
+<title>Campus Components</title>
+
+<script src="https://sdk.cashfree.com/js/v3/cashfree.js"></script>
 
 <style>
 *{box-sizing:border-box}
-
-body{
-margin:0;
-font-family:Arial,Helvetica,sans-serif;
-background:#f6f7fb;
-color:#172033
-}
-
-header{
-background:#101828;
-color:white;
-padding:16px 6%;
-display:flex;
-align-items:center;
-justify-content:space-between;
-gap:15px;
-position:sticky;
-top:0;
-z-index:10
-}
-
-.logo{
-font-size:22px;
-font-weight:800
-}
-
-.logo span{color:#63b3ed}
-
-nav{
-display:flex;
-align-items:center;
-gap:8px;
-flex-wrap:wrap
-}
-
-nav a{
-color:white;
-text-decoration:none
-}
-
-.btn{
-border:0;
-border-radius:9px;
-padding:10px 15px;
-font-weight:700;
-cursor:pointer
-}
-
-.primary{background:#2f80ed;color:white}
-.secondary{background:#eaf2ff;color:#1558a6}
-.danger{background:#fee4e2;color:#b42318}
-.dark{background:#344054;color:white}
-
-.btn:disabled{
-opacity:.5;
-cursor:not-allowed
-}
-
-.hero{
-padding:50px 6%;
-background:linear-gradient(135deg,#eaf3ff,#fff)
-}
-
-.hero h1{
-font-size:40px;
-max-width:750px;
-margin:0 0 12px
-}
-
-.hero p{
-font-size:18px;
-color:#536174;
-max-width:700px
-}
-
-.search{
-display:flex;
-gap:10px;
-max-width:900px;
-margin-top:25px
-}
-
-.search input,
-.search select,
-.form input,
-.form select,
-.form textarea,
-.toolbar input,
-.toolbar select{
-width:100%;
-padding:12px;
-border:1px solid #d6dce5;
-border-radius:9px;
-background:white
-}
-
-.container{
-padding:35px 6%
-}
-
-.section-head{
-display:flex;
-justify-content:space-between;
-align-items:center;
-gap:15px;
-margin-bottom:18px
-}
-
-.grid{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:18px
-}
-
-.card{
-background:white;
-border:1px solid #e5e9f0;
-border-radius:14px;
-overflow:hidden;
-box-shadow:0 3px 12px #1018280b
-}
-
-.pic{
-height:170px;
-background:#eef2f7;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:55px
-}
-
-.pic img{
-width:100%;
-height:100%;
-object-fit:cover
-}
-
-.card-body{padding:15px}
-
-.card h3{
-margin:0 0 8px;
-font-size:17px
-}
-
-.price{
-font-size:21px;
-font-weight:800
-}
-
-.meta{
-font-size:13px;
-color:#687588;
-margin:8px 0 13px;
-line-height:1.6
-}
-
-.badge,
-.approved,
-.pending,
-.sold,
-.founder{
-display:inline-block;
-padding:5px 8px;
-border-radius:20px;
-font-size:11px;
-font-weight:700
-}
-
-.badge{
-background:#e9f8ef;
-color:#16834a
-}
-
-.approved{
-background:#e9f8ef;
-color:#16834a
-}
-
-.pending{
-background:#fff4e5;
-color:#9a5b00
-}
-
-.sold{
-background:#fee4e2;
-color:#b42318
-}
-
-.founder{
-background:#f3e8ff;
-color:#7e22ce
-}
-
-.profile-pill{
-display:inline-block;
-padding:5px 8px;
-border-radius:20px;
-background:#eef6ff;
-color:#1558a6;
-font-size:11px;
-font-weight:700
-}
-
-.card-actions{
-display:flex;
-gap:7px;
-flex-wrap:wrap
-}
-
-.small-btn{
-padding:8px 10px;
-border-radius:8px;
-font-size:12px
-}
-
-.toolbar{
-display:flex;
-gap:10px;
-flex-wrap:wrap;
-margin-bottom:18px
-}
-
-.notice{
-padding:13px 15px;
-border-radius:10px;
-background:#fff8e6;
-color:#8a5b00;
-margin-bottom:20px;
-border:1px solid #f2dfaa
-}
-
-.empty{
-display:none;
-text-align:center;
-padding:35px;
-color:#667085
-}
-
-.modal{
-display:none;
-position:fixed;
-inset:0;
-background:#0008;
-align-items:center;
-justify-content:center;
-z-index:100
-}
-
-.modal-box{
-background:white;
-border-radius:15px;
-padding:24px;
-width:min(560px,94%);
-max-height:92vh;
-overflow:auto
-}
-
-.close{
-float:right;
-background:none;
-border:0;
-font-size:25px;
-cursor:pointer
-}
-
-.form{
-display:grid;
-gap:12px
-}
-
-.upload-box{
-border:2px dashed #cbd5e1;
-border-radius:10px;
-padding:15px;
-text-align:center;
-background:#f8fafc
-}
-
-.upload-preview{
-width:100%;
-height:180px;
-object-fit:cover;
-border-radius:10px;
-margin-top:8px;
-display:none
-}
-
-.contact-info{
-background:#f8fafc;
-border-radius:10px;
-padding:15px;
-margin-top:12px
-}
-
-.contact-link{
-display:block;
-text-decoration:none;
-margin-top:10px
-}
-
-.login-status{
-font-size:12px;
-color:#dbe4f0
-}
-
-.order-box{
-background:#f8fafc;
-border:1px solid #e5e9f0;
-padding:14px;
-border-radius:10px;
-margin-bottom:10px
-}
-
-.success{
-background:#e9f8ef;
-color:#16834a;
-padding:10px;
-border-radius:8px
-}
-
-.warning{
-background:#fff4e5;
-color:#9a5b00;
-padding:10px;
-border-radius:8px
-}
-
-footer{
-padding:30px 6%;
-background:#101828;
-color:#cbd5e1;
-margin-top:30px
-}
-
-@media(max-width:900px){
-.grid{grid-template-columns:repeat(2,1fr)}
-.hero h1{font-size:34px}
-}
-
-@media(max-width:600px){
-header{padding:13px 4%}
-.hero,.container{
-padding-left:4%;
-padding-right:4%
-}
-.search{flex-direction:column}
-.grid{grid-template-columns:1fr}
-.logo{font-size:18px}
-}
+body{margin:0;font-family:Arial;background:#f6f7fb;color:#172033}
+header{background:#101828;color:#fff;padding:15px 5%;display:flex;justify-content:space-between;align-items:center;gap:10px;position:sticky;top:0;z-index:10}
+.logo{font-size:21px;font-weight:800}.logo span{color:#63b3ed}
+nav{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+button{border:0;border-radius:8px;padding:10px 14px;font-weight:bold;cursor:pointer}
+.primary{background:#2f80ed;color:#fff}.secondary{background:#eaf2ff;color:#1558a6}.danger{background:#fee4e2;color:#b42318}.dark{background:#344054;color:#fff}
+.hero{padding:45px 5%;background:linear-gradient(135deg,#eaf3ff,#fff)}
+.hero h1{font-size:38px;margin:0 0 10px}
+.hero p{color:#667085;font-size:17px}
+.container{padding:30px 5%}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px}
+input,select,textarea{width:100%;padding:11px;border:1px solid #d6dce5;border-radius:8px;background:white}
+.toolbar input{max-width:500px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.card{background:white;border:1px solid #e5e9f0;border-radius:13px;overflow:hidden}
+.pic{height:170px;background:#eef2f7;display:flex;align-items:center;justify-content:center;font-size:55px}
+.pic img{width:100%;height:100%;object-fit:cover}
+.card-body{padding:15px}.card h3{margin:0 0 8px}.price{font-size:21px;font-weight:bold}
+.meta{font-size:13px;color:#667085;line-height:1.7;margin:10px 0}
+.actions{display:flex;gap:6px;flex-wrap:wrap}
+.small{padding:8px 10px;font-size:12px}
+.badge{display:inline-block;padding:5px 8px;border-radius:20px;font-size:11px;font-weight:bold}
+.green{background:#e9f8ef;color:#16834a}.orange{background:#fff4e5;color:#9a5b00}
+.red{background:#fee4e2;color:#b42318}.purple{background:#f3e8ff;color:#7e22ce}
+.modal{display:none;position:fixed;inset:0;background:#0008;align-items:center;justify-content:center;z-index:100}
+.box{background:white;width:min(600px,94%);max-height:92vh;overflow:auto;border-radius:14px;padding:22px}
+.close{float:right;background:none;font-size:25px}
+.form{display:grid;gap:11px}
+footer{background:#101828;color:#cbd5e1;padding:30px 5%;margin-top:30px}
+@media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){.grid{grid-template-columns:1fr}.hero h1{font-size:30px}}
 </style>
 </head>
 
 <body>
 
 <header>
+<div class="logo">Campus<span>Components</span></div>
 
-<div class="logo">
-Campus<span>Components</span>
-</div>
-
-<div class="login-status" id="loginStatus">
-Not logged in
-</div>
+<div id="status">Not logged in</div>
 
 <nav>
-
-<a href="#browse">Browse</a>
-
-<button
-class="btn secondary"
-id="loginBtn"
-onclick="openLogin()">
-Login
-</button>
-
-<button
-class="btn primary"
-onclick="openSell()">
-+ Sell Component
-</button>
-
-<button
-class="btn secondary"
-onclick="openRequirement()">
-+ Need Component
-</button>
-
+<button class="secondary" id="loginBtn" onclick="openLogin()">Login</button>
+<button class="primary" onclick="openSell()">+ Sell</button>
+<button class="secondary" onclick="openProfile()">Profile</button>
 </nav>
 </header>
 
-
 <section class="hero">
-
 <h1>Buy & Sell Electronics Components on Campus</h1>
-
-<p>
-Find Arduino boards, sensors, motors, modules, lab equipment
-and useful student items from sellers near your college.
-</p>
-
-<div class="search">
-
-<input
-id="heroSearch"
-placeholder="Search MQ2, Arduino, NRF24L01..."
-oninput="syncHeroSearch()">
-
-<select id="heroCondition" onchange="syncHeroSearch()">
-<option value="">Any condition</option>
-<option value="Working">Working</option>
-<option value="New">New</option>
-</select>
-
-<button
-class="btn primary"
-onclick="document.getElementById('browse').scrollIntoView({behavior:'smooth'})">
-Find Components
-</button>
-
-</div>
+<p>Student marketplace for electronics components and college-use items.</p>
 </section>
 
-
-<section class="container" id="browse">
-
-<div class="section-head">
-<h2>Components near you</h2>
-
-<span id="count" class="badge">
-0 listings
-</span>
-</div>
-
-<div class="notice">
-💡 Login is required for buying components.
-</div>
+<section class="container">
 
 <div class="toolbar">
+<input id="search" placeholder="Search MQ2, Arduino, NRF24L01..." oninput="render()">
 
-<input
-id="search"
-placeholder="Search any component..."
-oninput="filterCards()">
-
-<select id="condition" onchange="filterCards()">
+<select id="condition" onchange="render()">
 <option value="">Any condition</option>
-<option value="Working">Working</option>
-<option value="New">New</option>
+<option>New</option>
+<option>Working</option>
 </select>
 
-<select id="sort" onchange="filterCards()">
-<option value="new">Newest</option>
-<option value="low">Price: Low to High</option>
-<option value="high">Price: High to Low</option>
-</select>
-
-<select id="locationFilter" onchange="filterCards()">
+<select id="location" onchange="render()">
 <option value="">All locations</option>
 </select>
-
 </div>
 
-<div class="grid" id="grid"></div>
-
-<div id="empty" class="empty">
-No matching components found.
-</div>
+<div id="grid" class="grid"></div>
 
 </section>
+
+<footer>
+<b>CampusComponents</b><br><br>
+Student electronics marketplace
+</footer>
 
 
 <!-- LOGIN -->
 
 <div class="modal" id="loginModal">
+<div class="box">
 
-<div class="modal-box">
-
-<button class="close" onclick="closeLogin()">×</button>
+<button class="close" onclick="closeModal('loginModal')">×</button>
 
 <h2 id="authTitle">Login</h2>
 
-<form class="form" onsubmit="handleAuth(event)">
+<form class="form" onsubmit="authSubmit(event)">
 
-<input
-id="authEmail"
-type="email"
-required
-placeholder="Email address">
+<input id="email" type="email" placeholder="Email" required>
 
-<input
-id="authPassword"
-type="password"
-required
-minlength="6"
-placeholder="Password">
+<input id="password" type="password" minlength="6"
+placeholder="Password" required>
 
-<button
-class="btn primary"
-type="submit"
-id="authSubmit">
-Login
-</button>
+<button class="primary" id="authButton">Login</button>
 
 </form>
 
 <br>
 
-<button
-class="btn secondary"
-onclick="toggleAuthMode()"
-id="toggleAuth">
-Create new account
+<button class="secondary" onclick="toggleAuth()" id="toggleButton">
+Create Account
 </button>
 
-<p id="authMessage"></p>
+<p id="authMsg"></p>
 
 </div>
 </div>
@@ -530,155 +123,83 @@ Create new account
 <!-- SELL -->
 
 <div class="modal" id="sellModal">
+<div class="box">
 
-<div class="modal-box">
+<button class="close" onclick="closeModal('sellModal')">×</button>
 
-<button class="close" onclick="closeSell()">×</button>
-
-<h2 id="sellTitle">Sell a Component</h2>
+<h2>Sell Component</h2>
 
 <form class="form" onsubmit="saveListing(event)">
 
-<input
-id="name"
-required
-placeholder="Component name e.g. MQ2 Sensor">
+<input id="name" placeholder="Component name" required>
 
-<input
-id="price"
-required
-type="number"
-min="1"
-placeholder="Price ₹"
-oninput="showCommission()">
-
-<div
-id="commissionBox"
-style="background:#eef6ff;padding:12px;border-radius:10px">
-Platform commission will appear here.
-</div>
+<input id="price" type="number" min="1"
+placeholder="Price ₹" required>
 
 <select id="cond" required>
 <option value="">Condition</option>
-<option value="Working">Working</option>
-<option value="New">New</option>
+<option>New</option>
+<option>Working</option>
 </select>
 
-<input
-id="seller"
-required
-placeholder="Your name">
+<input id="seller" placeholder="Seller name" required>
 
-<input
-id="college"
-required
-placeholder="College name">
+<input id="college" placeholder="College name" required>
 
-<input
-id="collegeLocation"
-required
-placeholder="College location">
+<input id="collegeLocation"
+placeholder="College location" required>
 
-<input
-id="upiId"
-required
-placeholder="Your UPI ID e.g. name@upi">
+<input id="whatsapp" placeholder="WhatsApp">
 
-<input
-id="whatsapp"
-placeholder="WhatsApp number">
+<input id="instagram" placeholder="Instagram">
 
-<input
-id="instagram"
-placeholder="Instagram ID e.g. @username">
+<input id="upi" placeholder="Your UPI ID">
 
-<div class="upload-box">
+<input id="image" type="file" accept="image/*"
+onchange="readImage(event)">
 
-<strong>Upload component image</strong>
+<img id="preview"
+style="display:none;width:100%;height:180px;object-fit:cover;border-radius:10px">
 
-<br><br>
-
-<input
-id="image"
-type="file"
-accept="image/*"
-onchange="previewImage(event)">
-
-<img
-id="preview"
-class="upload-preview">
-
-</div>
-
-<textarea
-id="desc"
-rows="3"
-placeholder="Component description"></textarea>
+<textarea id="description"
+placeholder="Description"></textarea>
 
 <label>
-<input
-type="checkbox"
-id="restrictedCheck">
-This item may need approval
+<input type="checkbox" id="restricted">
+ This item requires founder approval
 </label>
 
-<button
-class="btn primary"
-type="submit">
-Publish Listing
-</button>
+<button class="primary">Publish Listing</button>
 
 </form>
+
 </div>
 </div>
 
 
-<!-- REQUIREMENT -->
+<!-- PROFILE -->
 
-<div class="modal" id="reqModal">
+<div class="modal" id="profileModal">
+<div class="box">
 
-<div class="modal-box">
+<button class="close" onclick="closeModal('profileModal')">×</button>
 
-<button class="close" onclick="closeRequirement()">×</button>
+<h2>My Profile</h2>
 
-<h2>Post a Requirement</h2>
+<p id="profileEmail"></p>
 
-<form class="form" onsubmit="addRequirement(event)">
-
-<input
-id="reqName"
-required
-placeholder="Component you need">
-
-<input
-id="reqBudget"
-type="number"
-placeholder="Maximum budget ₹">
-
-<input
-id="reqQty"
-type="number"
-min="1"
-value="1"
-placeholder="Quantity">
-
-<textarea
-id="reqDetails"
-rows="3"
-placeholder="Details / preferred condition"></textarea>
-
-<input
-id="reqContact"
-required
-placeholder="WhatsApp / Instagram">
-
-<button
-class="btn primary"
-type="submit">
-Post Requirement
-</button>
-
+<form class="form" onsubmit="saveProfile(event)">
+<input id="profileUpi" placeholder="UPI ID">
+<button class="primary">Save UPI ID</button>
 </form>
+
+<p id="profileMsg"></p>
+
+<hr>
+
+<h3>My Orders</h3>
+<div id="myOrders"></div>
+
 </div>
 </div>
 
@@ -686,68 +207,31 @@ Post Requirement
 <!-- CONTACT -->
 
 <div class="modal" id="contactModal">
+<div class="box">
 
-<div class="modal-box">
+<button class="close" onclick="closeModal('contactModal')">×</button>
 
-<button class="close" onclick="closeContact()">×</button>
+<h2>Contact Seller</h2>
 
-<h2 id="contactTitle">Contact Seller</h2>
-
-<div id="contactBox" class="contact-info"></div>
-
-</div>
-</div>
-
-
-<!-- ORDERS -->
-
-<div class="modal" id="ordersModal">
-
-<div class="modal-box">
-
-<button class="close" onclick="closeOrders()">×</button>
-
-<h2>My Orders</h2>
-
-<div id="ordersBox">
-Loading...
-</div>
+<div id="contactInfo"></div>
 
 </div>
 </div>
 
 
-<!-- SELLER UPI / FOUNDER -->
+<!-- FOUNDER -->
 
 <div class="modal" id="founderModal">
+<div class="box">
 
-<div class="modal-box">
+<button class="close" onclick="closeModal('founderModal')">×</button>
 
-<button class="close" onclick="closeFounder()">×</button>
+<h2>Founder Order Panel</h2>
 
-<h2>Founder Order Management</h2>
-
-<div id="founderOrdersBox">
-Loading...
-</div>
+<div id="founderOrders"></div>
 
 </div>
 </div>
-
-
-<footer>
-
-<b>CampusComponents</b>
-
-<br><br>
-
-Student electronics marketplace · Buy locally · Sell locally
-
-<br><br>
-
-Founder Platform · Tiered Platform Commission
-
-</footer>
 
 
 <script type="module">
@@ -771,10 +255,10 @@ getFirestore,
 collection,
 addDoc,
 getDocs,
-doc,
 getDoc,
+doc,
+setDoc,
 updateDoc,
-deleteDoc,
 query,
 where,
 serverTimestamp
@@ -782,939 +266,464 @@ serverTimestamp
 "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
 
-/* =====================================================
+/* ==============================
    FIREBASE
-===================================================== */
+============================== */
 
-const firebaseConfig = {
-
-apiKey:
-"AIzaSyAkETZr4bZQRlLfpbHVlCdvwK7iub-gVmQ",
-
-authDomain:
-"campus-components-2c641.firebaseapp.com",
-
-projectId:
-"campus-components-2c641",
-
-storageBucket:
-"campus-components-2c641.firebasestorage.app",
-
-messagingSenderId:
-"174888026978",
-
-appId:
-"1:174888026978:web:9170ceb1880bf9334f223b",
-
-measurementId:
-"G-0JYEYHLHDC"
-
+const firebaseConfig={
+apiKey:"AIzaSyAkETZr4bZQRlLfpbHVlCdvwK7iub-gVmQ",
+authDomain:"campus-components-2c641.firebaseapp.com",
+projectId:"campus-components-2c641",
+storageBucket:"campus-components-2c641.firebasestorage.app",
+messagingSenderId:"174888026978",
+appId:"1:174888026978:web:9170ceb1880bf9334f223b",
+measurementId:"G-0JYEYHLHDC"
 };
 
-const app = initializeApp(firebaseConfig);
-
-const auth = getAuth(app);
-
-const db = getFirestore(app);
+const app=initializeApp(firebaseConfig);
+const auth=getAuth(app);
+const db=getFirestore(app);
 
 
-/* =====================================================
+/* ==============================
    CASHFREE PRODUCTION
-===================================================== */
+============================== */
 
-let cashfree = null;
-
-async function loadCashfree(){
-
-if(window.Cashfree){
-
-cashfree =
-window.Cashfree({
+const cashfree=Cashfree({
 mode:"production"
 });
 
-return;
 
-}
-
-await new Promise((resolve,reject)=>{
-
-const script =
-document.createElement("script");
-
-script.src =
-"https://sdk.cashfree.com/js/v3/cashfree.js";
-
-script.onload=resolve;
-script.onerror=reject;
-
-document.head.appendChild(script);
-
-});
-
-cashfree =
-window.Cashfree({
-mode:"production"
-});
-
-}
-
-
-/* =====================================================
+/* ==============================
    FOUNDER
-===================================================== */
+============================== */
 
-const FOUNDER_EMAIL =
-"singhadarsh7254@gmail.com";
-
-
-/* =====================================================
-   DATA
-===================================================== */
-
-let allListings = [];
-
-let allOrders = [];
-
-let selectedImage = "";
-
-let editingId = null;
-
-let authMode = "login";
+const FOUNDER_EMAIL="singhadarsh7254@gmail.com";
 
 
-/* =====================================================
-   RESTRICTED
-===================================================== */
-
-const restrictedWords = [
-"gun",
-"pistol",
-"rifle",
-"weapon",
-"ammunition",
-"drugs",
-"alcohol",
-"cigarette",
-"vape",
-"explosive",
-"bomb",
-"stolen",
-"fake id"
-];
-
-function checkRestricted(name,description){
-
-const text =
-(name+" "+description).toLowerCase();
-
-return restrictedWords.some(
-word => text.includes(word)
-);
-
-}
+let listings=[];
+let imageData="";
+let signup=false;
 
 
-/* =====================================================
-   COMMISSION
-===================================================== */
+/* ==============================
+   AUTH
+============================== */
 
-function getCommissionRate(price){
-
-price=Number(price);
-
-if(price<200)return 3;
-
-if(price<500)return 5;
-
-return 10;
-
-}
-
-function calculateCommission(price){
-
-return Number(price) *
-(getCommissionRate(price)/100);
-
-}
-
-function showCommission(){
-
-const price =
-Number(
-document.getElementById("price").value || 0
-);
-
-const box =
-document.getElementById("commissionBox");
-
-if(!price){
-
-box.innerHTML =
-"Platform commission will appear here.";
-
-return;
-
-}
-
-const rate =
-getCommissionRate(price);
-
-const commission =
-calculateCommission(price);
-
-const sellerAmount =
-price-commission;
-
-box.innerHTML =
-`Platform Commission:
-<b>${rate}%</b>
-(₹${commission.toFixed(2)})
-<br>
-Seller receives:
-<b>₹${sellerAmount.toFixed(2)}</b>`;
-
-}
-
-window.showCommission=showCommission;
-
-
-/* =====================================================
-   IMAGE
-===================================================== */
-
-function previewImage(event){
-
-const file =
-event.target.files[0];
-
-if(!file){
-
-selectedImage="";
-return;
-
-}
-
-if(file.size>700000){
-
-alert(
-"Please choose an image smaller than 700 KB."
-);
-
-event.target.value="";
-selectedImage="";
-return;
-
-}
-
-const reader =
-new FileReader();
-
-reader.onload=e=>{
-
-selectedImage=e.target.result;
-
-const preview =
-document.getElementById("preview");
-
-preview.src=selectedImage;
-preview.style.display="block";
-
+window.openLogin=()=>{
+document.getElementById("loginModal").style.display="flex";
 };
 
-reader.readAsDataURL(file);
+window.closeModal=(id)=>{
+document.getElementById(id).style.display="none";
+};
 
-}
+window.toggleAuth=()=>{
+signup=!signup;
 
-window.previewImage=previewImage;
+document.getElementById("authTitle").textContent=
+signup?"Create Account":"Login";
 
+document.getElementById("authButton").textContent=
+signup?"Create Account":"Login";
 
-/* =====================================================
-   LOGIN
-===================================================== */
-
-function openLogin(){
-
-document.getElementById("loginModal")
-.style.display="flex";
-
-}
-
-window.openLogin=openLogin;
+document.getElementById("toggleButton").textContent=
+signup?"Already have account? Login":"Create Account";
+};
 
 
-function closeLogin(){
-
-document.getElementById("loginModal")
-.style.display="none";
-
-}
-
-window.closeLogin=closeLogin;
-
-
-function toggleAuthMode(){
-
-authMode =
-authMode==="login"
-? "signup"
-: "login";
-
-document.getElementById("authTitle")
-.textContent =
-authMode==="login"
-? "Login"
-: "Create Account";
-
-document.getElementById("authSubmit")
-.textContent =
-authMode==="login"
-? "Login"
-: "Create Account";
-
-document.getElementById("toggleAuth")
-.textContent =
-authMode==="login"
-? "Create new account"
-: "Already have an account? Login";
-
-}
-
-window.toggleAuthMode=toggleAuthMode;
-
-
-async function handleAuth(e){
-
+window.authSubmit=async(e)=>{
 e.preventDefault();
 
-const email =
-document.getElementById("authEmail")
-.value.trim();
-
-const password =
-document.getElementById("authPassword")
-.value;
-
-const msg =
-document.getElementById("authMessage");
-
-msg.textContent="Please wait...";
+const email=document.getElementById("email").value.trim();
+const password=document.getElementById("password").value;
+const msg=document.getElementById("authMsg");
 
 try{
 
-if(authMode==="signup"){
+if(signup){
 
 await createUserWithEmailAndPassword(
-auth,
-email,
-password
+auth,email,password
 );
 
 }else{
 
 await signInWithEmailAndPassword(
-auth,
-email,
-password
+auth,email,password
 );
 
 }
 
-msg.style.color="#16834a";
-msg.textContent="Success.";
+msg.textContent="Success";
+msg.style.color="green";
 
-setTimeout(closeLogin,500);
+setTimeout(()=>{
+closeModal("loginModal");
+},500);
 
-}catch(error){
+}catch(err){
 
-console.error(error);
-
-msg.style.color="#b42318";
-msg.textContent=
-friendlyAuthError(error);
-
-}
+msg.textContent=err.message;
+msg.style.color="red";
 
 }
 
-window.handleAuth=handleAuth;
+};
 
 
-function friendlyAuthError(error){
+onAuthStateChanged(auth,async user=>{
 
-const code=error?.code || "";
-
-if(code.includes("invalid-credential"))
-return "Email or password is incorrect.";
-
-if(code.includes("invalid-email"))
-return "Invalid email address.";
-
-if(code.includes("email-already-in-use"))
-return "This email is already registered.";
-
-if(code.includes("weak-password"))
-return "Password must contain at least 6 characters.";
-
-return error?.message || "Authentication failed.";
-
-}
-
-
-/* =====================================================
-   AUTH STATE
-===================================================== */
-
-onAuthStateChanged(auth,async(user)=>{
-
-const status =
-document.getElementById("loginStatus");
-
-const loginBtn =
-document.getElementById("loginBtn");
+const status=document.getElementById("status");
+const btn=document.getElementById("loginBtn");
 
 if(user){
 
-const founder =
-user.email?.toLowerCase() ===
-FOUNDER_EMAIL.toLowerCase();
+status.textContent=
+user.email===FOUNDER_EMAIL
+?"Founder · "+user.email
+:user.email;
 
-status.innerHTML =
-founder
-? "♠️ Founder · "+escapeHtml(user.email)
-: "👤 "+escapeHtml(user.email);
+btn.textContent="Logout";
 
-loginBtn.textContent="Logout";
-
-loginBtn.onclick=async()=>{
+btn.onclick=async()=>{
 await signOut(auth);
 };
 
 }else{
 
 status.textContent="Not logged in";
-
-loginBtn.textContent="Login";
-
-loginBtn.onclick=openLogin;
+btn.textContent="Login";
+btn.onclick=openLogin;
 
 }
 
-renderListings();
+await loadListings();
 
 });
 
 
-/* =====================================================
-   SELL
-===================================================== */
+/* ==============================
+   IMAGE
+============================== */
 
-function openSell(){
+window.readImage=(e)=>{
 
-if(!auth.currentUser){
+const file=e.target.files[0];
 
-alert("Please login first.");
+if(!file)return;
 
-openLogin();
+if(file.size>700000){
 
+alert("Image must be below 700 KB.");
+e.target.value="";
 return;
 
 }
 
-editingId=null;
+const reader=new FileReader();
 
-document.getElementById("sellTitle")
-.textContent="Sell a Component";
+reader.onload=()=>{
+imageData=reader.result;
 
-document
-.querySelector("#sellModal form")
-.reset();
+const preview=document.getElementById("preview");
 
-selectedImage="";
+preview.src=imageData;
+preview.style.display="block";
+};
 
-document.getElementById("preview")
-.style.display="none";
+reader.readAsDataURL(file);
 
-document.getElementById("commissionBox")
-.innerHTML=
-"Platform commission will appear here.";
-
-document.getElementById("sellModal")
-.style.display="flex";
-
-}
-
-window.openSell=openSell;
+};
 
 
-function closeSell(){
+/* ==============================
+   SELL
+============================== */
 
-document.getElementById("sellModal")
-.style.display="none";
+window.openSell=()=>{
+
+if(!auth.currentUser){
+
+alert("Please login first.");
+openLogin();
+return;
 
 }
 
-window.closeSell=closeSell;
+document.getElementById("sellModal").style.display="flex";
+
+};
 
 
-/* =====================================================
-   SAVE LISTING
-===================================================== */
-
-async function saveListing(e){
+window.saveListing=async(e)=>{
 
 e.preventDefault();
 
-if(!auth.currentUser){
+const user=auth.currentUser;
+
+if(!user){
 
 alert("Please login first.");
 return;
 
 }
 
-const name =
-document.getElementById("name")
-.value.trim();
+const data={
 
-const price =
-Number(document.getElementById("price").value);
+name:document.getElementById("name").value.trim(),
 
-const condition =
-document.getElementById("cond").value;
+price:Number(document.getElementById("price").value),
 
-const seller =
-document.getElementById("seller").value.trim();
+condition:document.getElementById("cond").value,
 
-const college =
-document.getElementById("college").value.trim();
+seller:document.getElementById("seller").value.trim(),
 
-const collegeLocation =
-document.getElementById("collegeLocation").value.trim();
+college:document.getElementById("college").value.trim(),
 
-const upiId =
-document.getElementById("upiId").value.trim();
+collegeLocation:
+document.getElementById("collegeLocation").value.trim(),
 
-const whatsapp =
-document.getElementById("whatsapp").value.trim();
+whatsapp:
+document.getElementById("whatsapp").value.trim(),
 
-const instagram =
-document.getElementById("instagram").value.trim();
+instagram:
+document.getElementById("instagram").value.trim(),
 
-const description =
-document.getElementById("desc").value.trim();
+image:imageData,
 
-let restricted =
-document.getElementById("restrictedCheck").checked;
+description:
+document.getElementById("description").value.trim(),
 
-if(checkRestricted(name,description))
-restricted=true;
-
-if(!upiId){
-
-alert("UPI ID is required.");
-
-return;
-
-}
-
-if(!whatsapp && !instagram){
-
-alert("Please provide WhatsApp or Instagram.");
-
-return;
-
-}
-
-if(!price || price<1){
-
-alert("Enter a valid price.");
-
-return;
-
-}
-
-const ownerUid=auth.currentUser.uid;
-
-const ownerEmail=auth.currentUser.email || "";
-
-const commissionRate =
-getCommissionRate(price);
-
-const commissionAmount =
-calculateCommission(price);
-
-
-try{
-
-if(editingId){
-
-const old =
-allListings.find(
-x=>x.id===editingId
-);
-
-if(!old ||
-old.ownerUid!==ownerUid){
-
-alert("You can edit only your own listing.");
-return;
-
-}
-
-await updateDoc(
-doc(db,"listings",editingId),
-{
-
-name,
-price,
-condition,
-seller,
-college,
-collegeLocation,
-
-/*
-UPI is stored in listing for now.
-It will NOT be rendered publicly.
-Firestore rules should restrict sensitive
-seller information in production.
-*/
-
-upiId,
-
-whatsapp,
-instagram,
-description,
-
-image:
-selectedImage || old.image || "",
-
-restricted,
+restricted:
+document.getElementById("restricted").checked,
 
 approved:
-restricted
-? Boolean(old.approved)
-: true,
+!document.getElementById("restricted").checked,
 
-sold:
-Boolean(old.sold),
+ownerUid:user.uid,
 
-commissionRate,
-commissionAmount,
-
-updatedAt:
-serverTimestamp()
-
-}
-);
-
-alert("Listing updated successfully.");
-
-}else{
-
-await addDoc(
-collection(db,"listings"),
-{
-
-name,
-price,
-condition,
-seller,
-college,
-collegeLocation,
-
-upiId,
-
-whatsapp,
-instagram,
-description,
-
-image:selectedImage || "",
-
-icon:"📦",
-
-ownerUid,
-ownerEmail,
-
-restricted,
-
-approved:
-restricted ? false : true,
+ownerEmail:user.email,
 
 sold:false,
 
-commissionRate,
-commissionAmount,
+buyerUid:"",
 
-createdAt:
-serverTimestamp(),
+orderId:"",
 
-updatedAt:
-serverTimestamp()
+createdAt:serverTimestamp()
 
-}
-);
+};
 
-alert(
-restricted
-? "Listing submitted for founder approval."
-: "Listing published successfully!"
-);
+try{
 
-}
+await addDoc(collection(db,"listings"),data);
 
-closeSell();
+alert("Listing published.");
+
+imageData="";
+
+document.querySelector("#sellModal form").reset();
+
+document.getElementById("preview").style.display="none";
+
+closeModal("sellModal");
 
 await loadListings();
 
-}catch(error){
+}catch(err){
 
-console.error(error);
-
-alert(
-"Could not save listing:\n\n"+
-error.message
-);
+alert(err.message);
 
 }
 
-}
-
-window.saveListing=saveListing;
+};
 
 
-/* =====================================================
+/* ==============================
    LOAD LISTINGS
-===================================================== */
+============================== */
 
 async function loadListings(){
 
 try{
 
-const snapshot =
-await getDocs(
+const snap=await getDocs(
 collection(db,"listings")
 );
 
-allListings=[];
+listings=[];
 
-snapshot.forEach(item=>{
-
-allListings.push({
-id:item.id,
-...item.data()
+snap.forEach(d=>{
+listings.push({
+id:d.id,
+...d.data()
+});
 });
 
-});
+updateLocations();
+render();
 
-updateLocationFilter();
-renderListings();
+}catch(err){
 
-}catch(error){
-
-console.error(error);
-
-document.getElementById("grid").innerHTML=
-`<div style="padding:20px;color:#b42318">
-<b>Firebase error</b><br><br>
-${escapeHtml(error.message)}
-</div>`;
+console.error(err);
 
 }
 
 }
 
 
-/* =====================================================
+/* ==============================
    RENDER
-===================================================== */
+============================== */
 
-function renderListings(){
+window.render=()=>{
 
-const grid =
-document.getElementById("grid");
+const grid=document.getElementById("grid");
 
 grid.innerHTML="";
 
-const data=getFilteredListings();
+const search=
+document.getElementById("search").value
+.toLowerCase().trim();
 
-let visible=0;
+const condition=
+document.getElementById("condition").value;
 
-const founder =
-auth.currentUser &&
-auth.currentUser.email?.toLowerCase() ===
-FOUNDER_EMAIL.toLowerCase();
+const location=
+document.getElementById("location").value;
+
+let data=listings.filter(x=>{
+
+const text=[
+x.name,
+x.description,
+x.seller,
+x.college,
+x.collegeLocation,
+x.condition
+].join(" ").toLowerCase();
+
+return text.includes(search)
+&&(!condition||x.condition===condition)
+&&(!location||x.collegeLocation===location);
+
+});
+
 
 data.forEach(x=>{
 
-if(x.restricted && !x.approved && !founder)
-return;
+const founder=
+auth.currentUser &&
+auth.currentUser.email===FOUNDER_EMAIL;
 
-visible++;
+if(x.restricted&&!x.approved&&!founder)return;
 
-const card =
-document.createElement("div");
-
+const card=document.createElement("div");
 card.className="card";
 
-const imageHTML =
-x.image
-? `<img src="${escapeAttribute(x.image)}" alt="">`
-: `<span>${escapeHtml(x.icon || "📦")}</span>`;
-
-const own =
-auth.currentUser &&
-x.ownerUid===auth.currentUser.uid;
-
-let buttons="";
-
-
-/* SOLD */
-
-if(x.sold){
-
-buttons += `
-<span class="sold">SOLD OUT</span>
-
-<button
-class="btn secondary small-btn"
-onclick="contactSeller('${x.id}')">
-Message Seller
-</button>
-`;
-
-}else{
-
-/*
-Buy Now ALWAYS checks login
-inside buyNow().
-*/
-
-buttons += `
-<button
-class="btn primary small-btn"
-onclick="buyNow('${x.id}')">
-Buy Now
-</button>
-
-<button
-class="btn secondary small-btn"
-onclick="contactSeller('${x.id}')">
-Message Seller
-</button>
-`;
-
-}
-
-
-if(own){
-
-buttons += `
-<button
-class="btn secondary small-btn"
-onclick="editListing('${x.id}')">
-Edit
-</button>
-
-<button
-class="btn danger small-btn"
-onclick="deleteListing('${x.id}')">
-Delete
-</button>
-`;
-
-}
-
-
-if(founder && x.restricted && !x.approved){
-
-buttons += `
-<button
-class="btn primary small-btn"
-onclick="approveListing('${x.id}')">
-Approve
-</button>
-
-<button
-class="btn danger small-btn"
-onclick="rejectListing('${x.id}')">
-Reject
-</button>
-`;
-
-}
-
+let image=x.image
+?`<img src="${esc(x.image)}">`
+:`<span>📦</span>`;
 
 let status="";
 
 if(x.sold){
 
-status=
-`<span class="sold">SOLD OUT</span>`;
+status=`<span class="badge red">SOLD OUT</span>`;
 
-}else if(x.restricted && !x.approved){
+}else if(x.restricted&&!x.approved){
 
-status=
-`<span class="pending">
-⏳ Pending Founder Approval
-</span>`;
-
-}else if(x.restricted){
-
-status=
-`<span class="approved">
-✓ Founder Approved
-</span>`;
+status=`<span class="badge orange">Pending Approval</span>`;
 
 }else{
 
-status=
-`<span class="approved">
-✓ Approved
-</span>`;
+status=`<span class="badge green">Available</span>`;
+
+}
+
+
+let buttons="";
+
+if(x.sold){
+
+buttons+=`
+<button class="secondary small"
+onclick="contactSeller('${x.id}')">
+Message Seller
+</button>`;
+
+if(
+auth.currentUser &&
+x.buyerUid===auth.currentUser.uid &&
+x.deliveryConfirmed!==true
+){
+
+buttons+=`
+<button class="primary small"
+onclick="confirmDelivery('${x.id}')">
+Delivery Done
+</button>`;
+
+}
+
+}else{
+
+buttons+=`
+<button class="primary small"
+onclick="buyNow('${x.id}')">
+Buy Now
+</button>`;
+
+buttons+=`
+<button class="secondary small"
+onclick="contactSeller('${x.id}')">
+Message Seller
+</button>`;
+
+}
+
+
+if(
+founder &&
+x.restricted &&
+!x.approved &&
+!x.sold
+){
+
+buttons+=`
+<button class="primary small"
+onclick="approveListing('${x.id}')">
+Approve
+</button>`;
 
 }
 
 
 card.innerHTML=`
 
-<div class="pic">
-${imageHTML}
-</div>
+<div class="pic">${image}</div>
 
 <div class="card-body">
 
-<h3>${escapeHtml(x.name || "")}</h3>
+<h3>${esc(x.name||"")}</h3>
 
 <div class="price">
-₹${Number(x.price || 0).toLocaleString("en-IN")}
+₹${Number(x.price||0).toLocaleString("en-IN")}
 </div>
 
 <div class="meta">
 
-${escapeHtml(x.condition || "")}
-
-<br>
-Seller: ${escapeHtml(x.seller || "")}
-
-<br>
-🏫 ${escapeHtml(x.college || "")}
-
-<br>
-📍 ${escapeHtml(x.collegeLocation || "")}
-
-<br><br>
-
-<span class="profile-pill">
-Student Seller
-</span>
-
-<br><br>
+${esc(x.condition||"")}<br>
+Seller: ${esc(x.seller||"")}<br>
+🏫 ${esc(x.college||"")}<br>
+📍 ${esc(x.collegeLocation||"")}<br><br>
 
 ${status}
 
 </div>
 
-<div class="card-actions">
+<div class="actions">
 ${buttons}
 </div>
 
@@ -1725,55 +734,65 @@ grid.appendChild(card);
 
 });
 
+};
 
-document.getElementById("count")
-.textContent=
-visible+" listings";
 
-document.getElementById("empty")
-.style.display=
-visible ? "none" : "block";
+/* ==============================
+   LOCATIONS
+============================== */
+
+function updateLocations(){
+
+const select=document.getElementById("location");
+
+const values=[
+...new Set(
+listings
+.map(x=>x.collegeLocation)
+.filter(Boolean)
+)
+];
+
+select.innerHTML=
+`<option value="">All locations</option>`;
+
+values.sort().forEach(x=>{
+
+const o=document.createElement("option");
+
+o.value=x;
+o.textContent=x;
+
+select.appendChild(o);
+
+});
 
 }
 
 
-/* =====================================================
+/* ==============================
    BUY NOW
-===================================================== */
+============================== */
 
-async function buyNow(id){
+window.buyNow=async(id)=>{
 
-/*
-VERY IMPORTANT:
-LOGIN IS CHECKED FIRST.
-*/
+/* LOGIN CHECK FIRST */
 
 if(!auth.currentUser){
 
-alert("Please login first to buy a component.");
-
+alert("Please login first to buy.");
 openLogin();
-
 return;
 
 }
 
-const listing =
-allListings.find(
-x=>x.id===id
-);
+const listing=listings.find(x=>x.id===id);
 
-if(!listing){
-
-alert("Listing not found.");
-return;
-
-}
+if(!listing)return;
 
 if(listing.sold){
 
-alert("This component has already been sold.");
-
+alert("This component is already sold out.");
 return;
 
 }
@@ -1783,32 +802,16 @@ listing.restricted &&
 !listing.approved
 ){
 
-alert(
-"This listing is waiting for founder approval."
-);
-
+alert("This listing is waiting for founder approval.");
 return;
 
 }
 
 if(
-listing.ownerUid ===
-auth.currentUser.uid
+listing.ownerUid===auth.currentUser.uid
 ){
 
 alert("You cannot buy your own component.");
-
-return;
-
-}
-
-const price =
-Number(listing.price || 0);
-
-if(!price || price<1){
-
-alert("Invalid listing price.");
-
 return;
 
 }
@@ -1816,16 +819,9 @@ return;
 
 try{
 
-await loadCashfree();
+/* CREATE CASHFREE ORDER */
 
-
-/*
-Prevent duplicate purchase while another
-order is already pending.
-*/
-
-const response =
-await fetch(
+const response=await fetch(
 "/api/create-order",
 {
 
@@ -1837,33 +833,28 @@ headers:{
 
 body:JSON.stringify({
 
-amount:price,
+amount:Number(listing.price),
 
 listingId:listing.id,
 
-productName:
-listing.name || "Campus Component",
+productName:listing.name,
 
-buyerEmail:
-auth.currentUser.email || "",
+buyerEmail:auth.currentUser.email,
 
-sellerUid:
-listing.ownerUid || ""
+buyerUid:auth.currentUser.uid,
+
+sellerUid:listing.ownerUid
 
 })
 
-}
-);
+});
 
-
-const data =
-await response.json();
+const data=await response.json();
 
 if(!response.ok){
 
 throw new Error(
-data.error ||
-"Unable to create Cashfree order."
+data.error||"Order creation failed."
 );
 
 }
@@ -1871,289 +862,57 @@ data.error ||
 if(!data.paymentSessionId){
 
 throw new Error(
-"Cashfree payment session was not received."
+"Payment session missing."
 );
 
 }
 
 
-/*
-PRODUCTION CHECKOUT
-*/
+/* CASHFREE */
 
-const result =
-await cashfree.checkout({
+const result=await cashfree.checkout({
 
-paymentSessionId:
-data.paymentSessionId,
+paymentSessionId:data.paymentSessionId,
 
 redirectTarget:"_modal"
 
 });
 
-
 if(result?.error){
 
 throw new Error(
-result.error.message ||
+result.error.message||
 "Cashfree checkout failed."
 );
 
 }
 
 
-/*
-VERIFY PAYMENT
-*/
+/* VERIFY */
 
-await verifyCashfreeOrder(
-data.orderId,
-listing
-);
+const verify=await fetch(
+"/api/verify-payment",
+{
 
+method:"POST",
 
-}catch(error){
+headers:{
+"Content-Type":"application/json"
+},
 
-console.error(error);
+body:JSON.stringify({
+orderId:data.orderId
+})
+
+});
+
+const verification=await verify.json();
+
+if(!verify.ok||!verification.verified){
 
 alert(
-"Could not start payment.\n\n"+
-error.message
-);
-
-}
-
-}
-
-window.buyNow=buyNow;
-
-
-/* =====================================================
-   VERIFY PAYMENT
-===================================================== */
-
-async function verifyCashfreeOrder(orderId, listing) {
-
-  const user = auth.currentUser;
-
-  if (!user) {
-    alert("Login session expired. Please login again.");
-    openLogin();
-    return;
-  }
-
-  try {
-
-    const response = await fetch(
-      "/api/verify-payment",
-      {
-        method: "POST",
-
-        headers: {
-          "Content-Type": "application/json"
-        },
-
-        body: JSON.stringify({
-          orderId: orderId
-        })
-      }
-    );
-
-    const data = await response.json();
-
-    if (!response.ok) {
-      throw new Error(
-        data.error || "Payment verification failed."
-      );
-    }
-
-    if (!data.verified) {
-
-      alert(
-        "Payment is not completed yet.\n\n" +
-        "Order status: " +
-        (data.orderStatus || "UNKNOWN")
-      );
-
-      return;
-    }
-
-
-    // =========================
-    // PAYMENT ID
-    // =========================
-
-    let cashfreePaymentId = "";
-
-    if (
-      data.paymentDetails &&
-      Array.isArray(
-        data.paymentDetails.payment_details
-      )
-    ) {
-
-      const successfulPayment =
-        data.paymentDetails.payment_details.find(
-          payment =>
-            payment.payment_status === "SUCCESS"
-        );
-
-      if (successfulPayment) {
-
-        cashfreePaymentId =
-          successfulPayment.cf_payment_id ||
-          successfulPayment.payment_id ||
-          "";
-
-      }
-    }
-
-
-    // =========================
-    // COMMISSION
-    // =========================
-
-    const price =
-      Number(listing.price || 0);
-
-    const commissionRate =
-      getCommissionRate(price);
-
-    const commissionAmount =
-      calculateCommission(price);
-
-    const sellerAmount =
-      price - commissionAmount;
-
-
-    // =========================
-    // ORDER DATA
-    // =========================
-
-    const orderData = {
-
-      buyerUid:
-        user.uid,
-
-      buyerEmail:
-        user.email || "",
-
-      sellerUid:
-        listing.ownerUid || "",
-
-      sellerEmail:
-        listing.ownerEmail || "",
-
-      listingId:
-        listing.id,
-
-      productName:
-        listing.name || "",
-
-      amount:
-        price,
-
-      commissionRate:
-        commissionRate,
-
-      commissionAmount:
-        commissionAmount,
-
-      sellerAmount:
-        sellerAmount,
-
-      cashfreeOrderId:
-        orderId,
-
-      cashfreePaymentId:
-        cashfreePaymentId,
-
-      status:
-        "paid",
-
-      createdAt:
-        serverTimestamp()
-    };
-
-
-    console.log(
-      "Saving order:",
-      orderData
-    );
-
-
-    // =========================
-    // SAVE ORDER
-    // =========================
-
-    await addDoc(
-      collection(db, "orders"),
-      orderData
-    );
-
-
-    // =========================
-    // MARK LISTING SOLD
-    // =========================
-
-    await updateDoc(
-      doc(db, "listings", listing.id),
-      {
-        sold: true,
-        soldAt: serverTimestamp(),
-        soldOrderId: orderId
-      }
-    );
-
-
-    // =========================
-    // SUCCESS
-    // =========================
-
-    alert(
-      "Payment successful! 🎉\n\n" +
-      "Order ID:\n" +
-      orderId +
-      "\n\n" +
-      "Seller Amount: ₹" +
-      sellerAmount.toFixed(2)
-    );
-
-
-    await loadListings();
-
-  } catch (error) {
-
-    console.error(
-      "Verification/order error:",
-      error
-    );
-
-    alert(
-      "Payment successful, but order processing failed.\n\n" +
-      error.message
-    );
-  }
-   }
-
-const data =
-await response.json();
-
-if(!response.ok){
-
-throw new Error(
-data.error ||
-"Payment verification failed."
-);
-
-}
-
-if(!data.verified){
-
-alert(
-"Payment is not completed yet.\n\n"+
-"Status: "+
-(data.orderStatus || "UNKNOWN")
+"Payment verification failed. Order ID: "+
+data.orderId
 );
 
 return;
@@ -2161,9 +920,40 @@ return;
 }
 
 
-/*
-MARK LISTING SOLD
-*/
+/* SAVE ORDER */
+
+await addDoc(
+collection(db,"orders"),
+{
+
+buyerUid:auth.currentUser.uid,
+
+buyerEmail:auth.currentUser.email,
+
+sellerUid:listing.ownerUid,
+
+sellerEmail:listing.ownerEmail||"",
+
+listingId:listing.id,
+
+productName:listing.name,
+
+amount:Number(listing.price),
+
+cashfreeOrderId:data.orderId,
+
+status:"paid",
+
+deliveryConfirmed:false,
+
+sellerPaid:false,
+
+createdAt:serverTimestamp()
+
+});
+
+
+/* SOLD OUT */
 
 await updateDoc(
 doc(db,"listings",listing.id),
@@ -2171,300 +961,105 @@ doc(db,"listings",listing.id),
 
 sold:true,
 
-soldToUid:
-auth.currentUser.uid,
+buyerUid:auth.currentUser.uid,
 
-soldToEmail:
-auth.currentUser.email || "",
+buyerEmail:auth.currentUser.email,
 
-soldOrderId:
-orderId,
+orderId:data.orderId,
 
-soldAt:
-serverTimestamp(),
+soldAt:serverTimestamp(),
 
-updatedAt:
-serverTimestamp()
+deliveryConfirmed:false
 
-}
-);
+});
 
-
-/*
-GET PAYMENT ID
-*/
-
-let paymentId="";
-
-if(
-data.paymentDetails &&
-Array.isArray(
-data.paymentDetails.payment_details
-)
-){
-
-const payment =
-data.paymentDetails.payment_details.find(
-x=>x.payment_status==="SUCCESS"
-);
-
-if(payment){
-
-paymentId =
-payment.cf_payment_id ||
-payment.payment_id ||
-"";
-
-}
-
-}
-
-
-const price =
-Number(listing.price || 0);
-
-const commissionRate =
-getCommissionRate(price);
-
-const commissionAmount =
-calculateCommission(price);
-
-const sellerAmount =
-price-commissionAmount;
-
-
-/*
-SAVE ORDER
-*/
-
-try{
-
-await addDoc(
-collection(db,"orders"),
-{
-
-buyerUid:
-auth.currentUser.uid,
-
-buyerEmail:
-auth.currentUser.email || "",
-
-sellerUid:
-listing.ownerUid || "",
-
-sellerEmail:
-listing.ownerEmail || "",
-
-listingId:
-listing.id,
-
-productName:
-listing.name || "",
-
-amount:price,
-
-commissionRate,
-
-commissionAmount,
-
-sellerAmount,
-
-cashfreeOrderId:orderId,
-
-cashfreePaymentId:paymentId,
-
-status:"paid",
-
-deliveryStatus:"pending",
-
-sellerPaymentStatus:"pending",
-
-createdAt:
-serverTimestamp(),
-
-updatedAt:
-serverTimestamp()
-
-}
-);
-
-}catch(orderError){
-
-/*
-Payment is already successful and listing is
-marked sold. Show the actual database error.
-*/
-
-console.error(orderError);
 
 alert(
-"Payment successful, but order saving failed.\n\n"+
-orderError.message
+"Payment successful!\n\nComponent marked SOLD OUT."
 );
 
 await loadListings();
 
-return;
+}catch(err){
 
-}
-
-
-await loadListings();
+console.error(err);
 
 alert(
-"Payment successful! 🎉\n\n"+
-"Order ID:\n"+
-orderId+
-"\n\nComponent marked SOLD OUT."
-);
-
-}catch(error){
-
-console.error(error);
-
-alert(
-"Payment verification/order error:\n\n"+
-error.message
+"Payment/Order Error:\n\n"+
+err.message
 );
 
 }
 
-}
+};
 
 
-/* =====================================================
+/* ==============================
    CONTACT SELLER
-===================================================== */
+============================== */
 
-function contactSeller(id){
+window.contactSeller=(id)=>{
 
-const x =
-allListings.find(
-item=>item.id===id
-);
+const x=listings.find(a=>a.id===id);
 
 if(!x)return;
-
-document.getElementById("contactTitle")
-.textContent=
-"Contact "+(x.seller || "Seller");
 
 let html=`
 
-<b>${escapeHtml(x.name || "")}</b>
+<b>${esc(x.name)}</b><br><br>
 
-<br><br>
+Seller: ${esc(x.seller)}<br>
+College: ${esc(x.college)}<br>
+Location: ${esc(x.collegeLocation)}
 
-🏫 ${escapeHtml(x.college || "")}
-
-<br>
-
-📍 ${escapeHtml(x.collegeLocation || "")}
 `;
-
 
 if(x.whatsapp){
 
-const number =
-String(x.whatsapp)
-.replace(/\D/g,"");
-
-if(number){
+const number=
+String(x.whatsapp).replace(/\D/g,"");
 
 html+=`
 
-<a
-class="contact-link"
-target="_blank"
-rel="noopener"
+<br><br>
+<a target="_blank"
 href="https://wa.me/${number}">
 📱 Message on WhatsApp
 </a>
+
 `;
 
 }
-
-}
-
 
 if(x.instagram){
 
-const insta =
-String(x.instagram)
-.replace(/^@/,"");
+const insta=
+String(x.instagram).replace(/^@/,"");
 
 html+=`
 
-<a
-class="contact-link"
-target="_blank"
-rel="noopener"
+<br><br>
+<a target="_blank"
 href="https://instagram.com/${encodeURIComponent(insta)}">
 📸 Instagram
 </a>
+
 `;
 
 }
 
+document.getElementById("contactInfo").innerHTML=html;
 
-document.getElementById("contactBox")
-.innerHTML=html;
+document.getElementById("contactModal").style.display="flex";
 
-document.getElementById("contactModal")
-.style.display="flex";
-
-}
-
-window.contactSeller=contactSeller;
+};
 
 
-function closeContact(){
+/* ==============================
+   DELIVERY DONE
+============================== */
 
-document.getElementById("contactModal")
-.style.display="none";
-
-}
-
-window.closeContact=closeContact;
-
-
-/* =====================================================
-   REQUIREMENT
-===================================================== */
-
-function openRequirement(){
-
-if(!auth.currentUser){
-
-alert("Please login first.");
-
-openLogin();
-
-return;
-
-}
-
-document.getElementById("reqModal")
-.style.display="flex";
-
-}
-
-window.openRequirement=openRequirement;
-
-
-function closeRequirement(){
-
-document.getElementById("reqModal")
-.style.display="none";
-
-}
-
-window.closeRequirement=closeRequirement;
-
-
-async function addRequirement(e){
-
-e.preventDefault();
+window.confirmDelivery=async(id)=>{
 
 if(!auth.currentUser){
 
@@ -2473,622 +1068,192 @@ return;
 
 }
 
-try{
+const listing=listings.find(x=>x.id===id);
 
-await addDoc(
-collection(db,"requirements"),
-{
+if(!listing)return;
 
-name:
-document.getElementById("reqName")
-.value.trim(),
+if(listing.buyerUid!==auth.currentUser.uid){
 
-budget:
-Number(
-document.getElementById("reqBudget")
-.value || 0
-),
-
-qty:
-Number(
-document.getElementById("reqQty")
-.value || 1
-),
-
-details:
-document.getElementById("reqDetails")
-.value.trim(),
-
-contact:
-document.getElementById("reqContact")
-.value.trim(),
-
-ownerUid:
-auth.currentUser.uid,
-
-ownerEmail:
-auth.currentUser.email || "",
-
-createdAt:
-serverTimestamp()
-
-}
-);
-
-alert("Requirement posted successfully.");
-
-closeRequirement();
-
-document
-.querySelector("#reqModal form")
-.reset();
-
-}catch(error){
-
-alert(
-"Could not post requirement:\n\n"+
-error.message
-);
-
-}
-
-}
-
-window.addRequirement=addRequirement;
-
-
-/* =====================================================
-   EDIT
-===================================================== */
-
-function editListing(id){
-
-const x =
-allListings.find(
-item=>item.id===id
-);
-
-if(!x)return;
-
-if(
-!auth.currentUser ||
-x.ownerUid!==auth.currentUser.uid
-){
-
-alert("You can edit only your own listing.");
-
+alert("Only the buyer can confirm delivery.");
 return;
 
 }
 
-editingId=id;
-
-document.getElementById("sellTitle")
-.textContent="Edit Listing";
-
-document.getElementById("name").value=x.name || "";
-
-document.getElementById("price").value=x.price || "";
-
-document.getElementById("cond").value=x.condition || "";
-
-document.getElementById("seller").value=x.seller || "";
-
-document.getElementById("college").value=x.college || "";
-
-document.getElementById("collegeLocation").value=
-x.collegeLocation || "";
-
-document.getElementById("upiId").value=x.upiId || "";
-
-document.getElementById("whatsapp").value=x.whatsapp || "";
-
-document.getElementById("instagram").value=x.instagram || "";
-
-document.getElementById("desc").value=x.description || "";
-
-document.getElementById("restrictedCheck").checked=
-Boolean(x.restricted);
-
-selectedImage=x.image || "";
-
-const preview=
-document.getElementById("preview");
-
-if(x.image){
-
-preview.src=x.image;
-preview.style.display="block";
-
-}else{
-
-preview.src="";
-preview.style.display="none";
-
-}
-
-showCommission();
-
-document.getElementById("sellModal")
-.style.display="flex";
-
-}
-
-window.editListing=editListing;
-
-
-/* =====================================================
-   DELETE
-===================================================== */
-
-async function deleteListing(id){
-
-const x =
-allListings.find(
-item=>item.id===id
-);
-
-if(!x)return;
-
-if(
-!auth.currentUser ||
-x.ownerUid!==auth.currentUser.uid
-){
-
-alert("You can delete only your own listing.");
-
-return;
-
-}
-
-if(x.sold){
-
-alert(
-"Sold components cannot be deleted."
-);
-
-return;
-
-}
-
-if(!confirm("Delete this listing permanently?"))
-return;
-
-try{
-
-await deleteDoc(
-doc(db,"listings",id)
-);
-
-alert("Listing deleted.");
-
-await loadListings();
-
-}catch(error){
-
-alert(error.message);
-
-}
-
-}
-
-window.deleteListing=deleteListing;
-
-
-/* =====================================================
-   FOUNDER APPROVE
-===================================================== */
-
-async function approveListing(id){
-
-if(!isFounder()){
-
-alert("Founder access required.");
-return;
-
-}
-
-try{
-
-await updateDoc(
-doc(db,"listings",id),
-{
-
-approved:true,
-
-approvedBy:
-auth.currentUser.uid,
-
-approvedByEmail:
-auth.currentUser.email,
-
-approvedAt:
-serverTimestamp(),
-
-updatedAt:
-serverTimestamp()
-
-}
-);
-
-alert("Listing approved.");
-
-await loadListings();
-
-}catch(error){
-
-alert(
-"Approval failed:\n"+
-error.message
-);
-
-}
-
-}
-
-window.approveListing=approveListing;
-
-
-async function rejectListing(id){
-
-if(!isFounder()){
-
-alert("Founder access required.");
-return;
-
-}
-
-if(!confirm("Reject this listing?"))
-return;
-
-try{
-
-await updateDoc(
-doc(db,"listings",id),
-{
-
-approved:false,
-rejected:true,
-
-rejectedBy:
-auth.currentUser.uid,
-
-rejectedAt:
-serverTimestamp(),
-
-updatedAt:
-serverTimestamp()
-
-}
-);
-
-alert("Listing rejected.");
-
-await loadListings();
-
-}catch(error){
-
-alert(error.message);
-
-}
-
-}
-
-window.rejectListing=rejectListing;
-
-
-/* =====================================================
-   ORDERS
-===================================================== */
-
-async function openOrders(){
-
-if(!auth.currentUser){
-
-alert("Please login first.");
-
-openLogin();
-
-return;
-
-}
-
-document.getElementById("ordersModal")
-.style.display="flex";
-
-await loadMyOrders();
-
-}
-
-window.openOrders=openOrders;
-
-
-function closeOrders(){
-
-document.getElementById("ordersModal")
-.style.display="none";
-
-}
-
-window.closeOrders=closeOrders;
-
-
-async function loadMyOrders(){
-
-const box=
-document.getElementById("ordersBox");
-
-box.innerHTML="Loading...";
-
-try{
-
-const snapshot =
-await getDocs(
-query(
-collection(db,"orders"),
-where(
-"buyerUid",
-"==",
-auth.currentUser.uid
-)
-)
-);
-
-allOrders=[];
-
-snapshot.forEach(x=>{
-
-allOrders.push({
-id:x.id,
-...x.data()
-});
-
-});
-
-if(!allOrders.length){
-
-box.innerHTML=
-"No orders found.";
-
-return;
-
-}
-
-box.innerHTML="";
-
-allOrders.forEach(order=>{
-
-const div=
-document.createElement("div");
-
-div.className="order-box";
-
-let deliveryButton="";
-
-if(
-order.status==="paid" &&
-order.deliveryStatus!=="delivered"
-){
-
-deliveryButton=`
-
-<br>
-
-<button
-class="btn primary small-btn"
-onclick="confirmDelivery('${order.id}')">
-✓ Delivery Received
-</button>
-`;
-
-}
-
-div.innerHTML=`
-
-<b>${escapeHtml(order.productName || "")}</b>
-
-<br><br>
-
-Amount:
-₹${Number(order.amount || 0).toLocaleString("en-IN")}
-
-<br>
-
-Order:
-${escapeHtml(order.cashfreeOrderId || "")}
-
-<br>
-
-Payment:
-<span class="approved">PAID</span>
-
-<br>
-
-Delivery:
-${
-order.deliveryStatus==="delivered"
-? '<span class="approved">DELIVERY DONE</span>'
-: '<span class="pending">PENDING</span>'
-}
-
-${deliveryButton}
-
-`;
-
-box.appendChild(div);
-
-});
-
-}catch(error){
-
-box.innerHTML=
-`Error: ${escapeHtml(error.message)}`;
-
-}
-
-}
-
-
-/* =====================================================
-   BUYER DELIVERY CONFIRMATION
-===================================================== */
-
-async function confirmDelivery(orderId){
-
-if(!auth.currentUser){
-
-alert("Please login first.");
-return;
-
-}
-
-if(
-!confirm(
-"Confirm that you received the component?"
-)
-){
-
-return;
-
-}
-
-try{
-
-const orderRef=
-doc(db,"orders",orderId);
-
-const snap=
-await getDoc(orderRef);
-
-if(!snap.exists()){
-
-alert("Order not found.");
-return;
-
-}
-
-const order=snap.data();
-
-if(order.buyerUid!==auth.currentUser.uid){
-
-alert("You cannot update this order.");
-return;
-
-}
-
-if(order.deliveryStatus==="delivered"){
+if(listing.deliveryConfirmed){
 
 alert("Delivery already confirmed.");
 return;
 
 }
 
+if(!confirm(
+"Have you received the component?\n\nConfirm delivery?"
+))return;
+
+try{
+
 await updateDoc(
-orderRef,
+doc(db,"listings",id),
 {
 
-deliveryStatus:"delivered",
+deliveryConfirmed:true,
 
-deliveryConfirmedAt:
-serverTimestamp(),
+deliveryConfirmedAt:serverTimestamp()
 
-sellerPaymentStatus:"pending",
+});
 
-updatedAt:
-serverTimestamp()
 
-}
+const q=query(
+collection(db,"orders"),
+where("listingId","==",id),
+where("buyerUid","==",auth.currentUser.uid)
 );
 
+const snap=await getDocs(q);
 
-/*
-Seller payment is NOT automatic.
-Founder manually pays seller after delivery.
-*/
+for(const d of snap.docs){
+
+await updateDoc(
+doc(db,"orders",d.id),
+{
+
+deliveryConfirmed:true,
+
+deliveryConfirmedAt:serverTimestamp(),
+
+status:"delivery_confirmed"
+
+});
+
+}
 
 alert(
-"Delivery confirmed successfully.\n\n"+
-"The founder can now process seller payment."
+"Delivery confirmed.\n\nFounder can now pay the seller."
 );
 
-await loadMyOrders();
+await loadListings();
 
-}catch(error){
+}catch(err){
 
-alert(
-"Could not confirm delivery:\n\n"+
-error.message
-);
+alert(err.message);
 
 }
 
-}
-
-window.confirmDelivery=confirmDelivery;
+};
 
 
-/* =====================================================
-   FOUNDER ORDER MANAGEMENT
-===================================================== */
+/* ==============================
+   PROFILE
+============================== */
 
-function isFounder(){
+window.openProfile=async()=>{
 
-return !!(
-auth.currentUser &&
-auth.currentUser.email?.toLowerCase() ===
-FOUNDER_EMAIL.toLowerCase()
-);
+if(!auth.currentUser){
 
-}
-
-
-async function openFounder(){
-
-if(!isFounder()){
-
-alert("Founder access required.");
-
+alert("Please login first.");
+openLogin();
 return;
 
 }
 
-document.getElementById("founderModal")
-.style.display="flex";
+document.getElementById("profileModal").style.display="flex";
 
-await loadFounderOrders();
+document.getElementById("profileEmail").textContent=
+auth.currentUser.email;
+
+const ref=doc(
+db,
+"profiles",
+auth.currentUser.uid
+);
+
+const snap=await getDoc(ref);
+
+if(snap.exists()){
+
+document.getElementById("profileUpi").value=
+snap.data().upiId||"";
 
 }
 
-window.openFounder=openFounder;
+await loadMyOrders();
+
+};
 
 
-function closeFounder(){
+window.saveProfile=async(e)=>{
 
-document.getElementById("founderModal")
-.style.display="none";
+e.preventDefault();
+
+if(!auth.currentUser)return;
+
+const upi=document
+.getElementById("profileUpi")
+.value.trim();
+
+if(!upi){
+
+alert("Enter UPI ID.");
+return;
 
 }
-
-window.closeFounder=closeFounder;
-
-
-async function loadFounderOrders(){
-
-if(!isFounder())return;
-
-const box=
-document.getElementById("founderOrdersBox");
-
-box.innerHTML="Loading...";
 
 try{
 
-const snapshot=
-await getDocs(
-collection(db,"orders")
+await setDoc(
+
+doc(
+db,
+"profiles",
+auth.currentUser.uid
+),
+
+{
+
+upiId:upi,
+
+email:auth.currentUser.email,
+
+updatedAt:serverTimestamp()
+
+},
+
+{merge:true}
+
 );
 
-if(snapshot.empty){
+document.getElementById("profileMsg").textContent=
+"UPI ID saved.";
+
+}catch(err){
+
+alert(err.message);
+
+}
+
+};
+
+
+/* ==============================
+   MY ORDERS
+============================== */
+
+async function loadMyOrders(){
+
+const box=document.getElementById("myOrders");
+
+box.innerHTML="Loading...";
+
+const q=query(
+collection(db,"orders"),
+where("buyerUid","==",auth.currentUser.uid)
+);
+
+const snap=await getDocs(q);
+
+box.innerHTML="";
+
+if(snap.empty){
 
 box.innerHTML="No orders.";
 
@@ -3096,450 +1261,86 @@ return;
 
 }
 
-box.innerHTML="";
+snap.forEach(d=>{
 
-snapshot.forEach(item=>{
+const x=d.data();
 
-const order={
-id:item.id,
-...item.data()
-};
+box.innerHTML+=`
 
-const div=
-document.createElement("div");
+<div style="padding:12px;border:1px solid #ddd;border-radius:8px;margin:8px 0">
 
-div.className="order-box";
+<b>${esc(x.productName)}</b><br>
 
-let paymentButton="";
+₹${x.amount}<br>
 
-if(
-order.deliveryStatus==="delivered" &&
-order.sellerPaymentStatus!=="paid"
-){
+Status: ${esc(x.status)}
 
-paymentButton=`
-
-<br><br>
-
-<button
-class="btn primary small-btn"
-onclick="markSellerPaid('${order.id}')">
-✓ Mark Seller Payment Done
-</button>
-`;
-
-}
-
-div.innerHTML=`
-
-<b>${escapeHtml(order.productName || "")}</b>
-
-<br><br>
-
-Order ID:
-${escapeHtml(order.cashfreeOrderId || "")}
-
-<br>
-
-Buyer:
-${escapeHtml(order.buyerEmail || "")}
-
-<br>
-
-Seller:
-${escapeHtml(order.sellerEmail || "")}
-
-<br>
-
-Amount:
-₹${Number(order.amount || 0).toFixed(2)}
-
-<br>
-
-Commission:
-₹${Number(order.commissionAmount || 0).toFixed(2)}
-
-<br>
-
-Seller Amount:
-<b>
-₹${Number(order.sellerAmount || 0).toFixed(2)}
-</b>
-
-<br>
-
-Delivery:
-${
-order.deliveryStatus==="delivered"
-? '<span class="approved">DONE</span>'
-: '<span class="pending">PENDING</span>'
-}
-
-<br>
-
-Seller Payment:
-${
-order.sellerPaymentStatus==="paid"
-? '<span class="approved">PAID</span>'
-: '<span class="pending">PENDING</span>'
-}
-
-${paymentButton}
-
-<br><br>
-
-<button
-class="btn secondary small-btn"
-onclick="showSellerUPI('${order.sellerUid}','${order.sellerEmail || ""}')">
-View Seller UPI
-</button>
+</div>
 
 `;
-
-box.appendChild(div);
 
 });
 
-}catch(error){
-
-box.innerHTML=
-`Error: ${escapeHtml(error.message)}`;
-
 }
 
-}
 
-window.loadFounderOrders=loadFounderOrders;
+/* ==============================
+   FOUNDER APPROVE
+============================== */
 
-
-/* =====================================================
-   VIEW SELLER UPI
-===================================================== */
-
-async function showSellerUPI(sellerUid,sellerEmail){
+window.approveListing=async(id)=>{
 
 if(!isFounder()){
 
-alert("Founder access required.");
-
+alert("Founder only.");
 return;
 
 }
-
-try{
-
-/*
-Seller profile is stored separately.
-Only founder should have read permission
-according to Firestore rules.
-*/
-
-const sellerRef=
-doc(db,"sellerProfiles",sellerUid);
-
-const snap=
-await getDoc(sellerRef);
-
-if(!snap.exists()){
-
-alert(
-"No seller profile found.\n\n"+
-"Seller: "+sellerEmail
-);
-
-return;
-
-}
-
-const data=snap.data();
-
-alert(
-"Seller UPI ID:\n\n"+
-(data.upiId || "Not available")
-);
-
-}catch(error){
-
-alert(
-"Could not load seller UPI:\n\n"+
-error.message
-);
-
-}
-
-}
-
-window.showSellerUPI=showSellerUPI;
-
-
-/* =====================================================
-   MARK SELLER PAID
-===================================================== */
-
-async function markSellerPaid(orderId){
-
-if(!isFounder()){
-
-alert("Founder access required.");
-
-return;
-
-}
-
-if(!confirm(
-"Have you actually transferred the seller's money?"
-)){
-
-return;
-
-}
-
-try{
 
 await updateDoc(
-doc(db,"orders",orderId),
+doc(db,"listings",id),
 {
 
-sellerPaymentStatus:"paid",
+approved:true,
 
-sellerPaidBy:
-auth.currentUser.uid,
+approvedBy:auth.currentUser.uid,
 
-sellerPaidAt:
-serverTimestamp(),
-
-updatedAt:
-serverTimestamp()
-
-}
-);
-
-alert("Seller payment marked as completed.");
-
-await loadFounderOrders();
-
-}catch(error){
-
-alert(
-"Could not update payment status:\n\n"+
-error.message
-);
-
-}
-
-}
-
-window.markSellerPaid=markSellerPaid;
-
-
-/* =====================================================
-   SEARCH
-===================================================== */
-
-function getFilteredListings(){
-
-const q=
-(
-document.getElementById("search")?.value || ""
-)
-.toLowerCase()
-.trim();
-
-const condition=
-document.getElementById("condition")?.value || "";
-
-const location=
-document.getElementById("locationFilter")?.value || "";
-
-let data=
-allListings.filter(x=>{
-
-const searchable=[
-x.name,
-x.description,
-x.seller,
-x.college,
-x.collegeLocation,
-x.condition,
-x.instagram
-]
-.join(" ")
-.toLowerCase();
-
-const words=
-q.split(/\s+/).filter(Boolean);
-
-const matches=
-words.every(
-word=>searchable.includes(word)
-);
-
-return(
-matches &&
-(!condition || x.condition===condition) &&
-(!location || x.collegeLocation===location)
-);
+approvedAt:serverTimestamp()
 
 });
 
+alert("Listing approved.");
 
-const sort=
-document.getElementById("sort")?.value || "new";
+await loadListings();
 
-if(sort==="low"){
-
-data.sort(
-(a,b)=>
-Number(a.price||0)-
-Number(b.price||0)
-);
-
-}
-
-if(sort==="high"){
-
-data.sort(
-(a,b)=>
-Number(b.price||0)-
-Number(a.price||0)
-);
-
-}
-
-if(sort==="new"){
-
-data.sort(
-(a,b)=>
-getTime(b.createdAt)-
-getTime(a.createdAt)
-);
-
-}
-
-return data;
-
-}
+};
 
 
-function filterCards(){
-
-renderListings();
-
-}
-
-window.filterCards=filterCards;
-
-
-function syncHeroSearch(){
-
-document.getElementById("search").value=
-document.getElementById("heroSearch").value;
-
-document.getElementById("condition").value=
-document.getElementById("heroCondition").value;
-
-renderListings();
-
-}
-
-window.syncHeroSearch=syncHeroSearch;
-
-
-/* =====================================================
-   LOCATION
-===================================================== */
-
-function updateLocationFilter(){
-
-const select=
-document.getElementById("locationFilter");
-
-const current=select.value;
-
-const locations=
-[
-...new Set(
-allListings
-.map(x=>x.collegeLocation)
-.filter(Boolean)
-)
-].sort();
-
-select.innerHTML=
-`<option value="">All locations</option>`;
-
-locations.forEach(location=>{
-
-const option=
-document.createElement("option");
-
-option.value=location;
-option.textContent=location;
-
-select.appendChild(option);
-
-});
-
-if(locations.includes(current))
-select.value=current;
-
-}
-
-
-/* =====================================================
+/* ==============================
    HELPERS
-===================================================== */
+============================== */
 
-function escapeHtml(s){
+function isFounder(){
 
-return String(s ?? "")
-.replace(
-/[&<>"']/g,
-m=>({
+return auth.currentUser &&
+auth.currentUser.email===FOUNDER_EMAIL;
+
+}
+
+function esc(s){
+
+return String(s??"")
+.replace(/[&<>"']/g,m=>({
+
 "&":"&amp;",
 "<":"&lt;",
 ">":"&gt;",
 '"':"&quot;",
 "'":"&#039;"
-}[m])
-);
+
+}[m]));
 
 }
-
-
-function escapeAttribute(s){
-
-return String(s ?? "")
-.replace(/&/g,"&amp;")
-.replace(/"/g,"&quot;")
-.replace(/</g,"&lt;")
-.replace(/>/g,"&gt;");
-
-}
-
-
-function getTime(timestamp){
-
-if(!timestamp)return 0;
-
-if(
-typeof timestamp.toMillis==="function"
-){
-
-return timestamp.toMillis();
-
-}
-
-return 0;
-
-}
-
-
-/* =====================================================
-   INITIAL
-===================================================== */
-
-loadListings();
 
 </script>
 
