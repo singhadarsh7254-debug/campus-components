@@ -1,7 +1,4 @@
-const crypto = require("crypto");
-
-module.exports = async function handler(req, res) {
-
+export default async function handler(req, res) {
   if (req.method !== "POST") {
     return res.status(405).json({
       error: "Method not allowed"
@@ -9,65 +6,67 @@ module.exports = async function handler(req, res) {
   }
 
   try {
+    const { orderId } = req.body || {};
 
-    const {
-      razorpay_order_id,
-      razorpay_payment_id,
-      razorpay_signature
-    } = req.body;
-
-    if (
-      !razorpay_order_id ||
-      !razorpay_payment_id ||
-      !razorpay_signature
-    ) {
+    if (!orderId) {
       return res.status(400).json({
-        verified: false,
-        error: "Missing payment details"
+        error: "Cashfree orderId is required"
       });
     }
 
-    const body =
-      razorpay_order_id +
-      "|" +
-      razorpay_payment_id;
+    const appId = process.env.CASHFREE_APP_ID;
+    const secretKey = process.env.CASHFREE_SECRET_KEY;
 
-    const expectedSignature =
-      crypto
-        .createHmac(
-          "sha256",
-          process.env.RAZORPAY_KEY_SECRET
-        )
-        .update(body)
-        .digest("hex");
+    if (!appId || !secretKey) {
+      return res.status(500).json({
+        error: "Cashfree environment variables are missing"
+      });
+    }
+
+    const response = await fetch(
+      `https://sandbox.cashfree.com/pg/orders/${encodeURIComponent(orderId)}`,
+      {
+        method: "GET",
+
+        headers: {
+          "x-api-version": "2025-01-01",
+          "x-client-id": appId,
+          "x-client-secret": secretKey
+        }
+      }
+    );
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      console.error("Cashfree verify error:", data);
+
+      return res.status(response.status).json({
+        verified: false,
+        error:
+          data.message ||
+          data.error ||
+          "Unable to verify Cashfree payment",
+        details: data
+      });
+    }
 
     const verified =
-      expectedSignature === razorpay_signature;
-
-    if (!verified) {
-      return res.status(400).json({
-        verified: false,
-        error: "Payment verification failed"
-      });
-    }
+      data.order_status === "PAID";
 
     return res.status(200).json({
-      verified: true,
-      paymentId: razorpay_payment_id,
-      orderId: razorpay_order_id
+      verified,
+      orderId: data.order_id,
+      orderStatus: data.order_status,
+      paymentDetails: data
     });
 
   } catch (error) {
-
-    console.error(
-      "Payment verification error:",
-      error
-    );
+    console.error("Verify payment error:", error);
 
     return res.status(500).json({
       verified: false,
-      error: "Server verification error"
+      error: error.message || "Internal server error"
     });
-
   }
-};
+}
