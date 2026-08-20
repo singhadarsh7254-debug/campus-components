@@ -3,88 +3,91 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Campus Components</title>
+<title>Campus Components — Student Marketplace</title>
 
 <script src="https://sdk.cashfree.com/js/v3/cashfree.js"></script>
 
 <style>
 *{box-sizing:border-box}
-body{margin:0;font-family:Arial;background:#f6f7fb;color:#172033}
-header{background:#101828;color:#fff;padding:15px 5%;display:flex;justify-content:space-between;align-items:center;gap:10px;position:sticky;top:0;z-index:10}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#f6f7fb;color:#172033}
+header{background:#101828;color:#fff;padding:15px 5%;display:flex;align-items:center;justify-content:space-between;gap:12px;position:sticky;top:0;z-index:20}
 .logo{font-size:21px;font-weight:800}.logo span{color:#63b3ed}
 nav{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-button{border:0;border-radius:8px;padding:10px 14px;font-weight:bold;cursor:pointer}
-.primary{background:#2f80ed;color:#fff}.secondary{background:#eaf2ff;color:#1558a6}.danger{background:#fee4e2;color:#b42318}.dark{background:#344054;color:#fff}
+button{border:0;border-radius:8px;padding:10px 14px;font-weight:700;cursor:pointer}
+.primary{background:#2f80ed;color:#fff}.secondary{background:#eaf2ff;color:#1558a6}
+.danger{background:#fee4e2;color:#b42318}.dark{background:#344054;color:#fff}
 .hero{padding:45px 5%;background:linear-gradient(135deg,#eaf3ff,#fff)}
-.hero h1{font-size:38px;margin:0 0 10px}
-.hero p{color:#667085;font-size:17px}
+.hero h1{font-size:38px;margin:0 0 10px}.hero p{color:#667085;font-size:17px}
 .container{padding:30px 5%}
 .toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px}
-input,select,textarea{width:100%;padding:11px;border:1px solid #d6dce5;border-radius:8px;background:white}
-.toolbar input{max-width:500px}
+.toolbar input{max-width:600px}
+input,select,textarea{width:100%;padding:11px;border:1px solid #d6dce5;border-radius:8px;background:#fff}
 .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
-.card{background:white;border:1px solid #e5e9f0;border-radius:13px;overflow:hidden}
+.card{background:#fff;border:1px solid #e5e9f0;border-radius:13px;overflow:hidden;box-shadow:0 2px 8px #1018280d}
 .pic{height:170px;background:#eef2f7;display:flex;align-items:center;justify-content:center;font-size:55px}
 .pic img{width:100%;height:100%;object-fit:cover}
-.card-body{padding:15px}.card h3{margin:0 0 8px}.price{font-size:21px;font-weight:bold}
+.card-body{padding:15px}.card h3{margin:0 0 8px}.price{font-size:21px;font-weight:800}
 .meta{font-size:13px;color:#667085;line-height:1.7;margin:10px 0}
 .actions{display:flex;gap:6px;flex-wrap:wrap}
 .small{padding:8px 10px;font-size:12px}
-.badge{display:inline-block;padding:5px 8px;border-radius:20px;font-size:11px;font-weight:bold}
+.badge{display:inline-block;padding:5px 8px;border-radius:20px;font-size:11px;font-weight:700}
 .green{background:#e9f8ef;color:#16834a}.orange{background:#fff4e5;color:#9a5b00}
 .red{background:#fee4e2;color:#b42318}.purple{background:#f3e8ff;color:#7e22ce}
 .modal{display:none;position:fixed;inset:0;background:#0008;align-items:center;justify-content:center;z-index:100}
-.box{background:white;width:min(600px,94%);max-height:92vh;overflow:auto;border-radius:14px;padding:22px}
-.close{float:right;background:none;font-size:25px}
+.box{background:#fff;width:min(620px,94%);max-height:92vh;overflow:auto;border-radius:14px;padding:22px}
+.close{float:right;background:none;font-size:25px;padding:0}
 .form{display:grid;gap:11px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.order{border:1px solid #ddd;border-radius:10px;padding:13px;margin:9px 0}
 footer{background:#101828;color:#cbd5e1;padding:30px 5%;margin-top:30px}
 @media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:600px){.grid{grid-template-columns:1fr}.hero h1{font-size:30px}}
+@media(max-width:600px){.grid{grid-template-columns:1fr}.hero h1{font-size:30px}.row{grid-template-columns:1fr}}
 </style>
 </head>
 
 <body>
 
 <header>
-<div class="logo">Campus<span>Components</span></div>
+  <div class="logo">Campus<span>Components</span></div>
+  <div id="status">Not logged in</div>
 
-<div id="status">Not logged in</div>
-
-<nav>
-<button class="secondary" id="loginBtn" onclick="openLogin()">Login</button>
-<button class="primary" onclick="openSell()">+ Sell</button>
-<button class="secondary" onclick="openProfile()">Profile</button>
-</nav>
+  <nav>
+    <button class="secondary" id="loginBtn" onclick="openLogin()">Login</button>
+    <button class="primary" onclick="openSell()">+ Sell Component</button>
+    <button class="secondary" onclick="openProfile()">Profile</button>
+    <button class="dark" id="founderBtn" style="display:none" onclick="openFounder()">Founder Panel</button>
+  </nav>
 </header>
 
 <section class="hero">
-<h1>Buy & Sell Electronics Components on Campus</h1>
-<p>Student marketplace for electronics components and college-use items.</p>
+  <h1>Buy & Sell Electronics Components on Campus</h1>
+  <p>Find electronics components and student-use items from sellers near your college.</p>
 </section>
 
 <section class="container">
 
-<div class="toolbar">
-<input id="search" placeholder="Search MQ2, Arduino, NRF24L01..." oninput="render()">
+  <div class="toolbar">
+    <input id="search" placeholder="Search MQ2, Arduino, NRF24L01..."
+           oninput="renderListings()">
 
-<select id="condition" onchange="render()">
-<option value="">Any condition</option>
-<option>New</option>
-<option>Working</option>
-</select>
+    <select id="condition" onchange="renderListings()">
+      <option value="">Any condition</option>
+      <option>New</option>
+      <option>Working</option>
+    </select>
 
-<select id="location" onchange="render()">
-<option value="">All locations</option>
-</select>
-</div>
+    <select id="locationFilter" onchange="renderListings()">
+      <option value="">All locations</option>
+    </select>
+  </div>
 
-<div id="grid" class="grid"></div>
+  <div id="grid" class="grid"></div>
 
 </section>
 
 <footer>
-<b>CampusComponents</b><br><br>
-Student electronics marketplace
+  <b>CampusComponents</b><br><br>
+  Student Electronics Marketplace
 </footer>
 
 
@@ -97,79 +100,70 @@ Student electronics marketplace
 
 <h2 id="authTitle">Login</h2>
 
-<form class="form" onsubmit="authSubmit(event)">
-
-<input id="email" type="email" placeholder="Email" required>
-
-<input id="password" type="password" minlength="6"
-placeholder="Password" required>
-
-<button class="primary" id="authButton">Login</button>
-
+<form class="form" onsubmit="handleAuth(event)">
+  <input id="authEmail" type="email" required placeholder="Email">
+  <input id="authPassword" type="password" minlength="6" required placeholder="Password">
+  <button class="primary" id="authSubmit">Login</button>
 </form>
 
 <br>
 
-<button class="secondary" onclick="toggleAuth()" id="toggleButton">
-Create Account
+<button class="secondary" onclick="toggleAuth()" id="toggleAuth">
+Create new account
 </button>
 
-<p id="authMsg"></p>
+<p id="authMessage"></p>
 
 </div>
 </div>
 
 
-<!-- SELL -->
+<!-- SELL / EDIT -->
 
 <div class="modal" id="sellModal">
 <div class="box">
 
 <button class="close" onclick="closeModal('sellModal')">×</button>
 
-<h2>Sell Component</h2>
+<h2 id="sellTitle">Sell Component</h2>
 
 <form class="form" onsubmit="saveListing(event)">
 
-<input id="name" placeholder="Component name" required>
+<input id="name" required placeholder="Component name">
 
-<input id="price" type="number" min="1"
-placeholder="Price ₹" required>
+<div class="row">
+  <input id="price" type="number" min="1" required placeholder="Price ₹">
+  <select id="cond" required>
+    <option value="">Condition</option>
+    <option>New</option>
+    <option>Working</option>
+  </select>
+</div>
 
-<select id="cond" required>
-<option value="">Condition</option>
-<option>New</option>
-<option>Working</option>
-</select>
+<input id="seller" required placeholder="Seller name">
+<input id="college" required placeholder="College name">
+<input id="collegeLocation" required placeholder="College location">
 
-<input id="seller" placeholder="Seller name" required>
+<div class="row">
+  <input id="whatsapp" placeholder="WhatsApp">
+  <input id="instagram" placeholder="Instagram">
+</div>
 
-<input id="college" placeholder="College name" required>
+<input id="upi" placeholder="Seller UPI ID">
 
-<input id="collegeLocation"
-placeholder="College location" required>
-
-<input id="whatsapp" placeholder="WhatsApp">
-
-<input id="instagram" placeholder="Instagram">
-
-<input id="upi" placeholder="Your UPI ID">
-
-<input id="image" type="file" accept="image/*"
-onchange="readImage(event)">
+<input id="image" type="file" accept="image/*" onchange="readImage(event)">
 
 <img id="preview"
-style="display:none;width:100%;height:180px;object-fit:cover;border-radius:10px">
+     style="display:none;width:100%;height:180px;object-fit:cover;border-radius:10px">
 
-<textarea id="description"
-placeholder="Description"></textarea>
+<textarea id="description" rows="4" placeholder="Description"></textarea>
 
 <label>
 <input type="checkbox" id="restricted">
- This item requires founder approval
+ This item needs founder approval
 </label>
 
-<button class="primary">Publish Listing</button>
+<button class="primary">Save Listing</button>
 
 </form>
 
@@ -189,8 +183,8 @@ placeholder="Description"></textarea>
 <p id="profileEmail"></p>
 
 <form class="form" onsubmit="saveProfile(event)">
-<input id="profileUpi" placeholder="UPI ID">
-<button class="primary">Save UPI ID</button>
+  <input id="profileUpi" placeholder="UPI ID">
+  <button class="primary">Save UPI ID</button>
 </form>
 
 <p id="profileMsg"></p>
@@ -211,8 +205,7 @@ placeholder="Description"></textarea>
 
 <button class="close" onclick="closeModal('contactModal')">×</button>
 
-<h2>Contact Seller</h2>
-
+<h2 id="contactTitle">Contact Seller</h2>
 <div id="contactInfo"></div>
 
 </div>
@@ -226,8 +219,14 @@ placeholder="Description"></textarea>
 
 <button class="close" onclick="closeModal('founderModal')">×</button>
 
-<h2>Founder Order Panel</h2>
+<h2>Founder Panel</h2>
 
+<h3>Pending Listings</h3>
+<div id="pendingListings"></div>
+
+<hr>
+
+<h3>Orders / Seller Payments</h3>
 <div id="founderOrders"></div>
 
 </div>
@@ -237,47 +236,45 @@ placeholder="Description"></textarea>
 <script type="module">
 
 import {
-initializeApp
-} from
-"https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+  initializeApp
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
 
 import {
-getAuth,
-createUserWithEmailAndPassword,
-signInWithEmailAndPassword,
-signOut,
-onAuthStateChanged
-} from
-"https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 
 import {
-getFirestore,
-collection,
-addDoc,
-getDocs,
-getDoc,
-doc,
-setDoc,
-updateDoc,
-query,
-where,
-serverTimestamp
-} from
-"https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+  getFirestore,
+  collection,
+  addDoc,
+  getDocs,
+  getDoc,
+  doc,
+  setDoc,
+  updateDoc,
+  deleteDoc,
+  query,
+  where,
+  serverTimestamp
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
 
-/* ==============================
+/* =========================
    FIREBASE
-============================== */
+========================= */
 
-const firebaseConfig={
-apiKey:"AIzaSyAkETZr4bZQRlLfpbHVlCdvwK7iub-gVmQ",
-authDomain:"campus-components-2c641.firebaseapp.com",
-projectId:"campus-components-2c641",
-storageBucket:"campus-components-2c641.firebasestorage.app",
-messagingSenderId:"174888026978",
-appId:"1:174888026978:web:9170ceb1880bf9334f223b",
-measurementId:"G-0JYEYHLHDC"
+const firebaseConfig = {
+  apiKey:"AIzaSyAkETZr4bZQRlLfpbHVlCdvwK7iub-gVmQ",
+  authDomain:"campus-components-2c641.firebaseapp.com",
+  projectId:"campus-components-2c641",
+  storageBucket:"campus-components-2c641.firebasestorage.app",
+  messagingSenderId:"174888026978",
+  appId:"1:174888026978:web:9170ceb1880bf9334f223b",
+  measurementId:"G-0JYEYHLHDC"
 };
 
 const app=initializeApp(firebaseConfig);
@@ -285,1062 +282,1599 @@ const auth=getAuth(app);
 const db=getFirestore(app);
 
 
-/* ==============================
+/* =========================
    CASHFREE PRODUCTION
-============================== */
+========================= */
 
 const cashfree=Cashfree({
-mode:"production"
+  mode:"production"
 });
 
-
-/* ==============================
-   FOUNDER
-============================== */
 
 const FOUNDER_EMAIL="singhadarsh7254@gmail.com";
 
-
 let listings=[];
+let editingId=null;
 let imageData="";
-let signup=false;
+let authMode="login";
 
 
-/* ==============================
+/* =========================
+   BASIC HELPERS
+========================= */
+
+window.closeModal=function(id){
+  document.getElementById(id).style.display="none";
+};
+
+function founder(){
+  return auth.currentUser &&
+         auth.currentUser.email===FOUNDER_EMAIL;
+}
+
+function esc(value){
+  return String(value ?? "").replace(/[&<>"']/g,m=>({
+    "&":"&amp;",
+    "<":"&lt;",
+    ">":"&gt;",
+    '"':"&quot;",
+    "'":"&#039;"
+  }[m]));
+}
+
+
+/* =========================
    AUTH
-============================== */
+========================= */
 
-window.openLogin=()=>{
-document.getElementById("loginModal").style.display="flex";
+window.openLogin=function(){
+  document.getElementById("loginModal").style.display="flex";
 };
 
-window.closeModal=(id)=>{
-document.getElementById(id).style.display="none";
-};
+window.toggleAuth=function(){
 
-window.toggleAuth=()=>{
-signup=!signup;
+  authMode=authMode==="login"?"signup":"login";
 
-document.getElementById("authTitle").textContent=
-signup?"Create Account":"Login";
+  document.getElementById("authTitle").textContent=
+    authMode==="login"?"Login":"Create Account";
 
-document.getElementById("authButton").textContent=
-signup?"Create Account":"Login";
+  document.getElementById("authSubmit").textContent=
+    authMode==="login"?"Login":"Create Account";
 
-document.getElementById("toggleButton").textContent=
-signup?"Already have account? Login":"Create Account";
-};
-
-
-window.authSubmit=async(e)=>{
-e.preventDefault();
-
-const email=document.getElementById("email").value.trim();
-const password=document.getElementById("password").value;
-const msg=document.getElementById("authMsg");
-
-try{
-
-if(signup){
-
-await createUserWithEmailAndPassword(
-auth,email,password
-);
-
-}else{
-
-await signInWithEmailAndPassword(
-auth,email,password
-);
-
-}
-
-msg.textContent="Success";
-msg.style.color="green";
-
-setTimeout(()=>{
-closeModal("loginModal");
-},500);
-
-}catch(err){
-
-msg.textContent=err.message;
-msg.style.color="red";
-
-}
-
+  document.getElementById("toggleAuth").textContent=
+    authMode==="login"
+    ?"Create new account"
+    :"Already have an account? Login";
 };
 
 
-onAuthStateChanged(auth,async user=>{
+window.handleAuth=async function(e){
 
-const status=document.getElementById("status");
-const btn=document.getElementById("loginBtn");
+  e.preventDefault();
 
-if(user){
+  const email=document.getElementById("authEmail").value.trim();
+  const password=document.getElementById("authPassword").value;
+  const msg=document.getElementById("authMessage");
 
-status.textContent=
-user.email===FOUNDER_EMAIL
-?"Founder · "+user.email
-:user.email;
+  try{
 
-btn.textContent="Logout";
+    if(authMode==="signup"){
+      await createUserWithEmailAndPassword(auth,email,password);
+    }else{
+      await signInWithEmailAndPassword(auth,email,password);
+    }
 
-btn.onclick=async()=>{
-await signOut(auth);
+    msg.style.color="green";
+    msg.textContent="Success";
+
+    setTimeout(()=>{
+      closeModal("loginModal");
+    },500);
+
+  }catch(error){
+
+    msg.style.color="red";
+    msg.textContent=error.message;
+
+  }
 };
 
-}else{
 
-status.textContent="Not logged in";
-btn.textContent="Login";
-btn.onclick=openLogin;
+onAuthStateChanged(auth,async(user)=>{
 
-}
+  const status=document.getElementById("status");
+  const loginBtn=document.getElementById("loginBtn");
+  const founderBtn=document.getElementById("founderBtn");
 
-await loadListings();
+  if(user){
+
+    status.textContent=
+      founder()
+      ?"Founder · "+user.email
+      :user.email;
+
+    loginBtn.textContent="Logout";
+
+    loginBtn.onclick=async()=>{
+      await signOut(auth);
+    };
+
+    founderBtn.style.display=founder()?"inline-block":"none";
+
+  }else{
+
+    status.textContent="Not logged in";
+    loginBtn.textContent="Login";
+    loginBtn.onclick=openLogin;
+    founderBtn.style.display="none";
+
+  }
+
+  await loadListings();
 
 });
 
 
-/* ==============================
+/* =========================
+   COMMISSION
+========================= */
+
+function commissionRate(price){
+
+  price=Number(price);
+
+  if(price<200)return 3;
+  if(price<500)return 5;
+  return 10;
+
+}
+
+function commissionAmount(price){
+
+  return Number(price) *
+         commissionRate(price)/100;
+
+}
+
+
+/* =========================
    IMAGE
-============================== */
+========================= */
 
-window.readImage=(e)=>{
+window.readImage=function(e){
 
-const file=e.target.files[0];
+  const file=e.target.files[0];
 
-if(!file)return;
+  if(!file)return;
 
-if(file.size>700000){
+  if(file.size>700000){
 
-alert("Image must be below 700 KB.");
-e.target.value="";
-return;
+    alert("Image must be smaller than 700 KB.");
+    e.target.value="";
+    return;
 
-}
+  }
 
-const reader=new FileReader();
+  const reader=new FileReader();
 
-reader.onload=()=>{
-imageData=reader.result;
+  reader.onload=()=>{
+    imageData=reader.result;
 
-const preview=document.getElementById("preview");
+    const preview=document.getElementById("preview");
+    preview.src=imageData;
+    preview.style.display="block";
+  };
 
-preview.src=imageData;
-preview.style.display="block";
-};
-
-reader.readAsDataURL(file);
-
-};
-
-
-/* ==============================
-   SELL
-============================== */
-
-window.openSell=()=>{
-
-if(!auth.currentUser){
-
-alert("Please login first.");
-openLogin();
-return;
-
-}
-
-document.getElementById("sellModal").style.display="flex";
+  reader.readAsDataURL(file);
 
 };
 
 
-window.saveListing=async(e)=>{
+/* =========================
+   SELL / EDIT OPEN
+========================= */
 
-e.preventDefault();
+window.openSell=function(){
 
-const user=auth.currentUser;
+  if(!auth.currentUser){
 
-if(!user){
+    alert("Please login first.");
+    openLogin();
+    return;
 
-alert("Please login first.");
-return;
+  }
 
-}
+  editingId=null;
 
-const data={
+  document.getElementById("sellTitle").textContent="Sell Component";
 
-name:document.getElementById("name").value.trim(),
+  document.querySelector("#sellModal form").reset();
 
-price:Number(document.getElementById("price").value),
+  imageData="";
+  document.getElementById("preview").style.display="none";
 
-condition:document.getElementById("cond").value,
-
-seller:document.getElementById("seller").value.trim(),
-
-college:document.getElementById("college").value.trim(),
-
-collegeLocation:
-document.getElementById("collegeLocation").value.trim(),
-
-whatsapp:
-document.getElementById("whatsapp").value.trim(),
-
-instagram:
-document.getElementById("instagram").value.trim(),
-
-image:imageData,
-
-description:
-document.getElementById("description").value.trim(),
-
-restricted:
-document.getElementById("restricted").checked,
-
-approved:
-!document.getElementById("restricted").checked,
-
-ownerUid:user.uid,
-
-ownerEmail:user.email,
-
-sold:false,
-
-buyerUid:"",
-
-orderId:"",
-
-createdAt:serverTimestamp()
-
-};
-
-try{
-
-await addDoc(collection(db,"listings"),data);
-
-alert("Listing published.");
-
-imageData="";
-
-document.querySelector("#sellModal form").reset();
-
-document.getElementById("preview").style.display="none";
-
-closeModal("sellModal");
-
-await loadListings();
-
-}catch(err){
-
-alert(err.message);
-
-}
+  document.getElementById("sellModal").style.display="flex";
 
 };
 
 
-/* ==============================
-   LOAD LISTINGS
-============================== */
+/* =========================
+   EDIT
+========================= */
+
+window.editListing=function(id){
+
+  const x=listings.find(a=>a.id===id);
+
+  if(!x)return;
+
+  if(!auth.currentUser ||
+     x.ownerUid!==auth.currentUser.uid){
+
+    alert("You can edit only your own listing.");
+    return;
+
+  }
+
+  if(x.sold){
+
+    alert("Sold Out listings cannot be edited.");
+    return;
+
+  }
+
+  editingId=id;
+
+  document.getElementById("sellTitle").textContent="Edit Listing";
+
+  document.getElementById("name").value=x.name||"";
+  document.getElementById("price").value=x.price||"";
+  document.getElementById("cond").value=x.condition||"";
+  document.getElementById("seller").value=x.seller||"";
+  document.getElementById("college").value=x.college||"";
+  document.getElementById("collegeLocation").value=x.collegeLocation||"";
+  document.getElementById("whatsapp").value=x.whatsapp||"";
+  document.getElementById("instagram").value=x.instagram||"";
+  document.getElementById("upi").value=x.upiId||"";
+  document.getElementById("description").value=x.description||"";
+  document.getElementById("restricted").checked=!!x.restricted;
+
+  imageData=x.image||"";
+
+  const preview=document.getElementById("preview");
+
+  if(x.image){
+    preview.src=x.image;
+    preview.style.display="block";
+  }else{
+    preview.src="";
+    preview.style.display="none";
+  }
+
+  document.getElementById("sellModal").style.display="flex";
+
+};
+
+
+/* =========================
+   SAVE LISTING
+========================= */
+
+window.saveListing=async function(e){
+
+  e.preventDefault();
+
+  if(!auth.currentUser){
+    alert("Please login first.");
+    return;
+  }
+
+  const data={
+
+    name:document.getElementById("name").value.trim(),
+
+    price:Number(document.getElementById("price").value),
+
+    condition:document.getElementById("cond").value,
+
+    seller:document.getElementById("seller").value.trim(),
+
+    college:document.getElementById("college").value.trim(),
+
+    collegeLocation:
+      document.getElementById("collegeLocation").value.trim(),
+
+    whatsapp:
+      document.getElementById("whatsapp").value.trim(),
+
+    instagram:
+      document.getElementById("instagram").value.trim(),
+
+    upiId:
+      document.getElementById("upi").value.trim(),
+
+    description:
+      document.getElementById("description").value.trim(),
+
+    image:imageData,
+
+    restricted:
+      document.getElementById("restricted").checked,
+
+    updatedAt:serverTimestamp()
+
+  };
+
+
+  if(!data.price || data.price<1){
+    alert("Enter valid price.");
+    return;
+  }
+
+
+  try{
+
+    if(editingId){
+
+      const old=listings.find(x=>x.id===editingId);
+
+      if(!old){
+        alert("Listing not found.");
+        return;
+      }
+
+      if(old.sold){
+        alert("Sold Out listing cannot be edited.");
+        return;
+      }
+
+      if(old.ownerUid!==auth.currentUser.uid){
+        alert("You can edit only your own listing.");
+        return;
+      }
+
+      data.approved=data.restricted
+        ? !!old.approved
+        : true;
+
+      await updateDoc(
+        doc(db,"listings",editingId),
+        data
+      );
+
+      alert("Listing updated successfully.");
+
+    }else{
+
+      await addDoc(
+        collection(db,"listings"),
+        {
+
+          ...data,
+
+          ownerUid:auth.currentUser.uid,
+          ownerEmail:auth.currentUser.email,
+
+          approved:data.restricted?false:true,
+
+          sold:false,
+
+          buyerUid:"",
+          buyerEmail:"",
+          orderId:"",
+
+          createdAt:serverTimestamp()
+
+        }
+      );
+
+      alert(
+        data.restricted
+        ?"Listing submitted for founder approval."
+        :"Listing published successfully."
+      );
+
+    }
+
+    editingId=null;
+    imageData="";
+
+    closeModal("sellModal");
+
+    await loadListings();
+
+  }catch(error){
+
+    console.error(error);
+    alert("Could not save listing:\n\n"+error.message);
+
+  }
+
+};
+
+
+/* =========================
+   DELETE
+========================= */
+
+window.deleteListing=async function(id){
+
+  const x=listings.find(a=>a.id===id);
+
+  if(!x)return;
+
+  if(!auth.currentUser ||
+     x.ownerUid!==auth.currentUser.uid){
+
+    alert("You can delete only your own listing.");
+    return;
+
+  }
+
+  if(x.sold){
+
+    alert("Sold Out listings cannot be deleted.");
+    return;
+
+  }
+
+  if(!confirm("Are you sure you want to delete this listing?")){
+    return;
+  }
+
+  try{
+
+    await deleteDoc(
+      doc(db,"listings",id)
+    );
+
+    alert("Listing deleted successfully.");
+
+    await loadListings();
+
+  }catch(error){
+
+    alert("Delete failed:\n\n"+error.message);
+
+  }
+
+};
+
+
+/* =========================
+   LOAD
+========================= */
 
 async function loadListings(){
 
-try{
+  try{
 
-const snap=await getDocs(
-collection(db,"listings")
-);
+    const snap=await getDocs(
+      collection(db,"listings")
+    );
 
-listings=[];
+    listings=[];
 
-snap.forEach(d=>{
-listings.push({
-id:d.id,
-...d.data()
-});
-});
+    snap.forEach(d=>{
+      listings.push({
+        id:d.id,
+        ...d.data()
+      });
+    });
 
-updateLocations();
-render();
+    updateLocations();
+    renderListings();
 
-}catch(err){
+  }catch(error){
 
-console.error(err);
+    console.error(error);
 
-}
+    document.getElementById("grid").innerHTML=
+      `<div style="color:#b42318;padding:20px">
+      Firebase error:<br>${esc(error.message)}
+      </div>`;
 
-}
-
-
-/* ==============================
-   RENDER
-============================== */
-
-window.render=()=>{
-
-const grid=document.getElementById("grid");
-
-grid.innerHTML="";
-
-const search=
-document.getElementById("search").value
-.toLowerCase().trim();
-
-const condition=
-document.getElementById("condition").value;
-
-const location=
-document.getElementById("location").value;
-
-let data=listings.filter(x=>{
-
-const text=[
-x.name,
-x.description,
-x.seller,
-x.college,
-x.collegeLocation,
-x.condition
-].join(" ").toLowerCase();
-
-return text.includes(search)
-&&(!condition||x.condition===condition)
-&&(!location||x.collegeLocation===location);
-
-});
-
-
-data.forEach(x=>{
-
-const founder=
-auth.currentUser &&
-auth.currentUser.email===FOUNDER_EMAIL;
-
-if(x.restricted&&!x.approved&&!founder)return;
-
-const card=document.createElement("div");
-card.className="card";
-
-let image=x.image
-?`<img src="${esc(x.image)}">`
-:`<span>📦</span>`;
-
-let status="";
-
-if(x.sold){
-
-status=`<span class="badge red">SOLD OUT</span>`;
-
-}else if(x.restricted&&!x.approved){
-
-status=`<span class="badge orange">Pending Approval</span>`;
-
-}else{
-
-status=`<span class="badge green">Available</span>`;
+  }
 
 }
 
 
-let buttons="";
-
-if(x.sold){
-
-buttons+=`
-<button class="secondary small"
-onclick="contactSeller('${x.id}')">
-Message Seller
-</button>`;
-
-if(
-auth.currentUser &&
-x.buyerUid===auth.currentUser.uid &&
-x.deliveryConfirmed!==true
-){
-
-buttons+=`
-<button class="primary small"
-onclick="confirmDelivery('${x.id}')">
-Delivery Done
-</button>`;
-
-}
-
-}else{
-
-buttons+=`
-<button class="primary small"
-onclick="buyNow('${x.id}')">
-Buy Now
-</button>`;
-
-buttons+=`
-<button class="secondary small"
-onclick="contactSeller('${x.id}')">
-Message Seller
-</button>`;
-
-}
-
-
-if(
-founder &&
-x.restricted &&
-!x.approved &&
-!x.sold
-){
-
-buttons+=`
-<button class="primary small"
-onclick="approveListing('${x.id}')">
-Approve
-</button>`;
-
-}
-
-
-card.innerHTML=`
-
-<div class="pic">${image}</div>
-
-<div class="card-body">
-
-<h3>${esc(x.name||"")}</h3>
-
-<div class="price">
-₹${Number(x.price||0).toLocaleString("en-IN")}
-</div>
-
-<div class="meta">
-
-${esc(x.condition||"")}<br>
-Seller: ${esc(x.seller||"")}<br>
-🏫 ${esc(x.college||"")}<br>
-📍 ${esc(x.collegeLocation||"")}<br><br>
-
-${status}
-
-</div>
-
-<div class="actions">
-${buttons}
-</div>
-
-</div>
-`;
-
-grid.appendChild(card);
-
-});
-
-};
-
-
-/* ==============================
-   LOCATIONS
-============================== */
+/* =========================
+   LOCATION
+========================= */
 
 function updateLocations(){
 
-const select=document.getElementById("location");
+  const select=document.getElementById("locationFilter");
+  const current=select.value;
 
-const values=[
-...new Set(
-listings
-.map(x=>x.collegeLocation)
-.filter(Boolean)
-)
-];
+  const locations=[
+    ...new Set(
+      listings
+      .map(x=>x.collegeLocation)
+      .filter(Boolean)
+    )
+  ].sort();
 
-select.innerHTML=
-`<option value="">All locations</option>`;
+  select.innerHTML=
+    `<option value="">All locations</option>`;
 
-values.sort().forEach(x=>{
+  locations.forEach(location=>{
 
-const o=document.createElement("option");
+    const option=document.createElement("option");
+    option.value=location;
+    option.textContent=location;
+    select.appendChild(option);
 
-o.value=x;
-o.textContent=x;
+  });
 
-select.appendChild(o);
-
-});
+  if(locations.includes(current)){
+    select.value=current;
+  }
 
 }
 
 
-/* ==============================
+/* =========================
+   RENDER
+========================= */
+
+window.renderListings=function(){
+
+  const grid=document.getElementById("grid");
+  grid.innerHTML="";
+
+  const search=
+    document.getElementById("search").value
+    .toLowerCase()
+    .trim();
+
+  const condition=
+    document.getElementById("condition").value;
+
+  const location=
+    document.getElementById("locationFilter").value;
+
+  listings
+  .filter(x=>{
+
+    const text=[
+      x.name,
+      x.description,
+      x.seller,
+      x.college,
+      x.collegeLocation,
+      x.condition
+    ].join(" ").toLowerCase();
+
+    return text.includes(search)
+      &&(!condition||x.condition===condition)
+      &&(!location||x.collegeLocation===location);
+
+  })
+  .forEach(x=>{
+
+    if(x.restricted&&!x.approved&&!founder()){
+      return;
+    }
+
+    const own=
+      auth.currentUser &&
+      x.ownerUid===auth.currentUser.uid;
+
+    let status="";
+
+    if(x.sold){
+
+      status=
+        `<span class="badge red">SOLD OUT</span>`;
+
+    }else if(x.restricted&&!x.approved){
+
+      status=
+        `<span class="badge orange">Pending Approval</span>`;
+
+    }else{
+
+      status=
+        `<span class="badge green">Available</span>`;
+
+    }
+
+
+    let buttons="";
+
+
+    /* AVAILABLE */
+
+    if(!x.sold){
+
+      buttons+=`
+      <button class="primary small"
+        onclick="buyNow('${x.id}')">
+        Buy Now
+      </button>`;
+
+    }
+
+
+    /* MESSAGE ALWAYS AVAILABLE FOR SOLD */
+
+    buttons+=`
+    <button class="secondary small"
+      onclick="contactSeller('${x.id}')">
+      Message Seller
+    </button>`;
+
+
+    /* OWNER EDIT DELETE ONLY IF UNSOLD */
+
+    if(own&&!x.sold){
+
+      buttons+=`
+      <button class="secondary small"
+        onclick="editListing('${x.id}')">
+        Edit
+      </button>`;
+
+      buttons+=`
+      <button class="danger small"
+        onclick="deleteListing('${x.id}')">
+        Delete
+      </button>`;
+
+    }
+
+
+    /* BUYER DELIVERY BUTTON */
+
+    if(
+      x.sold &&
+      auth.currentUser &&
+      x.buyerUid===auth.currentUser.uid &&
+      !x.deliveryConfirmed
+    ){
+
+      buttons+=`
+      <button class="primary small"
+        onclick="confirmDelivery('${x.id}')">
+        Delivery Done
+      </button>`;
+
+    }
+
+
+    /* DELIVERY CONFIRMED */
+
+    if(x.deliveryConfirmed){
+
+      buttons+=`
+      <span class="badge green">
+      Delivery Confirmed
+      </span>`;
+
+    }
+
+
+    const image=x.image
+      ?`<img src="${esc(x.image)}">`
+      :`<span>📦</span>`;
+
+
+    const card=document.createElement("div");
+    card.className="card";
+
+    card.innerHTML=`
+
+      <div class="pic">${image}</div>
+
+      <div class="card-body">
+
+        <h3>${esc(x.name||"")}</h3>
+
+        <div class="price">
+          ₹${Number(x.price||0).toLocaleString("en-IN")}
+        </div>
+
+        <div class="meta">
+
+          ${esc(x.condition||"")}<br>
+
+          Seller: ${esc(x.seller||"")}<br>
+
+          🏫 ${esc(x.college||"")}<br>
+
+          📍 ${esc(x.collegeLocation||"")}<br><br>
+
+          ${status}
+
+        </div>
+
+        <div class="actions">
+          ${buttons}
+        </div>
+
+      </div>
+    `;
+
+    grid.appendChild(card);
+
+  });
+
+};
+
+
+/* =========================
    BUY NOW
-============================== */
+========================= */
 
-window.buyNow=async(id)=>{
+window.buyNow=async function(id){
 
-/* LOGIN CHECK FIRST */
+  /* LOGIN COMPULSORY */
 
-if(!auth.currentUser){
+  if(!auth.currentUser){
 
-alert("Please login first to buy.");
-openLogin();
-return;
+    alert("Please login first to buy.");
+    openLogin();
+    return;
 
-}
+  }
 
-const listing=listings.find(x=>x.id===id);
 
-if(!listing)return;
+  const listing=listings.find(x=>x.id===id);
 
-if(listing.sold){
+  if(!listing)return;
 
-alert("This component is already sold out.");
-return;
 
-}
+  if(listing.sold){
 
-if(
-listing.restricted &&
-!listing.approved
-){
+    alert("This component is already SOLD OUT.");
+    return;
 
-alert("This listing is waiting for founder approval.");
-return;
+  }
 
-}
 
-if(
-listing.ownerUid===auth.currentUser.uid
-){
+  if(
+    listing.restricted &&
+    !listing.approved
+  ){
 
-alert("You cannot buy your own component.");
-return;
+    alert("This listing is waiting for founder approval.");
+    return;
 
-}
+  }
 
 
-try{
+  if(
+    listing.ownerUid===auth.currentUser.uid
+  ){
 
-/* CREATE CASHFREE ORDER */
+    alert("You cannot buy your own component.");
+    return;
 
-const response=await fetch(
-"/api/create-order",
-{
+  }
 
-method:"POST",
 
-headers:{
-"Content-Type":"application/json"
-},
+  try{
 
-body:JSON.stringify({
+    const response=await fetch(
+      "/api/create-order",
+      {
+        method:"POST",
 
-amount:Number(listing.price),
+        headers:{
+          "Content-Type":"application/json"
+        },
 
-listingId:listing.id,
+        body:JSON.stringify({
 
-productName:listing.name,
+          amount:Number(listing.price),
 
-buyerEmail:auth.currentUser.email,
+          listingId:listing.id,
 
-buyerUid:auth.currentUser.uid,
+          productName:listing.name,
 
-sellerUid:listing.ownerUid
+          buyerEmail:auth.currentUser.email,
 
-})
+          buyerUid:auth.currentUser.uid,
 
-});
+          sellerUid:listing.ownerUid
 
-const data=await response.json();
+        })
+      }
+    );
 
-if(!response.ok){
 
-throw new Error(
-data.error||"Order creation failed."
-);
+    const data=await response.json();
 
-}
 
-if(!data.paymentSessionId){
+    if(!response.ok){
 
-throw new Error(
-"Payment session missing."
-);
+      throw new Error(
+        data.error||"Unable to create payment order."
+      );
 
-}
+    }
 
 
-/* CASHFREE */
+    if(!data.paymentSessionId){
 
-const result=await cashfree.checkout({
+      throw new Error(
+        "Cashfree payment session missing."
+      );
 
-paymentSessionId:data.paymentSessionId,
+    }
 
-redirectTarget:"_modal"
 
-});
+    const result=await cashfree.checkout({
 
-if(result?.error){
+      paymentSessionId:data.paymentSessionId,
 
-throw new Error(
-result.error.message||
-"Cashfree checkout failed."
-);
+      redirectTarget:"_modal"
 
-}
+    });
 
 
-/* VERIFY */
+    if(result?.error){
 
-const verify=await fetch(
-"/api/verify-payment",
-{
+      throw new Error(
+        result.error.message||
+        "Cashfree checkout failed."
+      );
 
-method:"POST",
+    }
 
-headers:{
-"Content-Type":"application/json"
-},
 
-body:JSON.stringify({
-orderId:data.orderId
-})
+    /* VERIFY SERVER SIDE */
 
-});
+    const verifyResponse=await fetch(
+      "/api/verify-payment",
+      {
 
-const verification=await verify.json();
+        method:"POST",
 
-if(!verify.ok||!verification.verified){
+        headers:{
+          "Content-Type":"application/json"
+        },
 
-alert(
-"Payment verification failed. Order ID: "+
-data.orderId
-);
+        body:JSON.stringify({
+          orderId:data.orderId
+        })
 
-return;
+      }
+    );
 
-}
 
+    const verified=await verifyResponse.json();
 
-/* SAVE ORDER */
 
-await addDoc(
-collection(db,"orders"),
-{
+    if(!verifyResponse.ok||!verified.verified){
 
-buyerUid:auth.currentUser.uid,
+      alert(
+        "Payment verification failed.\n\n"+
+        "Order ID: "+data.orderId
+      );
 
-buyerEmail:auth.currentUser.email,
+      return;
 
-sellerUid:listing.ownerUid,
+    }
 
-sellerEmail:listing.ownerEmail||"",
 
-listingId:listing.id,
+    /* SAVE ORDER */
 
-productName:listing.name,
+    await addDoc(
+      collection(db,"orders"),
+      {
 
-amount:Number(listing.price),
+        buyerUid:auth.currentUser.uid,
 
-cashfreeOrderId:data.orderId,
+        buyerEmail:auth.currentUser.email,
 
-status:"paid",
+        sellerUid:listing.ownerUid,
 
-deliveryConfirmed:false,
+        sellerEmail:listing.ownerEmail||"",
 
-sellerPaid:false,
+        listingId:listing.id,
 
-createdAt:serverTimestamp()
+        productName:listing.name,
 
-});
+        amount:Number(listing.price),
 
+        commissionRate:
+          commissionRate(listing.price),
 
-/* SOLD OUT */
+        commissionAmount:
+          commissionAmount(listing.price),
 
-await updateDoc(
-doc(db,"listings",listing.id),
-{
+        sellerAmount:
+          Number(listing.price)-
+          commissionAmount(listing.price),
 
-sold:true,
+        cashfreeOrderId:data.orderId,
 
-buyerUid:auth.currentUser.uid,
+        status:"paid",
 
-buyerEmail:auth.currentUser.email,
+        deliveryConfirmed:false,
 
-orderId:data.orderId,
+        sellerPaid:false,
 
-soldAt:serverTimestamp(),
+        createdAt:serverTimestamp()
 
-deliveryConfirmed:false
+      }
+    );
 
-});
 
+    /* MARK SOLD */
 
-alert(
-"Payment successful!\n\nComponent marked SOLD OUT."
-);
+    await updateDoc(
+      doc(db,"listings",listing.id),
+      {
 
-await loadListings();
+        sold:true,
 
-}catch(err){
+        buyerUid:auth.currentUser.uid,
 
-console.error(err);
+        buyerEmail:auth.currentUser.email,
 
-alert(
-"Payment/Order Error:\n\n"+
-err.message
-);
+        orderId:data.orderId,
 
-}
+        soldAt:serverTimestamp(),
+
+        deliveryConfirmed:false
+
+      }
+    );
+
+
+    alert(
+      "Payment successful!\n\n"+
+      "Component is now SOLD OUT."
+    );
+
+    await loadListings();
+
+
+  }catch(error){
+
+    console.error(error);
+
+    alert(
+      "Payment/Order Error:\n\n"+
+      error.message
+    );
+
+  }
 
 };
 
 
-/* ==============================
+/* =========================
    CONTACT SELLER
-============================== */
+========================= */
 
-window.contactSeller=(id)=>{
+window.contactSeller=function(id){
 
-const x=listings.find(a=>a.id===id);
+  const x=listings.find(a=>a.id===id);
 
-if(!x)return;
+  if(!x)return;
 
-let html=`
+  document.getElementById("contactTitle").textContent=
+    "Contact "+(x.seller||"Seller");
 
-<b>${esc(x.name)}</b><br><br>
+  let html=`
 
-Seller: ${esc(x.seller)}<br>
-College: ${esc(x.college)}<br>
-Location: ${esc(x.collegeLocation)}
+    <b>${esc(x.name)}</b><br><br>
 
-`;
+    College: ${esc(x.college||"")}<br>
 
-if(x.whatsapp){
+    Location: ${esc(x.collegeLocation||"")}
 
-const number=
-String(x.whatsapp).replace(/\D/g,"");
+  `;
 
-html+=`
 
-<br><br>
-<a target="_blank"
-href="https://wa.me/${number}">
-📱 Message on WhatsApp
-</a>
+  if(x.whatsapp){
 
-`;
+    const number=
+      String(x.whatsapp).replace(/\D/g,"");
 
-}
+    if(number){
 
-if(x.instagram){
+      html+=`
+      <br><br>
+      <a target="_blank"
+         href="https://wa.me/${number}">
+         📱 Message on WhatsApp
+      </a>`;
 
-const insta=
-String(x.instagram).replace(/^@/,"");
+    }
 
-html+=`
+  }
 
-<br><br>
-<a target="_blank"
-href="https://instagram.com/${encodeURIComponent(insta)}">
-📸 Instagram
-</a>
 
-`;
+  if(x.instagram){
 
-}
+    const insta=
+      String(x.instagram).replace(/^@/,"");
 
-document.getElementById("contactInfo").innerHTML=html;
+    html+=`
+    <br><br>
+    <a target="_blank"
+       href="https://instagram.com/${encodeURIComponent(insta)}">
+       📸 Instagram
+    </a>`;
 
-document.getElementById("contactModal").style.display="flex";
+  }
+
+
+  document.getElementById("contactInfo").innerHTML=html;
+
+  document.getElementById("contactModal").style.display="flex";
 
 };
 
 
-/* ==============================
+/* =========================
    DELIVERY DONE
-============================== */
+========================= */
 
-window.confirmDelivery=async(id)=>{
+window.confirmDelivery=async function(id){
 
-if(!auth.currentUser){
+  if(!auth.currentUser){
 
-alert("Please login first.");
-return;
+    alert("Please login first.");
+    return;
 
-}
-
-const listing=listings.find(x=>x.id===id);
-
-if(!listing)return;
-
-if(listing.buyerUid!==auth.currentUser.uid){
-
-alert("Only the buyer can confirm delivery.");
-return;
-
-}
-
-if(listing.deliveryConfirmed){
-
-alert("Delivery already confirmed.");
-return;
-
-}
-
-if(!confirm(
-"Have you received the component?\n\nConfirm delivery?"
-))return;
-
-try{
-
-await updateDoc(
-doc(db,"listings",id),
-{
-
-deliveryConfirmed:true,
-
-deliveryConfirmedAt:serverTimestamp()
-
-});
+  }
 
 
-const q=query(
-collection(db,"orders"),
-where("listingId","==",id),
-where("buyerUid","==",auth.currentUser.uid)
-);
+  const listing=listings.find(x=>x.id===id);
 
-const snap=await getDocs(q);
+  if(!listing)return;
 
-for(const d of snap.docs){
 
-await updateDoc(
-doc(db,"orders",d.id),
-{
+  if(listing.buyerUid!==auth.currentUser.uid){
 
-deliveryConfirmed:true,
+    alert("Only the buyer can confirm delivery.");
+    return;
 
-deliveryConfirmedAt:serverTimestamp(),
+  }
 
-status:"delivery_confirmed"
 
-});
+  if(listing.deliveryConfirmed){
 
-}
+    alert("Delivery already confirmed.");
+    return;
 
-alert(
-"Delivery confirmed.\n\nFounder can now pay the seller."
-);
+  }
 
-await loadListings();
 
-}catch(err){
+  if(!confirm(
+    "Have you received the component?\n\nConfirm Delivery Done?"
+  ))return;
 
-alert(err.message);
 
-}
+  try{
+
+    await updateDoc(
+      doc(db,"listings",id),
+      {
+
+        deliveryConfirmed:true,
+
+        deliveryConfirmedAt:
+          serverTimestamp()
+
+      }
+    );
+
+
+    const q=query(
+      collection(db,"orders"),
+      where("listingId","==",id),
+      where("buyerUid","==",auth.currentUser.uid)
+    );
+
+
+    const snap=await getDocs(q);
+
+
+    for(const d of snap.docs){
+
+      await updateDoc(
+        doc(db,"orders",d.id),
+        {
+
+          deliveryConfirmed:true,
+
+          deliveryConfirmedAt:
+            serverTimestamp(),
+
+          status:"delivery_confirmed"
+
+        }
+      );
+
+    }
+
+
+    alert(
+      "Delivery confirmed.\n\nFounder can now pay the seller."
+    );
+
+    await loadListings();
+
+  }catch(error){
+
+    alert(error.message);
+
+  }
 
 };
 
 
-/* ==============================
+/* =========================
    PROFILE
-============================== */
+========================= */
 
-window.openProfile=async()=>{
+window.openProfile=async function(){
 
-if(!auth.currentUser){
+  if(!auth.currentUser){
 
-alert("Please login first.");
-openLogin();
-return;
+    alert("Please login first.");
+    openLogin();
+    return;
 
-}
+  }
 
-document.getElementById("profileModal").style.display="flex";
 
-document.getElementById("profileEmail").textContent=
-auth.currentUser.email;
+  document.getElementById("profileModal").style.display="flex";
 
-const ref=doc(
-db,
-"profiles",
-auth.currentUser.uid
-);
+  document.getElementById("profileEmail").textContent=
+    "Email: "+auth.currentUser.email;
 
-const snap=await getDoc(ref);
 
-if(snap.exists()){
+  const profileSnap=await getDoc(
+    doc(db,"profiles",auth.currentUser.uid)
+  );
 
-document.getElementById("profileUpi").value=
-snap.data().upiId||"";
 
-}
+  document.getElementById("profileUpi").value=
+    profileSnap.exists()
+    ?(profileSnap.data().upiId||"")
+    :"";
 
-await loadMyOrders();
+
+  await loadMyOrders();
 
 };
 
 
-window.saveProfile=async(e)=>{
+window.saveProfile=async function(e){
 
-e.preventDefault();
+  e.preventDefault();
 
-if(!auth.currentUser)return;
+  if(!auth.currentUser)return;
 
-const upi=document
-.getElementById("profileUpi")
-.value.trim();
+  const upi=
+    document.getElementById("profileUpi").value.trim();
 
-if(!upi){
+  if(!upi){
 
-alert("Enter UPI ID.");
-return;
+    alert("Enter UPI ID.");
+    return;
 
-}
+  }
 
-try{
 
-await setDoc(
+  try{
 
-doc(
-db,
-"profiles",
-auth.currentUser.uid
-),
+    await setDoc(
+      doc(db,"profiles",auth.currentUser.uid),
+      {
 
-{
+        upiId:upi,
 
-upiId:upi,
+        email:auth.currentUser.email,
 
-email:auth.currentUser.email,
+        updatedAt:serverTimestamp()
 
-updatedAt:serverTimestamp()
+      },
+      {merge:true}
+    );
 
-},
 
-{merge:true}
+    document.getElementById("profileMsg").textContent=
+      "UPI ID saved successfully.";
 
-);
+  }catch(error){
 
-document.getElementById("profileMsg").textContent=
-"UPI ID saved.";
+    alert(error.message);
 
-}catch(err){
-
-alert(err.message);
-
-}
+  }
 
 };
 
 
-/* ==============================
+/* =========================
    MY ORDERS
-============================== */
+========================= */
 
 async function loadMyOrders(){
 
-const box=document.getElementById("myOrders");
+  const box=document.getElementById("myOrders");
 
-box.innerHTML="Loading...";
-
-const q=query(
-collection(db,"orders"),
-where("buyerUid","==",auth.currentUser.uid)
-);
-
-const snap=await getDocs(q);
-
-box.innerHTML="";
-
-if(snap.empty){
-
-box.innerHTML="No orders.";
-
-return;
-
-}
-
-snap.forEach(d=>{
-
-const x=d.data();
-
-box.innerHTML+=`
-
-<div style="padding:12px;border:1px solid #ddd;border-radius:8px;margin:8px 0">
-
-<b>${esc(x.productName)}</b><br>
-
-₹${x.amount}<br>
-
-Status: ${esc(x.status)}
-
-</div>
-
-`;
-
-});
-
-}
+  box.innerHTML="Loading...";
 
 
-/* ==============================
-   FOUNDER APPROVE
-============================== */
+  const q=query(
+    collection(db,"orders"),
+    where("buyerUid","==",auth.currentUser.uid)
+  );
 
-window.approveListing=async(id)=>{
 
-if(!isFounder()){
+  const snap=await getDocs(q);
 
-alert("Founder only.");
-return;
+  box.innerHTML="";
+
+
+  if(snap.empty){
+
+    box.textContent="No orders.";
+    return;
+
+  }
+
+
+  snap.forEach(d=>{
+
+    const x=d.data();
+
+    box.innerHTML+=`
+
+      <div class="order">
+
+        <b>${esc(x.productName||"")}</b><br>
+
+        Amount: ₹${Number(x.amount||0)}<br>
+
+        Status: ${esc(x.status||"paid")}<br>
+
+        Delivery:
+        ${x.deliveryConfirmed
+          ?"Confirmed"
+          :"Waiting for confirmation"}
+
+      </div>
+
+    `;
+
+  });
 
 }
 
-await updateDoc(
-doc(db,"listings",id),
-{
 
-approved:true,
+/* =========================
+   FOUNDER PANEL
+========================= */
 
-approvedBy:auth.currentUser.uid,
+window.openFounder=async function(){
 
-approvedAt:serverTimestamp()
+  if(!founder()){
 
-});
+    alert("Founder only.");
+    return;
 
-alert("Listing approved.");
+  }
 
-await loadListings();
+  document.getElementById("founderModal").style.display="flex";
+
+  await loadPendingListings();
+  await loadFounderOrders();
 
 };
 
 
-/* ==============================
-   HELPERS
-============================== */
+/* =========================
+   PENDING LISTINGS
+========================= */
 
-function isFounder(){
+async function loadPendingListings(){
 
-return auth.currentUser &&
-auth.currentUser.email===FOUNDER_EMAIL;
+  const box=document.getElementById("pendingListings");
+
+  box.innerHTML="Loading...";
+
+
+  const q=query(
+    collection(db,"listings"),
+    where("restricted","==",true),
+    where("approved","==",false)
+  );
+
+
+  const snap=await getDocs(q);
+
+  box.innerHTML="";
+
+
+  if(snap.empty){
+
+    box.textContent="No pending listings.";
+    return;
+
+  }
+
+
+  snap.forEach(d=>{
+
+    const x=d.data();
+
+    box.innerHTML+=`
+
+      <div class="order">
+
+        <b>${esc(x.name)}</b><br>
+
+        ₹${Number(x.price||0)}<br>
+
+        Seller: ${esc(x.seller||"")}<br>
+
+        College: ${esc(x.college||"")}<br><br>
+
+        <button class="primary small"
+          onclick="approveListing('${d.id}')">
+          Approve
+        </button>
+
+      </div>
+
+    `;
+
+  });
 
 }
 
-function esc(s){
 
-return String(s??"")
-.replace(/[&<>"']/g,m=>({
+/* =========================
+   APPROVE
+========================= */
 
-"&":"&amp;",
-"<":"&lt;",
-">":"&gt;",
-'"':"&quot;",
-"'":"&#039;"
+window.approveListing=async function(id){
 
-}[m]));
+  if(!founder()){
+
+    alert("Founder only.");
+    return;
+
+  }
+
+
+  try{
+
+    await updateDoc(
+      doc(db,"listings",id),
+      {
+
+        approved:true,
+
+        approvedBy:auth.currentUser.uid,
+
+        approvedByEmail:auth.currentUser.email,
+
+        approvedAt:serverTimestamp()
+
+      }
+    );
+
+
+    alert("Listing approved.");
+
+    await loadListings();
+    await loadPendingListings();
+
+  }catch(error){
+
+    alert(error.message);
+
+  }
+
+};
+
+
+/* =========================
+   FOUNDER ORDERS
+========================= */
+
+async function loadFounderOrders(){
+
+  const box=document.getElementById("founderOrders");
+
+  box.innerHTML="Loading...";
+
+
+  const snap=await getDocs(
+    collection(db,"orders")
+  );
+
+
+  box.innerHTML="";
+
+
+  if(snap.empty){
+
+    box.textContent="No orders.";
+    return;
+
+  }
+
+
+  for(const d of snap.docs){
+
+    const x=d.data();
+
+
+    /* GET SELLER UPI ONLY HERE */
+
+    let sellerUpi="";
+
+    if(x.sellerUid){
+
+      const profile=await getDoc(
+        doc(db,"profiles",x.sellerUid)
+      );
+
+      if(profile.exists()){
+
+        sellerUpi=
+          profile.data().upiId||"";
+
+      }
+
+    }
+
+
+    const ready=
+      x.deliveryConfirmed===true &&
+      x.sellerPaid!==true;
+
+
+    box.innerHTML+=`
+
+      <div class="order">
+
+        <b>${esc(x.productName||"")}</b><br>
+
+        Order: ${esc(x.cashfreeOrderId||"")}<br>
+
+        Amount: ₹${Number(x.amount||0)}<br>
+
+        Commission:
+        ₹${Number(x.commissionAmount||0).toFixed(2)}<br>
+
+        Seller Amount:
+        ₹${Number(x.sellerAmount||0).toFixed(2)}<br><br>
+
+        Seller UPI:
+        <b>${esc(sellerUpi||"Not provided")}</b><br><br>
+
+        Delivery:
+        ${x.deliveryConfirmed
+          ?"✅ Done"
+          :"⏳ Pending"}<br>
+
+        Seller Payment:
+        ${x.sellerPaid
+          ?"✅ Paid"
+          :"⏳ Not Paid"}
+
+        <br><br>
+
+        ${
+          ready
+          ?`
+          <button class="primary small"
+            onclick="markSellerPaid('${d.id}')">
+            Mark Seller Paid
+          </button>
+          `
+          :""
+        }
+
+      </div>
+
+    `;
+
+  }
 
 }
+
+
+/* =========================
+   MARK SELLER PAID
+========================= */
+
+window.markSellerPaid=async function(orderId){
+
+  if(!founder()){
+
+    alert("Founder only.");
+    return;
+
+  }
+
+
+  const orderSnap=await getDoc(
+    doc(db,"orders",orderId)
+  );
+
+
+  if(!orderSnap.exists()){
+
+    alert("Order not found.");
+    return;
+
+  }
+
+
+  const order=orderSnap.data();
+
+
+  if(!order.deliveryConfirmed){
+
+    alert(
+      "Buyer has not confirmed delivery yet."
+    );
+
+    return;
+
+  }
+
+
+  if(order.sellerPaid){
+
+    alert("Seller is already marked paid.");
+    return;
+
+  }
+
+
+  if(!confirm(
+    "Have you actually sent the seller's payment?\n\n"+
+    "After confirming, this order will be marked Seller Paid."
+  ))return;
+
+
+  try{
+
+    await updateDoc(
+      doc(db,"orders",orderId),
+      {
+
+        sellerPaid:true,
+
+        sellerPaidBy:auth.currentUser.uid,
+
+        sellerPaidByEmail:auth.currentUser.email,
+
+        sellerPaidAt:serverTimestamp(),
+
+        status:"seller_paid"
+
+      }
+    );
+
+
+    alert("Seller marked as Paid.");
+
+    await loadFounderOrders();
+
+  }catch(error){
+
+    alert(error.message);
+
+  }
+
+};
 
 </script>
 
