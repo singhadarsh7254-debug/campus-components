@@ -6,6 +6,18 @@ export default async function handler(req, res) {
   }
 
   try {
+    const appId = process.env.CASHFREE_APP_ID;
+    const secretKey = process.env.CASHFREE_SECRET_KEY;
+
+    console.log("Cashfree App ID exists:", !!appId);
+    console.log("Cashfree Secret Key exists:", !!secretKey);
+
+    if (!appId || !secretKey) {
+      return res.status(500).json({
+        error: "Cashfree environment variables are missing"
+      });
+    }
+
     const {
       amount,
       listingId,
@@ -26,28 +38,13 @@ export default async function handler(req, res) {
       });
     }
 
-    const appId = process.env.CASHFREE_APP_ID;
-    const secretKey = process.env.CASHFREE_SECRET_KEY;
-
-    if (!appId || !secretKey) {
-      return res.status(500).json({
-        error: "Cashfree environment variables are missing"
-      });
-    }
-
     const orderId =
       "cc_" +
       Date.now() +
       "_" +
       Math.random()
         .toString(36)
-        .substring(2, 10);
-
-    const customerId =
-      "customer_" +
-      Date.now();
-
-    const customerPhone = "9999999999";
+        .substring(2, 8);
 
     const payload = {
       order_id: orderId,
@@ -57,11 +54,14 @@ export default async function handler(req, res) {
       order_currency: "INR",
 
       customer_details: {
-        customer_id: customerId,
+        customer_id:
+          "cc_user_" + Date.now(),
 
-        customer_email: buyerEmail,
+        customer_email:
+          buyerEmail,
 
-        customer_phone: customerPhone
+        customer_phone:
+          "9999999999"
       },
 
       order_meta: {
@@ -71,18 +71,7 @@ export default async function handler(req, res) {
 
       order_note:
         productName ||
-        "CampusComponents order",
-
-      order_tags: {
-        listingId:
-          String(listingId || ""),
-
-        sellerUid:
-          String(sellerUid || ""),
-
-        productName:
-          String(productName || "")
-      }
+        "CampusComponents Order"
     };
 
     const response = await fetch(
@@ -97,17 +86,14 @@ export default async function handler(req, res) {
           Accept:
             "application/json",
 
+          "x-api-version":
+            "2025-01-01",
+
           "x-client-id":
             appId,
 
           "x-client-secret":
-            secretKey,
-
-          "x-api-version":
-            "2025-01-01",
-
-          "x-idempotency-key":
-            orderId
+            secretKey
         },
 
         body:
@@ -118,12 +104,12 @@ export default async function handler(req, res) {
     const data =
       await response.json();
 
-    if (!response.ok) {
-      console.error(
-        "Cashfree create order error:",
-        data
-      );
+    console.log(
+      "Cashfree response:",
+      data
+    );
 
+    if (!response.ok) {
       return res.status(response.status).json({
         error:
           data.message ||
