@@ -1,135 +1,203 @@
 export default async function handler(req, res) {
-  // Only POST allowed
+
   if (req.method !== "POST") {
+
     return res.status(405).json({
       error: "Method not allowed"
     });
+
   }
 
+
   try {
-    // Cashfree production credentials
-    const clientId = process.env.CASHFREE_CLIENT_ID;
-    const clientSecret = process.env.CASHFREE_CLIENT_SECRET;
+
+    const clientId =
+      process.env.CASHFREE_CLIENT_ID;
+
+    const clientSecret =
+      process.env.CASHFREE_CLIENT_SECRET;
+
 
     if (!clientId || !clientSecret) {
+
       return res.status(500).json({
-        error: "Cashfree environment variables are missing."
+        error:
+          "Cashfree environment variables are missing."
       });
+
     }
+
 
     const {
       amount,
       listingId,
       productName,
       buyerEmail,
+      buyerUid,
       sellerUid
     } = req.body || {};
 
-    // Validate amount
-    const orderAmount = Number(amount);
 
-    if (!orderAmount || orderAmount <= 0) {
+    const orderAmount =
+      Number(amount);
+
+
+    if (
+      !Number.isFinite(orderAmount) ||
+      orderAmount <= 0
+    ) {
+
       return res.status(400).json({
-        error: "Invalid payment amount."
+        error:
+          "Invalid payment amount."
       });
+
     }
+
 
     if (!buyerEmail) {
+
       return res.status(400).json({
-        error: "Buyer email is required."
+        error:
+          "Buyer email is required."
       });
+
     }
 
-    // Generate unique order ID
+
+    if (!buyerUid) {
+
+      return res.status(400).json({
+        error:
+          "Buyer UID is required."
+      });
+
+    }
+
+
+    if (!listingId) {
+
+      return res.status(400).json({
+        error:
+          "Listing ID is required."
+      });
+
+    }
+
+
+    if (!sellerUid) {
+
+      return res.status(400).json({
+        error:
+          "Seller UID is required."
+      });
+
+    }
+
+
     const orderId =
       "CC_" +
       Date.now() +
       "_" +
       Math.random()
         .toString(36)
-        .substring(2, 8);
+        .substring(2, 9);
 
-    // Production Cashfree API
-    const cashfreeResponse = await fetch(
-      "https://api.cashfree.com/pg/orders",
-      {
-        method: "POST",
 
-        headers: {
-          "Content-Type": "application/json",
+    const response =
+      await fetch(
+        "https://api.cashfree.com/pg/orders",
+        {
 
-          "x-client-id":
-            clientId,
+          method:"POST",
 
-          "x-client-secret":
-            clientSecret,
+          headers:{
 
-          "x-api-version":
-            "2025-01-01"
-        },
+            "Content-Type":
+              "application/json",
 
-        body: JSON.stringify({
+            "x-client-id":
+              clientId,
 
-          order_id:
-            orderId,
+            "x-client-secret":
+              clientSecret,
 
-          order_amount:
-            orderAmount,
-
-          order_currency:
-            "INR",
-
-          customer_details: {
-
-            customer_id:
-              "buyer_" +
-              Date.now(),
-
-            customer_email:
-              buyerEmail,
-
-            customer_phone:
-              "9999999999"
-          },
-
-          order_meta: {
-
-            return_url:
-              "https://campus-components.vercel.app/?order_id={order_id}"
+            "x-api-version":
+              "2025-01-01"
 
           },
 
-          order_note:
-            productName
-              ? `Campus Components - ${productName}`
-              : "Campus Components purchase",
+          body:JSON.stringify({
 
-          order_tags: {
+            order_id:
+              orderId,
 
-            listing_id:
-              String(listingId || ""),
+            order_amount:
+              Number(
+                orderAmount.toFixed(2)
+              ),
 
-            seller_uid:
-              String(sellerUid || "")
+            order_currency:
+              "INR",
 
-          }
+            customer_details:{
 
-        })
-      }
-    );
+              customer_id:
+                String(buyerUid),
+
+              customer_email:
+                buyerEmail,
+
+              customer_phone:
+                "9999999999"
+
+            },
+
+            order_meta:{
+
+              return_url:
+                "https://campus-components.vercel.app/?order_id={order_id}"
+
+            },
+
+            order_note:
+              productName
+                ?`Campus Components - ${productName}`
+                :"Campus Components purchase",
+
+            order_tags:{
+
+              listing_id:
+                String(listingId),
+
+              buyer_uid:
+                String(buyerUid),
+
+              seller_uid:
+                String(sellerUid)
+
+            }
+
+          })
+
+        }
+      );
+
 
     const data =
-      await cashfreeResponse.json();
+      await response.json();
+
 
     console.log(
-      "Cashfree response:",
+      "Cashfree create order:",
       data
     );
 
-    if (!cashfreeResponse.ok) {
+
+    if (!response.ok) {
 
       return res.status(
-        cashfreeResponse.status
+        response.status
       ).json({
 
         error:
@@ -141,10 +209,13 @@ export default async function handler(req, res) {
           data
 
       });
+
     }
 
-    // Payment session must exist
-    if (!data.payment_session_id) {
+
+    if (
+      !data.payment_session_id
+    ) {
 
       return res.status(500).json({
 
@@ -155,13 +226,13 @@ export default async function handler(req, res) {
           data
 
       });
+
     }
 
-    // Send required information to frontend
+
     return res.status(200).json({
 
-      success:
-        true,
+      success:true,
 
       orderId:
         data.order_id ||
@@ -177,19 +248,21 @@ export default async function handler(req, res) {
         data.order_currency,
 
       listingId:
-        listingId || "",
+        listingId,
 
       productName:
         productName || ""
 
     });
 
-  } catch (error) {
+
+  } catch(error) {
 
     console.error(
       "Create order error:",
       error
     );
+
 
     return res.status(500).json({
 
@@ -198,5 +271,7 @@ export default async function handler(req, res) {
         "Unable to create Cashfree order."
 
     });
+
   }
+
 }
