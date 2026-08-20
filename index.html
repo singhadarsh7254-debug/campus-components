@@ -6,8 +6,9 @@
 <title>Campus Components — Student Marketplace</title>
 
 <!-- Cashfree Checkout SDK -->
-<script src="https://sdk.cashfree.com/js/v3/cashfree.js"></script>
-
+const cashfree = Cashfree({
+    mode: "production"
+});
 <style>
 *{box-sizing:border-box}
 
