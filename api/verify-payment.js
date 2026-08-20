@@ -1,49 +1,68 @@
-export default async function handler(req,res){
+export default async function handler(req, res) {
 
-  if(req.method!=="POST"){
+  if (req.method !== "POST") {
 
     return res.status(405).json({
-      error:"Method not allowed"
+      error: "Method not allowed"
     });
 
   }
 
 
-  try{
+  try {
 
-    const {orderId}=req.body||{};
+    const clientId =
+      process.env.CASHFREE_CLIENT_ID;
+
+    const clientSecret =
+      process.env.CASHFREE_CLIENT_SECRET;
 
 
-    if(!orderId){
+    if (!clientId || !clientSecret) {
 
-      return res.status(400).json({
-        error:"Order ID is required"
+      return res.status(500).json({
+        error:
+          "Cashfree environment variables are missing."
       });
 
     }
 
 
-    const response=
+    const {
+      orderId
+    } = req.body || {};
+
+
+    if (!orderId) {
+
+      return res.status(400).json({
+        error:
+          "Cashfree order ID is required."
+      });
+
+    }
+
+
+    const response =
       await fetch(
-        "https://api.cashfree.com/pg/orders/"
-        +encodeURIComponent(orderId),
+        `https://api.cashfree.com/pg/orders/${encodeURIComponent(orderId)}`,
         {
 
           method:"GET",
 
           headers:{
 
-            "Content-Type":
-              "application/json",
+            "x-client-id":
+              clientId,
+
+            "x-client-secret":
+              clientSecret,
 
             "x-api-version":
               "2025-01-01",
 
-            "x-client-id":
-              process.env.CASHFREE_CLIENT_ID,
-
-            "x-client-secret":
-              process.env.CASHFREE_CLIENT_SECRET
+            "Content-Type":
+              "application/json"
 
           }
 
@@ -51,54 +70,89 @@ export default async function handler(req,res){
       );
 
 
-    const data=await response.json();
+    const data =
+      await response.json();
 
 
-    if(!response.ok){
+    console.log(
+      "Cashfree verify response:",
+      data
+    );
 
-      console.error(
-        "Cashfree verification:",
-        data
-      );
 
-      return res.status(response.status).json({
+    if (!response.ok) {
+
+      return res.status(
+        response.status
+      ).json({
+
+        verified:false,
 
         error:
           data.message ||
-          data.error ||
-          "Cashfree verification failed"
+          data.error_description ||
+          "Cashfree payment verification failed.",
+
+        details:
+          data
 
       });
 
     }
 
 
-    const verified=
-      data.order_status==="PAID";
+    const status =
+      String(
+        data.order_status || ""
+      ).toUpperCase();
+
+
+    const verified =
+      status === "PAID";
 
 
     return res.status(200).json({
 
-      verified:verified,
+      verified:
 
-      orderStatus:
-        data.order_status || "UNKNOWN",
+        verified,
 
       orderId:
-        data.order_id || orderId,
+
+        data.order_id ||
+        orderId,
+
+      orderStatus:
+
+        data.order_status || "",
 
       amount:
-        data.order_amount || 0
+
+        data.order_amount || null,
+
+      currency:
+
+        data.order_currency || "INR"
 
     });
 
 
-  }catch(error){
+  } catch(error) {
 
-    console.error(error);
+    console.error(
+      "Verify payment error:",
+      error
+    );
+
 
     return res.status(500).json({
-      error:error.message
+
+      verified:false,
+
+      error:
+        error.message ||
+        "Unable to verify payment."
+
     });
 
   }
