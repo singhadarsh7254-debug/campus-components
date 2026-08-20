@@ -1,4 +1,5 @@
 export default async function handler(req, res) {
+
   if (req.method !== "POST") {
     return res.status(405).json({
       error: "Method not allowed"
@@ -6,20 +7,12 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { orderId } = req.body || {};
+
+    const { orderId } = req.body;
 
     if (!orderId) {
       return res.status(400).json({
-        error: "Cashfree orderId is required"
-      });
-    }
-
-    const appId = process.env.CASHFREE_APP_ID;
-    const secretKey = process.env.CASHFREE_SECRET_KEY;
-
-    if (!appId || !secretKey) {
-      return res.status(500).json({
-        error: "Cashfree environment variables are missing"
+        error: "Order ID is required"
       });
     }
 
@@ -29,9 +22,10 @@ export default async function handler(req, res) {
         method: "GET",
 
         headers: {
+          "Content-Type": "application/json",
           "x-api-version": "2025-01-01",
-          "x-client-id": appId,
-          "x-client-secret": secretKey
+          "x-client-id": process.env.CASHFREE_CLIENT_ID,
+          "x-client-secret": process.env.CASHFREE_CLIENT_SECRET
         }
       }
     );
@@ -39,15 +33,17 @@ export default async function handler(req, res) {
     const data = await response.json();
 
     if (!response.ok) {
-      console.error("Cashfree verify error:", data);
+
+      console.error(
+        "Cashfree verification:",
+        data
+      );
 
       return res.status(response.status).json({
-        verified: false,
         error:
           data.message ||
           data.error ||
-          "Unable to verify Cashfree payment",
-        details: data
+          "Cashfree verification failed"
       });
     }
 
@@ -55,18 +51,26 @@ export default async function handler(req, res) {
       data.order_status === "PAID";
 
     return res.status(200).json({
+
       verified,
-      orderId: data.order_id,
-      orderStatus: data.order_status,
-      paymentDetails: data
+
+      orderStatus:
+        data.order_status || "UNKNOWN",
+
+      orderId:
+        data.order_id || orderId,
+
+      amount:
+        data.order_amount || 0
+
     });
 
   } catch (error) {
-    console.error("Verify payment error:", error);
+
+    console.error(error);
 
     return res.status(500).json({
-      verified: false,
-      error: error.message || "Internal server error"
+      error: error.message
     });
   }
 }
