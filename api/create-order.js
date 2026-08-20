@@ -1,7 +1,4 @@
-import Razorpay from "razorpay";
-
 export default async function handler(req, res) {
-
   if (req.method !== "POST") {
     return res.status(405).json({
       error: "Method not allowed"
@@ -9,7 +6,6 @@ export default async function handler(req, res) {
   }
 
   try {
-
     const {
       amount,
       listingId,
@@ -24,100 +20,96 @@ export default async function handler(req, res) {
       });
     }
 
-    if (!listingId) {
-      return res.status(400).json({
-        error: "Listing ID is required"
-      });
-    }
+    const appId = process.env.CASHFREE_APP_ID;
+    const secretKey = process.env.CASHFREE_SECRET_KEY;
 
-    const keyId =
-      process.env.RAZORPAY_KEY_ID;
-
-    const keySecret =
-      process.env.RAZORPAY_KEY_SECRET;
-
-    if (!keyId || !keySecret) {
+    if (!appId || !secretKey) {
       return res.status(500).json({
-        error:
-          "Razorpay configuration is missing on server."
+        error: "Cashfree environment variables are missing"
       });
     }
 
-    const razorpay = new Razorpay({
-      key_id: keyId,
-      key_secret: keySecret
-    });
+    const orderId =
+      "CC_" +
+      Date.now() +
+      "_" +
+      Math.random().toString(36).substring(2, 8);
 
-    const amountInPaise =
-      Math.round(Number(amount) * 100);
+    const customerId =
+      buyerEmail
+        ? buyerEmail.replace(/[^a-zA-Z0-9_-]/g, "_")
+        : "customer_" + Date.now();
 
-    const order =
-      await razorpay.orders.create({
+    const response = await fetch(
+      "https://sandbox.cashfree.com/pg/orders",
+      {
+        method: "POST",
 
-        amount: amountInPaise,
+        headers: {
+          "Content-Type": "application/json",
+          "x-api-version": "2025-01-01",
+          "x-client-id": appId,
+          "x-client-secret": secretKey
+        },
 
-        currency: "INR",
+        body: JSON.stringify({
+          order_id: orderId,
 
-        receipt:
-          `cc_${String(listingId).slice(0,20)}_${Date.now()}`,
+          order_amount: Number(amount),
 
-        notes: {
+          order_currency: "INR",
 
-          listingId:
-            String(listingId),
+          customer_details: {
+            customer_id: customerId,
+            customer_email: buyerEmail || "customer@example.com",
+            customer_phone: "9999999999"
+          },
 
-          productName:
-            String(
-              productName || "Campus Component"
-            ).slice(0,200),
+          order_meta: {
+            return_url:
+              "https://YOUR-VERCEL-DOMAIN.vercel.app/?order_id={order_id}"
+          },
 
-          buyerEmail:
-            String(
-              buyerEmail || ""
-            ).slice(0,200),
+          order_note:
+            productName || "Campus Components Order",
 
-          sellerUid:
-            String(
-              sellerUid || ""
-            ).slice(0,200)
+          order_tags: {
+            listingId: String(listingId || ""),
+            sellerUid: String(sellerUid || "")
+          }
+        })
+      }
+    );
 
-        }
+    const data = await response.json();
 
+    if (!response.ok) {
+      console.error("Cashfree create order error:", data);
+
+      return res.status(response.status).json({
+        error:
+          data.message ||
+          data.error ||
+          "Cashfree order creation failed",
+        details: data
       });
+    }
 
     return res.status(200).json({
-
       success: true,
 
       orderId:
-        order.id,
+        data.order_id || orderId,
 
-      amount:
-        order.amount,
-
-      currency:
-        order.currency
-
+      paymentSessionId:
+        data.payment_session_id
     });
 
   } catch (error) {
-
-    console.error(
-      "Razorpay order creation failed:",
-      error
-    );
+    console.error("Create order error:", error);
 
     return res.status(500).json({
-
-      success: false,
-
-      error:
-        error?.error?.description ||
-        error?.message ||
-        "Failed to create Razorpay order."
-
+      error: error.message || "Internal server error"
     });
-
   }
-
 }
