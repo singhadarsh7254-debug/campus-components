@@ -66,9 +66,9 @@ export default async function handler(req, res) {
           },
 
           order_meta: {
-            return_url:
-              "https://YOUR-VERCEL-DOMAIN.vercel.app/?order_id={order_id}"
-          },
+  return_url:
+    "https://campus-components.vercel.app/?order_id={order_id}"
+},
 
           order_note:
             productName || "Campus Components Order",
