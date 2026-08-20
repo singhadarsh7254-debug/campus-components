@@ -1932,31 +1932,209 @@ window.buyNow=buyNow;
    VERIFY PAYMENT
 ===================================================== */
 
-async function verifyCashfreeOrder(
-orderId,
-listing
-){
+async function verifyCashfreeOrder(orderId, listing) {
 
-try{
+  const user = auth.currentUser;
 
-const response =
-await fetch(
-"/api/verify-payment",
-{
+  if (!user) {
+    alert("Login session expired. Please login again.");
+    openLogin();
+    return;
+  }
 
-method:"POST",
+  try {
 
-headers:{
-"Content-Type":
-"application/json"
-},
+    const response = await fetch(
+      "/api/verify-payment",
+      {
+        method: "POST",
 
-body:JSON.stringify({
-orderId
-})
+        headers: {
+          "Content-Type": "application/json"
+        },
 
-}
-);
+        body: JSON.stringify({
+          orderId: orderId
+        })
+      }
+    );
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(
+        data.error || "Payment verification failed."
+      );
+    }
+
+    if (!data.verified) {
+
+      alert(
+        "Payment is not completed yet.\n\n" +
+        "Order status: " +
+        (data.orderStatus || "UNKNOWN")
+      );
+
+      return;
+    }
+
+
+    // =========================
+    // PAYMENT ID
+    // =========================
+
+    let cashfreePaymentId = "";
+
+    if (
+      data.paymentDetails &&
+      Array.isArray(
+        data.paymentDetails.payment_details
+      )
+    ) {
+
+      const successfulPayment =
+        data.paymentDetails.payment_details.find(
+          payment =>
+            payment.payment_status === "SUCCESS"
+        );
+
+      if (successfulPayment) {
+
+        cashfreePaymentId =
+          successfulPayment.cf_payment_id ||
+          successfulPayment.payment_id ||
+          "";
+
+      }
+    }
+
+
+    // =========================
+    // COMMISSION
+    // =========================
+
+    const price =
+      Number(listing.price || 0);
+
+    const commissionRate =
+      getCommissionRate(price);
+
+    const commissionAmount =
+      calculateCommission(price);
+
+    const sellerAmount =
+      price - commissionAmount;
+
+
+    // =========================
+    // ORDER DATA
+    // =========================
+
+    const orderData = {
+
+      buyerUid:
+        user.uid,
+
+      buyerEmail:
+        user.email || "",
+
+      sellerUid:
+        listing.ownerUid || "",
+
+      sellerEmail:
+        listing.ownerEmail || "",
+
+      listingId:
+        listing.id,
+
+      productName:
+        listing.name || "",
+
+      amount:
+        price,
+
+      commissionRate:
+        commissionRate,
+
+      commissionAmount:
+        commissionAmount,
+
+      sellerAmount:
+        sellerAmount,
+
+      cashfreeOrderId:
+        orderId,
+
+      cashfreePaymentId:
+        cashfreePaymentId,
+
+      status:
+        "paid",
+
+      createdAt:
+        serverTimestamp()
+    };
+
+
+    console.log(
+      "Saving order:",
+      orderData
+    );
+
+
+    // =========================
+    // SAVE ORDER
+    // =========================
+
+    await addDoc(
+      collection(db, "orders"),
+      orderData
+    );
+
+
+    // =========================
+    // MARK LISTING SOLD
+    // =========================
+
+    await updateDoc(
+      doc(db, "listings", listing.id),
+      {
+        sold: true,
+        soldAt: serverTimestamp(),
+        soldOrderId: orderId
+      }
+    );
+
+
+    // =========================
+    // SUCCESS
+    // =========================
+
+    alert(
+      "Payment successful! 🎉\n\n" +
+      "Order ID:\n" +
+      orderId +
+      "\n\n" +
+      "Seller Amount: ₹" +
+      sellerAmount.toFixed(2)
+    );
+
+
+    await loadListings();
+
+  } catch (error) {
+
+    console.error(
+      "Verification/order error:",
+      error
+    );
+
+    alert(
+      "Payment successful, but order processing failed.\n\n" +
+      error.message
+    );
+  }
+   }
 
 const data =
 await response.json();
