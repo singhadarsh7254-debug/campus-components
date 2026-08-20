@@ -10,94 +10,106 @@
 <script src="https://sdk.cashfree.com/js/v3/cashfree.js"></script>
 
 <style>
-*{box-sizing:border-box}
+*{
+  box-sizing:border-box
+}
 
 body{
-margin:0;
-font-family:Arial,Helvetica,sans-serif;
-background:#f6f7fb;
-color:#172033
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:#f6f7fb;
+  color:#172033
 }
 
 header{
-background:#101828;
-color:white;
-padding:16px 6%;
-display:flex;
-align-items:center;
-justify-content:space-between;
-gap:15px;
-position:sticky;
-top:0;
-z-index:10
+  background:#101828;
+  color:white;
+  padding:16px 6%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+  position:sticky;
+  top:0;
+  z-index:10
 }
 
 .logo{
-font-size:22px;
-font-weight:800
+  font-size:22px;
+  font-weight:800
 }
 
 .logo span{
-color:#63b3ed
+  color:#63b3ed
 }
 
 nav{
-display:flex;
-align-items:center;
-gap:8px;
-flex-wrap:wrap
+  display:flex;
+  align-items:center;
+  gap:8px;
+  flex-wrap:wrap
+}
+
+nav a{
+  color:white;
+  text-decoration:none
 }
 
 .btn{
-border:0;
-border-radius:9px;
-padding:10px 15px;
-font-weight:700;
-cursor:pointer
+  border:0;
+  border-radius:9px;
+  padding:10px 15px;
+  font-weight:700;
+  cursor:pointer
 }
 
 .primary{
-background:#2f80ed;
-color:white
+  background:#2f80ed;
+  color:white
 }
 
 .secondary{
-background:#eaf2ff;
-color:#1558a6
+  background:#eaf2ff;
+  color:#1558a6
 }
 
 .danger{
-background:#fee4e2;
-color:#b42318
+  background:#fee4e2;
+  color:#b42318
+}
+
+.success{
+  background:#12b76a;
+  color:white
 }
 
 .dark{
-background:#344054;
-color:white
+  background:#344054;
+  color:white
 }
 
 .hero{
-padding:50px 6%;
-background:linear-gradient(135deg,#eaf3ff,#fff)
+  padding:50px 6%;
+  background:linear-gradient(135deg,#eaf3ff,#fff)
 }
 
 .hero h1{
-font-size:40px;
-max-width:750px;
-margin:0 0 12px
+  font-size:40px;
+  max-width:750px;
+  margin:0 0 12px
 }
 
 .hero p{
-font-size:18px;
-color:#536174;
-max-width:700px
+  font-size:18px;
+  color:#536174;
+  max-width:700px
 }
 
 .search{
-display:flex;
-gap:10px;
-max-width:900px;
-margin-top:25px
+  display:flex;
+  gap:10px;
+  max-width:900px;
+  margin-top:25px
 }
 
 .search input,
@@ -107,263 +119,291 @@ margin-top:25px
 .form textarea,
 .toolbar input,
 .toolbar select{
-width:100%;
-padding:12px;
-border:1px solid #d6dce5;
-border-radius:9px;
-background:white
+  width:100%;
+  padding:12px;
+  border:1px solid #d6dce5;
+  border-radius:9px;
+  background:white
 }
 
 .container{
-padding:35px 6%
+  padding:35px 6%
 }
 
 .section-head{
-display:flex;
-justify-content:space-between;
-align-items:center;
-gap:15px;
-margin-bottom:18px
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+  margin-bottom:18px
 }
 
 .grid{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:18px
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:18px
 }
 
 .card{
-background:white;
-border:1px solid #e5e9f0;
-border-radius:14px;
-overflow:hidden;
-box-shadow:0 3px 12px #1018280b
+  background:white;
+  border:1px solid #e5e9f0;
+  border-radius:14px;
+  overflow:hidden;
+  box-shadow:0 3px 12px #1018280b
 }
 
 .pic{
-height:170px;
-background:#eef2f7;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:55px
+  height:170px;
+  background:#eef2f7;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:55px
 }
 
 .pic img{
-width:100%;
-height:100%;
-object-fit:cover
+  width:100%;
+  height:100%;
+  object-fit:cover
 }
 
 .card-body{
-padding:15px
+  padding:15px
 }
 
 .card h3{
-margin:0 0 8px;
-font-size:17px
+  margin:0 0 8px;
+  font-size:17px
 }
 
 .price{
-font-size:21px;
-font-weight:800
+  font-size:21px;
+  font-weight:800
 }
 
 .meta{
-font-size:13px;
-color:#687588;
-margin:8px 0 13px;
-line-height:1.6
+  font-size:13px;
+  color:#687588;
+  margin:8px 0 13px;
+  line-height:1.6
 }
 
 .badge{
-display:inline-block;
-background:#e9f8ef;
-color:#16834a;
-padding:5px 8px;
-border-radius:20px;
-font-size:11px;
-font-weight:700
+  display:inline-block;
+  background:#e9f8ef;
+  color:#16834a;
+  padding:5px 8px;
+  border-radius:20px;
+  font-size:11px;
+  font-weight:700
 }
 
 .location{
-display:inline-block;
-background:#fff4e5;
-color:#9a5b00;
-padding:5px 8px;
-border-radius:20px;
-font-size:11px;
-font-weight:700;
-margin-top:5px
+  display:inline-block;
+  background:#fff4e5;
+  color:#9a5b00;
+  padding:5px 8px;
+  border-radius:20px;
+  font-size:11px;
+  font-weight:700;
+  margin-top:5px
 }
 
 .profile-pill{
-display:inline-block;
-padding:5px 8px;
-border-radius:20px;
-background:#eef6ff;
-color:#1558a6;
-font-size:11px;
-font-weight:700
+  display:inline-block;
+  padding:5px 8px;
+  border-radius:20px;
+  background:#eef6ff;
+  color:#1558a6;
+  font-size:11px;
+  font-weight:700
 }
 
 .card-actions{
-display:flex;
-gap:7px;
-flex-wrap:wrap
+  display:flex;
+  gap:7px;
+  flex-wrap:wrap
 }
 
 .small-btn{
-padding:8px 10px;
-border-radius:8px;
-font-size:12px
+  padding:8px 10px;
+  border-radius:8px;
+  font-size:12px
 }
 
 .toolbar{
-display:flex;
-gap:10px;
-flex-wrap:wrap;
-margin-bottom:18px
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-bottom:18px
 }
 
 .notice{
-padding:13px 15px;
-border-radius:10px;
-background:#fff8e6;
-color:#8a5b00;
-margin-bottom:20px;
-border:1px solid #f2dfaa
+  padding:13px 15px;
+  border-radius:10px;
+  background:#fff8e6;
+  color:#8a5b00;
+  margin-bottom:20px;
+  border:1px solid #f2dfaa
 }
 
 .empty{
-display:none;
-text-align:center;
-padding:35px;
-color:#667085
+  display:none;
+  text-align:center;
+  padding:35px;
+  color:#667085
 }
 
 .modal{
-display:none;
-position:fixed;
-inset:0;
-background:#0008;
-align-items:center;
-justify-content:center;
-z-index:100
+  display:none;
+  position:fixed;
+  inset:0;
+  background:#0008;
+  align-items:center;
+  justify-content:center;
+  z-index:100
 }
 
 .modal-box{
-background:white;
-border-radius:15px;
-padding:24px;
-width:min(560px,94%);
-max-height:92vh;
-overflow:auto
+  background:white;
+  border-radius:15px;
+  padding:24px;
+  width:min(560px,94%);
+  max-height:92vh;
+  overflow:auto
 }
 
 .close{
-float:right;
-background:none;
-border:0;
-font-size:25px;
-cursor:pointer
+  float:right;
+  background:none;
+  border:0;
+  font-size:25px;
+  cursor:pointer
 }
 
 .form{
-display:grid;
-gap:12px
+  display:grid;
+  gap:12px
 }
 
 .upload-box{
-border:2px dashed #cbd5e1;
-border-radius:10px;
-padding:15px;
-text-align:center;
-background:#f8fafc
+  border:2px dashed #cbd5e1;
+  border-radius:10px;
+  padding:15px;
+  text-align:center;
+  background:#f8fafc
 }
 
 .upload-preview{
-width:100%;
-height:180px;
-object-fit:cover;
-border-radius:10px;
-margin-top:8px;
-display:none
+  width:100%;
+  height:180px;
+  object-fit:cover;
+  border-radius:10px;
+  margin-top:8px;
+  display:none
 }
 
 .contact-info{
-background:#f8fafc;
-border-radius:10px;
-padding:15px;
-margin-top:12px
+  background:#f8fafc;
+  border-radius:10px;
+  padding:15px;
+  margin-top:12px
 }
 
 .contact-link{
-display:block;
-text-decoration:none;
-margin-top:10px
+  display:block;
+  text-decoration:none;
+  margin-top:10px
 }
 
 .login-status{
-font-size:12px;
-color:#dbe4f0
+  font-size:12px;
+  color:#dbe4f0
 }
 
 .restricted{
-background:#fff1f0;
-color:#b42318;
-padding:6px 9px;
-border-radius:20px;
-font-size:11px;
-font-weight:700;
-display:inline-block
+  background:#fff1f0;
+  color:#b42318;
+  padding:6px 9px;
+  border-radius:20px;
+  font-size:11px;
+  font-weight:700;
+  display:inline-block
 }
 
 .approved{
-background:#e9f8ef;
-color:#16834a;
-padding:6px 9px;
-border-radius:20px;
-font-size:11px;
-font-weight:700;
-display:inline-block
+  background:#e9f8ef;
+  color:#16834a;
+  padding:6px 9px;
+  border-radius:20px;
+  font-size:11px;
+  font-weight:700;
+  display:inline-block
 }
 
 .pending{
-background:#fff4e5;
-color:#9a5b00;
-padding:6px 9px;
-border-radius:20px;
-font-size:11px;
-font-weight:700;
-display:inline-block
+  background:#fff4e5;
+  color:#9a5b00;
+  padding:6px 9px;
+  border-radius:20px;
+  font-size:11px;
+  font-weight:700;
+  display:inline-block
 }
 
 .founder{
-background:#f3e8ff;
-color:#7e22ce;
-padding:6px 9px;
-border-radius:20px;
-font-size:11px;
-font-weight:700;
-display:inline-block
+  background:#f3e8ff;
+  color:#7e22ce;
+  padding:6px 9px;
+  border-radius:20px;
+  font-size:11px;
+  font-weight:700;
+  display:inline-block
+}
+
+.sold{
+  background:#344054;
+  color:white;
+  padding:6px 9px;
+  border-radius:20px;
+  font-size:11px;
+  font-weight:700;
+  display:inline-block
+}
+
+.delivery{
+  background:#eef6ff;
+  color:#1558a6;
+  padding:6px 9px;
+  border-radius:20px;
+  font-size:11px;
+  font-weight:700;
+  display:inline-block
+}
+
+.order-box{
+  background:#f8fafc;
+  border:1px solid #e4e7ec;
+  padding:15px;
+  border-radius:10px;
+  margin-bottom:12px
 }
 
 footer{
-padding:30px 6%;
-background:#101828;
-color:#cbd5e1;
-margin-top:30px
+  padding:30px 6%;
+  background:#101828;
+  color:#cbd5e1;
+  margin-top:30px
 }
 
 @media(max-width:900px){
 
 .grid{
-grid-template-columns:repeat(2,1fr)
+  grid-template-columns:repeat(2,1fr)
 }
 
 .hero h1{
-font-size:34px
+  font-size:34px
 }
 
 }
@@ -371,28 +411,25 @@ font-size:34px
 @media(max-width:600px){
 
 header{
-padding:13px 4%
+  padding:13px 4%
 }
 
-nav a{
-display:none
-}
-
-.hero,.container{
-padding-left:4%;
-padding-right:4%
+.hero,
+.container{
+  padding-left:4%;
+  padding-right:4%
 }
 
 .search{
-flex-direction:column
+  flex-direction:column
 }
 
 .grid{
-grid-template-columns:1fr
+  grid-template-columns:1fr
 }
 
 .logo{
-font-size:18px
+  font-size:18px
 }
 
 }
@@ -413,20 +450,31 @@ Not logged in
 
 <nav>
 
-<a href="#browse" style="color:white;text-decoration:none">
-Browse
-</a>
+<a href="#browse">Browse</a>
 
-<button class="btn secondary" onclick="openLogin()" id="loginBtn">
+<button
+class="btn secondary"
+onclick="openLogin()"
+id="loginBtn">
 Login
 </button>
 
-<button class="btn primary" onclick="openSell()">
+<button
+class="btn primary"
+onclick="openSell()">
 + Sell Component
 </button>
 
-<button class="btn secondary" onclick="openRequirement()">
+<button
+class="btn secondary"
+onclick="openRequirement()">
 + Need Component
+</button>
+
+<button
+class="btn dark"
+onclick="openProfile()">
+My Profile
 </button>
 
 </nav>
@@ -448,16 +496,14 @@ Find Arduino boards, sensors, motors, modules, lab equipment and useful student 
 
 <input
 id="heroSearch"
-placeholder="Search MQ2, Arduino, NRF24L01, sensor..."
-oninput="syncHeroSearch()"
->
+placeholder="Search MQ2, Arduino, NRF24L01..."
+oninput="syncHeroSearch()">
 
-<select id="heroCondition" onchange="syncHeroSearch()">
+<select
+id="heroCondition"
+onchange="syncHeroSearch()">
 
-<option value="">
-Any condition
-</option>
-
+<option value="">Any condition</option>
 <option>Working</option>
 <option>New</option>
 
@@ -465,8 +511,7 @@ Any condition
 
 <button
 class="btn primary"
-onclick="document.getElementById('browse').scrollIntoView({behavior:'smooth'})"
->
+onclick="document.getElementById('browse').scrollIntoView({behavior:'smooth'})">
 Find Components
 </button>
 
@@ -479,9 +524,7 @@ Find Components
 
 <div class="section-head">
 
-<h2>
-Components near you
-</h2>
+<h2>Components near you</h2>
 
 <span id="count" class="badge">
 0 listings
@@ -490,7 +533,7 @@ Components near you
 </div>
 
 <div class="notice">
-💡 Search any component. Listings from students are loaded from Firebase automatically.
+💡 Listings are loaded from Firebase.
 </div>
 
 <div class="toolbar">
@@ -498,10 +541,11 @@ Components near you
 <input
 id="search"
 placeholder="Search any component..."
-oninput="filterCards()"
->
+oninput="filterCards()">
 
-<select id="condition" onchange="filterCards()">
+<select
+id="condition"
+onchange="filterCards()">
 
 <option value="">Any condition</option>
 <option>Working</option>
@@ -509,7 +553,9 @@ oninput="filterCards()"
 
 </select>
 
-<select id="sort" onchange="filterCards()">
+<select
+id="sort"
+onchange="filterCards()">
 
 <option value="new">Newest</option>
 <option value="low">Price: Low to High</option>
@@ -517,7 +563,9 @@ oninput="filterCards()"
 
 </select>
 
-<select id="locationFilter" onchange="filterCards()">
+<select
+id="locationFilter"
+onchange="filterCards()">
 
 <option value="">All locations</option>
 
@@ -542,10 +590,6 @@ No matching components found.
 
 Student electronics marketplace · Buy locally · Sell locally
 
-<br><br>
-
-Founder Platform · Tiered Platform Commission
-
 </footer>
 
 
@@ -559,28 +603,27 @@ Founder Platform · Tiered Platform Commission
 
 <h2 id="authTitle">Login</h2>
 
-<form class="form" onsubmit="handleAuth(event)">
+<form
+class="form"
+onsubmit="handleAuth(event)">
 
 <input
 id="authEmail"
 type="email"
 required
-placeholder="Email address"
->
+placeholder="Email address">
 
 <input
 id="authPassword"
 type="password"
 required
 minlength="6"
-placeholder="Password"
->
+placeholder="Password">
 
 <button
 class="btn primary"
 type="submit"
-id="authSubmit"
->
+id="authSubmit">
 Login
 </button>
 
@@ -591,15 +634,63 @@ Login
 <button
 class="btn secondary"
 onclick="toggleAuthMode()"
-id="toggleAuth"
->
+id="toggleAuth">
 Create new account
 </button>
 
 <p id="authMessage"></p>
 
 </div>
+</div>
 
+
+<!-- PROFILE -->
+
+<div class="modal" id="profileModal">
+
+<div class="modal-box">
+
+<button class="close" onclick="closeProfile()">×</button>
+
+<h2>My Seller Profile</h2>
+
+<div id="profileEmail"
+style="margin-bottom:15px">
+</div>
+
+<form
+class="form"
+onsubmit="saveProfile(event)">
+
+<input
+id="profileName"
+placeholder="Your name"
+required>
+
+<input
+id="profileCollege"
+placeholder="College name"
+required>
+
+<input
+id="profileUpi"
+placeholder="Seller UPI ID e.g. name@upi"
+required>
+
+<small style="color:#667085">
+UPI ID is stored in your seller profile.
+Only the founder/admin can read seller UPI details.
+</small>
+
+<button
+class="btn primary"
+type="submit">
+Save Profile
+</button>
+
+</form>
+
+</div>
 </div>
 
 
@@ -613,13 +704,14 @@ Create new account
 
 <h2 id="sellTitle">Sell a Component</h2>
 
-<form class="form" onsubmit="saveListing(event)">
+<form
+class="form"
+onsubmit="saveListing(event)">
 
 <input
 id="name"
 required
-placeholder="Component name e.g. MQ2 Sensor"
->
+placeholder="Component name e.g. MQ2 Sensor">
 
 <input
 id="price"
@@ -627,13 +719,11 @@ required
 type="number"
 min="1"
 placeholder="Price ₹"
-oninput="showCommission()"
->
+oninput="showCommission()">
 
 <div
 id="commissionBox"
-style="background:#eef6ff;padding:12px;border-radius:10px"
->
+style="background:#eef6ff;padding:12px;border-radius:10px">
 Platform commission will appear here.
 </div>
 
@@ -648,30 +738,25 @@ Platform commission will appear here.
 <input
 id="seller"
 required
-placeholder="Your name"
->
+placeholder="Your name">
 
 <input
 id="college"
 required
-placeholder="College name"
->
+placeholder="College name">
 
 <input
 id="collegeLocation"
 required
-placeholder="College location e.g. Mathura, Noida"
->
+placeholder="College location">
 
 <input
 id="whatsapp"
-placeholder="WhatsApp number"
->
+placeholder="WhatsApp number">
 
 <input
 id="instagram"
-placeholder="Instagram ID e.g. @username"
->
+placeholder="Instagram ID">
 
 <div class="upload-box">
 
@@ -683,53 +768,39 @@ placeholder="Instagram ID e.g. @username"
 id="image"
 type="file"
 accept="image/*"
-onchange="previewImage(event)"
->
+onchange="previewImage(event)">
 
 <img
 id="preview"
-class="upload-preview"
->
+class="upload-preview">
 
 </div>
 
 <textarea
 id="desc"
 rows="3"
-placeholder="Component description"
-></textarea>
+placeholder="Component description">
+</textarea>
 
 <label>
 
 <input
 type="checkbox"
-id="restrictedCheck"
->
+id="restrictedCheck">
 
 This item may need approval
 
 </label>
 
-<small style="color:#667085">
-
-Allowed student-use examples:
-lab coat, drafter scale, calculator,
-Arduino, sensors, motors, project components,
-electronics tools and similar college-use items.
-
-</small>
-
 <button
 class="btn primary"
-type="submit"
->
+type="submit">
 Publish Listing
 </button>
 
 </form>
 
 </div>
-
 </div>
 
 
@@ -739,55 +810,55 @@ Publish Listing
 
 <div class="modal-box">
 
-<button class="close" onclick="closeRequirement()">×</button>
+<button
+class="close"
+onclick="closeRequirement()">
+×
+</button>
 
 <h2>Post a Requirement</h2>
 
-<form class="form" onsubmit="addRequirement(event)">
+<form
+class="form"
+onsubmit="addRequirement(event)">
 
 <input
 id="reqName"
 required
-placeholder="Component you need"
->
+placeholder="Component you need">
 
 <input
 id="reqBudget"
 type="number"
-placeholder="Maximum budget ₹"
->
+placeholder="Maximum budget ₹">
 
 <input
 id="reqQty"
 type="number"
 min="1"
 value="1"
-placeholder="Quantity"
->
+placeholder="Quantity">
 
 <textarea
 id="reqDetails"
 rows="3"
-placeholder="Details / preferred condition"
-></textarea>
+placeholder="Details">
+</textarea>
 
 <input
 id="reqContact"
 required
-placeholder="WhatsApp / Instagram"
->
+placeholder="WhatsApp / Instagram">
 
 <button
 class="btn primary"
-type="submit"
->
+type="submit">
 Post Requirement
 </button>
 
 </form>
 
 </div>
-
 </div>
 
 
@@ -797,14 +868,44 @@ Post Requirement
 
 <div class="modal-box">
 
-<button class="close" onclick="closeContact()">×</button>
+<button
+class="close"
+onclick="closeContact()">
+×
+</button>
 
-<h2 id="contactTitle">Contact Seller</h2>
+<h2 id="contactTitle">
+Contact Seller
+</h2>
 
-<div id="contactBox" class="contact-info"></div>
-
+<div
+id="contactBox"
+class="contact-info">
 </div>
 
+</div>
+</div>
+
+
+<!-- ORDERS -->
+
+<div class="modal" id="ordersModal">
+
+<div class="modal-box">
+
+<button
+class="close"
+onclick="closeOrders()">
+×
+</button>
+
+<h2>My Orders</h2>
+
+<div id="ordersList">
+Loading...
+</div>
+
+</div>
 </div>
 
 
@@ -832,19 +933,23 @@ collection,
 addDoc,
 getDocs,
 doc,
+getDoc,
+setDoc,
 updateDoc,
 deleteDoc,
-serverTimestamp
+serverTimestamp,
+query,
+where
 }
 from
 "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
 
-/* =====================================================
-   FIREBASE
-===================================================== */
+/* =========================
+FIREBASE
+========================= */
 
-const firebaseConfig = {
+const firebaseConfig={
 
 apiKey:
 "AIzaSyAkETZr4bZQRlLfpbHVlCdvwK7iub-gVmQ",
@@ -869,49 +974,48 @@ measurementId:
 
 };
 
-const app = initializeApp(firebaseConfig);
+const app=initializeApp(firebaseConfig);
 
-const auth = getAuth(app);
+const auth=getAuth(app);
 
-const db = getFirestore(app);
+const db=getFirestore(app);
 
 
-/* =====================================================
-   CASHFREE — PRODUCTION
-===================================================== */
+/* =========================
+CASHFREE PRODUCTION
+========================= */
 
-const cashfree = Cashfree({
-mode: "production"
+const cashfree=Cashfree({
+mode:"production"
 });
 
 
-/* =====================================================
-   FOUNDER
-===================================================== */
+/* =========================
+FOUNDER
+========================= */
 
-const FOUNDER_EMAIL =
+const FOUNDER_EMAIL=
 "singhadarsh7254@gmail.com";
 
 
-/* =====================================================
-   DATA
-===================================================== */
+/* =========================
+DATA
+========================= */
 
-let allListings = [];
+let allListings=[];
 
-let selectedImage = "";
+let selectedImage="";
 
-let editingId = null;
+let editingId=null;
 
-let authMode = "login";
+let authMode="login";
 
 
-/* =====================================================
-   RESTRICTED WORDS
-===================================================== */
+/* =========================
+RESTRICTED
+========================= */
 
-const restrictedWords = [
-
+const restrictedWords=[
 "gun",
 "pistol",
 "rifle",
@@ -925,137 +1029,118 @@ const restrictedWords = [
 "bomb",
 "stolen",
 "fake id"
-
 ];
 
 function checkRestricted(name,description){
 
-const text =
+const text=
 (name+" "+description).toLowerCase();
 
 return restrictedWords.some(
-word => text.includes(word)
+word=>text.includes(word)
 );
 
 }
 
 
-/* =====================================================
-   COMMISSION
-===================================================== */
+/* =========================
+COMMISSION
+========================= */
 
 function getCommissionRate(price){
 
-price = Number(price);
+price=Number(price);
 
-if(price < 200) return 3;
+if(price<200)return 3;
 
-if(price < 500) return 5;
+if(price<500)return 5;
 
 return 10;
 
 }
 
-
 function calculateCommission(price){
 
-return Number(price) *
+return Number(price)*
 (getCommissionRate(price)/100);
 
 }
 
-
 function showCommission(){
 
-const price =
-Number(
-document.getElementById("price").value || 0
+const price=Number(
+document.getElementById("price").value||0
 );
 
-const box =
+const box=
 document.getElementById("commissionBox");
 
 if(!price){
 
-box.innerHTML =
+box.innerHTML=
 "Platform commission will appear here.";
 
 return;
 
 }
 
-const rate =
+const rate=
 getCommissionRate(price);
 
-const commission =
+const commission=
 calculateCommission(price);
 
-const sellerAmount =
-price - commission;
+const sellerAmount=
+price-commission;
 
-box.innerHTML =
-`
-Platform Commission:
+box.innerHTML=
+`Platform Commission:
 <b>${rate}%</b>
-(₹${commission.toFixed(2)})<br>
+(₹${commission.toFixed(2)})
+<br>
 Seller receives:
-<b>₹${sellerAmount.toFixed(2)}</b>
-`;
+<b>₹${sellerAmount.toFixed(2)}</b>`;
 
 }
 
-window.showCommission =
-showCommission;
+window.showCommission=showCommission;
 
 
-/* =====================================================
-   IMAGE
-===================================================== */
+/* =========================
+IMAGE
+========================= */
 
 function previewImage(event){
 
-const file =
+const file=
 event.target.files[0];
 
-if(!file){
+if(!file)return;
 
-selectedImage="";
-
-return;
-
-}
-
-if(file.size > 700000){
+if(file.size>700000){
 
 alert(
-"Please choose an image smaller than 700 KB."
+"Image must be smaller than 700 KB."
 );
 
 event.target.value="";
 
-selectedImage="";
-
 return;
 
 }
 
-const reader =
-new FileReader();
+const reader=new FileReader();
 
-reader.onload =
-function(e){
+reader.onload=function(e){
 
-selectedImage =
-e.target.result;
+selectedImage=e.target.result;
 
-const preview =
+const preview=
 document.getElementById("preview");
 
-preview.src =
-selectedImage;
+preview.src=selectedImage;
 
-preview.style.display =
-"block";
+preview.style.display="block";
 
 };
 
@@ -1063,13 +1148,12 @@ reader.readAsDataURL(file);
 
 }
 
-window.previewImage =
-previewImage;
+window.previewImage=previewImage;
 
 
-/* =====================================================
-   LOGIN
-===================================================== */
+/* =========================
+AUTH
+========================= */
 
 function openLogin(){
 
@@ -1078,8 +1162,7 @@ document.getElementById("loginModal")
 
 }
 
-window.openLogin =
-openLogin;
+window.openLogin=openLogin;
 
 
 function closeLogin(){
@@ -1089,58 +1172,55 @@ document.getElementById("loginModal")
 
 }
 
-window.closeLogin =
-closeLogin;
+window.closeLogin=closeLogin;
 
 
 function toggleAuthMode(){
 
-authMode =
+authMode=
 authMode==="login"
-? "signup"
-: "login";
+?"signup"
+:"login";
 
 document.getElementById("authTitle")
-.textContent =
+.textContent=
 authMode==="login"
-? "Login"
-: "Create Account";
+?"Login"
+:"Create Account";
 
 document.getElementById("authSubmit")
-.textContent =
+.textContent=
 authMode==="login"
-? "Login"
-: "Create Account";
+?"Login"
+:"Create Account";
 
 document.getElementById("toggleAuth")
-.textContent =
+.textContent=
 authMode==="login"
-? "Create new account"
-: "Already have an account? Login";
+?"Create new account"
+:"Already have an account? Login";
 
 }
 
-window.toggleAuthMode =
-toggleAuthMode;
+window.toggleAuthMode=toggleAuthMode;
 
 
 async function handleAuth(e){
 
 e.preventDefault();
 
-const email =
+const email=
 document.getElementById("authEmail")
 .value.trim();
 
-const password =
+const password=
 document.getElementById("authPassword")
 .value;
 
-const msg =
+const msg=
 document.getElementById("authMessage");
 
-msg.innerHTML =
-"Please wait...";
+msg.innerHTML="Please wait...";
 
 try{
 
@@ -1152,9 +1232,11 @@ email,
 password
 );
 
+await ensureUserProfile();
+
 msg.style.color="#16834a";
 
-msg.innerHTML =
+msg.innerHTML=
 "Account created successfully.";
 
 }else{
@@ -1165,9 +1247,11 @@ email,
 password
 );
 
+await ensureUserProfile();
+
 msg.style.color="#16834a";
 
-msg.innerHTML =
+msg.innerHTML=
 "Login successful.";
 
 setTimeout(
@@ -1183,58 +1267,260 @@ console.error(error);
 
 msg.style.color="#b42318";
 
-msg.innerHTML =
-escapeHtml(error.message);
+msg.innerHTML=
+escapeHtml(
+error.message
+);
 
 }
 
 }
 
-window.handleAuth =
-handleAuth;
+window.handleAuth=handleAuth;
 
 
-/* =====================================================
-   AUTH STATE
-===================================================== */
+/* =========================
+PROFILE
+========================= */
+
+async function ensureUserProfile(){
+
+if(!auth.currentUser)return;
+
+const ref=
+doc(
+db,
+"users",
+auth.currentUser.uid
+);
+
+const snap=
+await getDoc(ref);
+
+if(!snap.exists()){
+
+await setDoc(
+ref,
+{
+
+email:
+auth.currentUser.email||"",
+
+name:"",
+
+college:"",
+
+upiId:"",
+
+createdAt:
+serverTimestamp(),
+
+updatedAt:
+serverTimestamp()
+
+}
+);
+
+}
+
+}
+
+
+async function openProfile(){
+
+if(!auth.currentUser){
+
+openLogin();
+
+return;
+
+}
+
+await ensureUserProfile();
+
+const snap=
+await getDoc(
+doc(
+db,
+"users",
+auth.currentUser.uid
+)
+);
+
+const data=
+snap.exists()
+?snap.data()
+:{};
+
+document.getElementById(
+"profileEmail"
+).innerHTML=
+`Logged in as:
+<b>${escapeHtml(auth.currentUser.email||"")}</b>`;
+
+document.getElementById(
+"profileName"
+).value=
+data.name||"";
+
+document.getElementById(
+"profileCollege"
+).value=
+data.college||"";
+
+document.getElementById(
+"profileUpi"
+).value=
+data.upiId||"";
+
+document.getElementById(
+"profileModal"
+).style.display="flex";
+
+}
+
+window.openProfile=openProfile;
+
+
+function closeProfile(){
+
+document.getElementById(
+"profileModal"
+).style.display="none";
+
+}
+
+window.closeProfile=closeProfile;
+
+
+async function saveProfile(e){
+
+e.preventDefault();
+
+if(!auth.currentUser){
+
+alert("Please login.");
+
+return;
+
+}
+
+const name=
+document.getElementById(
+"profileName"
+).value.trim();
+
+const college=
+document.getElementById(
+"profileCollege"
+).value.trim();
+
+const upiId=
+document.getElementById(
+"profileUpi"
+).value.trim();
+
+if(!upiId.includes("@")){
+
+alert("Please enter a valid UPI ID.");
+
+return;
+
+}
+
+try{
+
+await setDoc(
+
+doc(
+db,
+"users",
+auth.currentUser.uid
+),
+
+{
+
+email:
+auth.currentUser.email||"",
+
+name,
+college,
+upiId,
+
+updatedAt:
+serverTimestamp()
+
+},
+
+{merge:true}
+
+);
+
+alert(
+"Profile saved successfully."
+);
+
+closeProfile();
+
+}catch(error){
+
+alert(
+"Could not save profile:\n"+
+error.message
+);
+
+}
+
+}
+
+window.saveProfile=saveProfile;
+
+
+/* =========================
+AUTH STATE
+========================= */
 
 onAuthStateChanged(
 auth,
-(user)=>{
+async user=>{
 
-const status =
-document.getElementById("loginStatus");
+const status=
+document.getElementById(
+"loginStatus"
+);
 
-const loginBtn =
-document.getElementById("loginBtn");
+const loginBtn=
+document.getElementById(
+"loginBtn"
+);
 
 if(user){
 
-const isFounder =
-user.email === FOUNDER_EMAIL;
+await ensureUserProfile();
 
-status.innerHTML =
-isFounder
-? "♠️ Founder · "+escapeHtml(user.email)
-: "👤 "+escapeHtml(user.email);
+const founder=
+user.email===FOUNDER_EMAIL;
 
-loginBtn.textContent =
-"Logout";
+status.innerHTML=
+founder
+?"♠️ Founder · "+user.email
+:"👤 "+user.email;
 
-loginBtn.onclick =
-async ()=>{
+loginBtn.textContent="Logout";
+
+loginBtn.onclick=
+async()=>{
 await signOut(auth);
 };
 
 }else{
 
-status.innerHTML =
+status.innerHTML=
 "Not logged in";
 
-loginBtn.textContent =
-"Login";
+loginBtn.textContent="Login";
 
-loginBtn.onclick =
+loginBtn.onclick=
 openLogin;
 
 }
@@ -1245,17 +1531,15 @@ renderListings();
 );
 
 
-/* =====================================================
-   SELL
-===================================================== */
+/* =========================
+SELL
+========================= */
 
 function openSell(){
 
 if(!auth.currentUser){
 
-alert(
-"Please login first."
-);
+alert("Please login first.");
 
 openLogin();
 
@@ -1265,8 +1549,9 @@ return;
 
 editingId=null;
 
-document.getElementById("sellTitle")
-.textContent =
+document.getElementById(
+"sellTitle"
+).textContent=
 "Sell a Component";
 
 document
@@ -1275,36 +1560,33 @@ document
 
 selectedImage="";
 
-document.getElementById("preview")
-.style.display="none";
+document.getElementById(
+"preview"
+).style.display="none";
 
-document.getElementById("commissionBox")
-.innerHTML =
-"Platform commission will appear here.";
-
-document.getElementById("sellModal")
-.style.display="flex";
+document.getElementById(
+"sellModal"
+).style.display="flex";
 
 }
 
-window.openSell =
-openSell;
+window.openSell=openSell;
 
 
 function closeSell(){
 
-document.getElementById("sellModal")
-.style.display="none";
+document.getElementById(
+"sellModal"
+).style.display="none";
 
 }
 
-window.closeSell =
-closeSell;
+window.closeSell=closeSell;
 
 
-/* =====================================================
-   SAVE LISTING
-===================================================== */
+/* =========================
+SAVE LISTING
+========================= */
 
 async function saveListing(e){
 
@@ -1318,53 +1600,52 @@ return;
 
 }
 
-const name =
+const name=
 document.getElementById("name")
 .value.trim();
 
-const price =
+const price=
 Number(
-document.getElementById("price")
-.value
+document.getElementById("price").value
 );
 
-const condition =
-document.getElementById("cond")
-.value;
+const condition=
+document.getElementById("cond").value;
 
-const seller =
+const seller=
 document.getElementById("seller")
 .value.trim();
 
-const college =
+const college=
 document.getElementById("college")
 .value.trim();
 
-const collegeLocation =
-document.getElementById("collegeLocation")
-.value.trim();
+const collegeLocation=
+document.getElementById(
+"collegeLocation"
+).value.trim();
 
-const whatsapp =
+const whatsapp=
 document.getElementById("whatsapp")
 .value.trim();
 
-const instagram =
+const instagram=
 document.getElementById("instagram")
 .value.trim();
 
-const description =
+const description=
 document.getElementById("desc")
 .value.trim();
 
-let restricted =
-document.getElementById("restrictedCheck")
-.checked;
+let restricted=
+document.getElementById(
+"restrictedCheck"
+).checked;
 
-if(checkRestricted(name,description)){
+if(checkRestricted(name,description))
 restricted=true;
-}
 
-if(!whatsapp && !instagram){
+if(!whatsapp&&!instagram){
 
 alert(
 "Please provide WhatsApp or Instagram."
@@ -1374,57 +1655,46 @@ return;
 
 }
 
-if(!price || price < 1){
+if(!price||price<1){
 
-alert(
-"Please enter a valid price."
-);
+alert("Invalid price.");
 
 return;
 
 }
 
-const ownerUid =
-auth.currentUser.uid;
-
-const ownerEmail =
-auth.currentUser.email || "";
-
-const commissionRate =
+const commissionRate=
 getCommissionRate(price);
 
-const commissionAmount =
+const commissionAmount=
 calculateCommission(price);
 
 try{
 
 if(editingId){
 
-const old =
+const old=
 allListings.find(
 x=>x.id===editingId
 );
 
-if(!old){
+if(!old||
+old.ownerUid!==auth.currentUser.uid){
 
-alert("Listing not found.");
-
-return;
-
-}
-
-if(old.ownerUid !== ownerUid){
-
-alert(
-"You can edit only your own listing."
-);
+alert("You can edit only your own listing.");
 
 return;
 
 }
 
 await updateDoc(
-doc(db,"listings",editingId),
+
+doc(
+db,
+"listings",
+editingId
+),
+
 {
 
 name,
@@ -1438,16 +1708,16 @@ instagram,
 description,
 
 image:
-selectedImage ||
-old.image ||
+selectedImage||
+old.image||
 "",
 
 restricted,
 
 approved:
 restricted
-? Boolean(old.approved)
-: true,
+?Boolean(old.approved)
+:true,
 
 commissionRate,
 commissionAmount,
@@ -1456,15 +1726,18 @@ updatedAt:
 serverTimestamp()
 
 }
+
 );
 
-alert(
-"Listing updated successfully!"
-);
+alert("Listing updated.");
 
 }else{
 
-const listingData = {
+await addDoc(
+
+collection(db,"listings"),
+
+{
 
 name,
 price,
@@ -1477,23 +1750,22 @@ instagram,
 description,
 
 image:
-selectedImage || "",
+selectedImage||"",
 
 icon:"📦",
 
-ownerUid,
+ownerUid:
+auth.currentUser.uid,
 
-ownerEmail,
+ownerEmail:
+auth.currentUser.email||"",
 
 restricted,
 
 approved:
-restricted
-? false
-: true,
+restricted?false:true,
 
-commissionRate,
-commissionAmount,
+sold:false,
 
 createdAt:
 serverTimestamp(),
@@ -1501,17 +1773,14 @@ serverTimestamp(),
 updatedAt:
 serverTimestamp()
 
-};
+}
 
-await addDoc(
-collection(db,"listings"),
-listingData
 );
 
 alert(
 restricted
-? "Listing submitted for founder/team approval."
-: "Listing published successfully!"
+?"Listing submitted for approval."
+:"Listing published successfully."
 );
 
 }
@@ -1525,7 +1794,7 @@ await loadListings();
 console.error(error);
 
 alert(
-"Could not save listing:\n\n"+
+"Could not save listing:\n"+
 error.message
 );
 
@@ -1533,19 +1802,18 @@ error.message
 
 }
 
-window.saveListing =
-saveListing;
+window.saveListing=saveListing;
 
 
-/* =====================================================
-   LOAD
-===================================================== */
+/* =========================
+LOAD
+========================= */
 
 async function loadListings(){
 
 try{
 
-const snapshot =
+const snapshot=
 await getDocs(
 collection(db,"listings")
 );
@@ -1553,12 +1821,12 @@ collection(db,"listings")
 allListings=[];
 
 snapshot.forEach(
-docSnap=>{
+snap=>{
 
 allListings.push({
 
-id:docSnap.id,
-...docSnap.data()
+id:snap.id,
+...snap.data()
 
 });
 
@@ -1572,102 +1840,119 @@ renderListings();
 
 console.error(error);
 
-document.getElementById("grid")
-.innerHTML =
-`
-<div style="padding:20px;color:#b42318">
-<b>Firebase error</b><br><br>
+document.getElementById(
+"grid"
+).innerHTML=
+`<div style="padding:20px;color:#b42318">
+Firebase error:<br><br>
 ${escapeHtml(error.message)}
-</div>
-`;
+</div>`;
 
 }
 
 }
 
 
-/* =====================================================
-   RENDER
-===================================================== */
+/* =========================
+RENDER
+========================= */
 
 function renderListings(){
 
-const grid =
+const grid=
 document.getElementById("grid");
 
 grid.innerHTML="";
 
-const data =
+const data=
 getFilteredListings();
 
 let visibleCount=0;
 
 data.forEach(x=>{
 
-const founder =
+const founder=
 auth.currentUser &&
-auth.currentUser.email ===
+auth.currentUser.email===
 FOUNDER_EMAIL;
 
 if(
 x.restricted &&
 !x.approved &&
 !founder
-){
-return;
-}
+)return;
 
 visibleCount++;
 
-const card =
+const card=
 document.createElement("div");
 
 card.className="card";
 
-const imageHTML =
+const imageHTML=
 x.image
-? `<img src="${escapeAttribute(x.image)}">`
-: `<span>${escapeHtml(x.icon || "📦")}</span>`;
+?`<img src="${escapeAttribute(x.image)}">`
+:`<span>${escapeHtml(x.icon||"📦")}</span>`;
 
-const own =
+const own=
 auth.currentUser &&
-x.ownerUid ===
+x.ownerUid===
 auth.currentUser.uid;
 
-let buttons = `
+let buttons="";
+
+if(x.sold){
+
+buttons+=`
+
+<span class="sold">
+SOLD OUT
+</span>
+
+<button
+class="btn secondary small-btn"
+onclick="contactSeller('${x.id}')">
+Message Seller
+</button>
+
+`;
+
+}else{
+
+buttons+=`
 
 <button
 class="btn primary small-btn"
-onclick="buyNow('${escapeAttribute(x.id)}')"
->
+onclick="buyNow('${x.id}')">
 Buy Now
 </button>
 
 <button
 class="btn secondary small-btn"
-onclick="contactSeller('${escapeAttribute(x.id)}')"
->
+onclick="contactSeller('${x.id}')">
 Message Seller
 </button>
+
 `;
+
+}
 
 if(own){
 
-buttons += `
+buttons+=`
 
 <button
 class="btn secondary small-btn"
-onclick="editListing('${escapeAttribute(x.id)}')"
->
+onclick="editListing('${x.id}')">
 Edit
 </button>
 
 <button
 class="btn danger small-btn"
-onclick="deleteListing('${escapeAttribute(x.id)}')"
->
+onclick="deleteListing('${x.id}')">
 Delete
 </button>
+
 `;
 
 }
@@ -1678,67 +1963,67 @@ x.restricted &&
 !x.approved
 ){
 
-buttons += `
+buttons+=`
 
 <button
 class="btn primary small-btn"
-onclick="approveListing('${escapeAttribute(x.id)}')"
->
+onclick="approveListing('${x.id}')">
 Approve
 </button>
 
 <button
 class="btn danger small-btn"
-onclick="rejectListing('${escapeAttribute(x.id)}')"
->
+onclick="rejectListing('${x.id}')">
 Reject
 </button>
+
+`;
+
+}
+
+if(
+founder &&
+x.sold
+){
+
+buttons+=`
+
+<button
+class="btn dark small-btn"
+onclick="openFounderOrder('${x.id}')">
+Order / Seller Payment
+</button>
+
 `;
 
 }
 
 let statusBadge="";
 
-if(
-x.restricted &&
-!x.approved
+if(x.sold){
+
+statusBadge=
+`<span class="sold">SOLD OUT</span>`;
+
+}else if(
+x.restricted&&!x.approved
 ){
 
-statusBadge =
+statusBadge=
 `<span class="pending">
-⏳ Pending Founder Approval
-</span>`;
-
-}else if(x.restricted){
-
-statusBadge =
-`<span class="approved">
-✓ Founder Approved
+Pending Founder Approval
 </span>`;
 
 }else{
 
-statusBadge =
+statusBadge=
 `<span class="approved">
-✓ Approved
+✓ Available
 </span>`;
 
 }
 
-if(
-founder &&
-x.restricted &&
-!x.approved
-){
-
-statusBadge +=
-`<br><span class="founder">
-Founder Review
-</span>`;
-
-}
-
-card.innerHTML = `
+card.innerHTML=`
 
 <div class="pic">
 ${imageHTML}
@@ -1747,37 +2032,29 @@ ${imageHTML}
 <div class="card-body">
 
 <h3>
-${escapeHtml(x.name || "")}
+${escapeHtml(x.name||"")}
 </h3>
 
 <div class="price">
-₹${Number(x.price || 0).toLocaleString("en-IN")}
+₹${Number(x.price||0).toLocaleString("en-IN")}
 </div>
 
 <div class="meta">
 
-${escapeHtml(x.condition || "")}
+${escapeHtml(x.condition||"")}
 
 <br>
 
 Seller:
-${escapeHtml(x.seller || "")}
+${escapeHtml(x.seller||"")}
 
 <br>
 
-🏫
-${escapeHtml(x.college || "")}
+🏫 ${escapeHtml(x.college||"")}
 
 <br>
 
-📍
-${escapeHtml(x.collegeLocation || "")}
-
-<br><br>
-
-<span class="profile-pill">
-Student Seller
-</span>
+📍 ${escapeHtml(x.collegeLocation||"")}
 
 <br><br>
 
@@ -1797,27 +2074,25 @@ grid.appendChild(card);
 });
 
 document.getElementById("count")
-.textContent =
+.textContent=
 visibleCount+" listings";
 
 document.getElementById("empty")
-.style.display =
-visibleCount
-? "none"
-: "block";
+.style.display=
+visibleCount?"none":"block";
 
 }
 
 
-/* =====================================================
-   CASHFREE PRODUCTION PAYMENT
-===================================================== */
+/* =========================
+BUY NOW
+========================= */
 
 async function buyNow(id){
 
-const listing =
+const listing=
 allListings.find(
-item=>item.id===id
+x=>x.id===id
 );
 
 if(!listing){
@@ -1830,9 +2105,7 @@ return;
 
 if(!auth.currentUser){
 
-alert(
-"Please login first to buy."
-);
+alert("Please login first.");
 
 openLogin();
 
@@ -1840,32 +2113,30 @@ return;
 
 }
 
-if(
-listing.restricted &&
-!listing.approved
-){
+if(listing.sold){
 
 alert(
-"This listing is waiting for founder approval."
+"This component has already been sold."
 );
 
 return;
 
 }
 
-const price =
-Number(listing.price || 0);
+if(
+listing.restricted&&!listing.approved
+){
 
-if(!price || price < 1){
-
-alert("Invalid listing price.");
+alert(
+"Waiting for founder approval."
+);
 
 return;
 
 }
 
 if(
-listing.ownerUid ===
+listing.ownerUid===
 auth.currentUser.uid
 ){
 
@@ -1877,9 +2148,12 @@ return;
 
 }
 
+const price=
+Number(listing.price||0);
+
 try{
 
-const response =
+const response=
 await fetch(
 "/api/create-order",
 {
@@ -1891,8 +2165,7 @@ headers:{
 "application/json"
 },
 
-body:
-JSON.stringify({
+body:JSON.stringify({
 
 amount:price,
 
@@ -1900,30 +2173,27 @@ listingId:
 listing.id,
 
 productName:
-listing.name ||
-"Campus Component",
+listing.name||"Campus Component",
 
 buyerEmail:
-auth.currentUser.email ||
-"",
+auth.currentUser.email||"",
 
 sellerUid:
-listing.ownerUid ||
-""
+listing.ownerUid||""
 
 })
 
 }
 );
 
-const data =
+const data=
 await response.json();
 
 if(!response.ok){
 
 throw new Error(
-data.error ||
-"Unable to create Cashfree order."
+data.error||
+"Could not create payment order."
 );
 
 }
@@ -1931,39 +2201,29 @@ data.error ||
 if(!data.paymentSessionId){
 
 throw new Error(
-"Payment session was not received."
+"Payment session missing."
 );
 
 }
 
-
-/* PRODUCTION CASHFREE CHECKOUT */
-
-const result =
+const result=
 await cashfree.checkout({
 
 paymentSessionId:
 data.paymentSessionId,
 
-redirectTarget:
-"_modal"
+redirectTarget:"_modal"
 
 });
 
-if(result && result.error){
+if(result?.error){
 
 throw new Error(
-result.error.message ||
-"Cashfree checkout failed."
+result.error.message||
+"Checkout failed."
 );
 
 }
-
-
-/*
-Checkout completed/closed.
-Verify payment from backend.
-*/
 
 await verifyCashfreeOrder(
 data.orderId,
@@ -1972,13 +2232,10 @@ listing
 
 }catch(error){
 
-console.error(
-"Payment error:",
-error
-);
+console.error(error);
 
 alert(
-"Could not start payment.\n\n"+
+"Payment could not be started:\n\n"+
 error.message
 );
 
@@ -1986,22 +2243,19 @@ error.message
 
 }
 
-window.buyNow =
-buyNow;
+window.buyNow=buyNow;
 
 
-/* =====================================================
-   VERIFY PAYMENT
-===================================================== */
+/* =========================
+VERIFY
+========================= */
 
 async function verifyCashfreeOrder(
 orderId,
 listing
 ){
 
-try{
-
-const response =
+const response=
 await fetch(
 "/api/verify-payment",
 {
@@ -2013,21 +2267,20 @@ headers:{
 "application/json"
 },
 
-body:
-JSON.stringify({
+body:JSON.stringify({
 orderId
 })
 
 }
 );
 
-const data =
+const data=
 await response.json();
 
 if(!response.ok){
 
 throw new Error(
-data.error ||
+data.error||
 "Payment verification failed."
 );
 
@@ -2036,17 +2289,27 @@ data.error ||
 if(!data.verified){
 
 alert(
-"Payment is not completed yet.\n\n"+
-"Order status: "+
-(data.orderStatus || "UNKNOWN")
+"Payment is not completed.\nOrder status: "+
+(data.orderStatus||"UNKNOWN")
 );
 
 return;
 
 }
 
+const price=
+Number(listing.price||0);
 
-let cashfreePaymentId="";
+const commissionRate=
+getCommissionRate(price);
+
+const commissionAmount=
+calculateCommission(price);
+
+const sellerAmount=
+price-commissionAmount;
+
+let paymentId="";
 
 if(
 data.paymentDetails &&
@@ -2055,17 +2318,16 @@ data.paymentDetails.payment_details
 )
 ){
 
-const successfulPayment =
+const payment=
 data.paymentDetails.payment_details.find(
-payment =>
-payment.payment_status === "SUCCESS"
+p=>p.payment_status==="SUCCESS"
 );
 
-if(successfulPayment){
+if(payment){
 
-cashfreePaymentId =
-successfulPayment.cf_payment_id ||
-successfulPayment.payment_id ||
+paymentId=
+payment.cf_payment_id||
+payment.payment_id||
 "";
 
 }
@@ -2073,40 +2335,63 @@ successfulPayment.payment_id ||
 }
 
 
-const price =
-Number(listing.price || 0);
+/* GET SELLER PROFILE */
 
-const commissionRate =
-getCommissionRate(price);
+let sellerUpi="";
 
-const commissionAmount =
-calculateCommission(price);
+try{
 
-const sellerAmount =
-price - commissionAmount;
+const sellerProfile=
+await getDoc(
+doc(
+db,
+"users",
+listing.ownerUid
+)
+);
+
+if(sellerProfile.exists()){
+
+sellerUpi=
+sellerProfile.data().upiId||"";
+
+}
+
+}catch(e){
+
+console.log(
+"Seller UPI read skipped."
+);
+
+}
 
 
+/* SAVE ORDER */
+
+const orderRef=
 await addDoc(
+
 collection(db,"orders"),
+
 {
 
 buyerUid:
 auth.currentUser.uid,
 
 buyerEmail:
-auth.currentUser.email || "",
+auth.currentUser.email||"",
 
 sellerUid:
-listing.ownerUid || "",
+listing.ownerUid||"",
 
 sellerEmail:
-listing.ownerEmail || "",
+listing.ownerEmail||"",
 
 listingId:
 listing.id,
 
 productName:
-listing.name || "",
+listing.name||"",
 
 amount:
 price,
@@ -2117,35 +2402,189 @@ commissionAmount,
 
 sellerAmount,
 
+sellerUpi,
+
 cashfreeOrderId:
 orderId,
 
-cashfreePaymentId,
+cashfreePaymentId:
+paymentId,
 
 status:"paid",
 
+deliveryConfirmed:false,
+
+sellerPaid:false,
+
 createdAt:
+serverTimestamp(),
+
+updatedAt:
 serverTimestamp()
 
 }
+
 );
 
+
+/* MARK LISTING SOLD */
+
+await updateDoc(
+
+doc(
+db,
+"listings",
+listing.id
+),
+
+{
+
+sold:true,
+
+soldOrderId:
+orderRef.id,
+
+soldTo:
+auth.currentUser.uid,
+
+soldAt:
+serverTimestamp(),
+
+updatedAt:
+serverTimestamp()
+
+}
+
+);
 
 alert(
-"Payment successful!\n\n"+
-"Cashfree Order ID:\n"+
-orderId+
-"\n\nOrder saved successfully.\n\n"+
-"Seller Amount: ₹"+
-sellerAmount.toFixed(2)
+
+"Payment successful! 🎉\n\n"+
+"Component marked SOLD OUT.\n\n"+
+"Order ID:\n"+
+orderRef.id+
+
+"\n\n"+
+"After receiving the component, tap 'Delivery Received'."
+
 );
 
-}catch(error){
+await loadListings();
+
+}
+
+window.verifyCashfreeOrder=
+verifyCashfreeOrder;
+
+
+/* =========================
+DELIVERY CONFIRM
+========================= */
+
+async function confirmDelivery(orderId){
+
+if(!auth.currentUser){
+
+alert("Please login.");
+
+return;
+
+}
+
+try{
+
+const orderRef=
+doc(
+db,
+"orders",
+orderId
+);
+
+const snap=
+await getDoc(orderRef);
+
+if(!snap.exists()){
+
+alert("Order not found.");
+
+return;
+
+}
+
+const order=
+snap.data();
+
+if(
+order.buyerUid!==
+auth.currentUser.uid
+){
+
+alert(
+"Only the buyer can confirm delivery."
+);
+
+return;
+
+}
+
+if(
+order.deliveryConfirmed
+){
+
+alert(
+"Delivery already confirmed."
+);
+
+return;
+
+}
+
+if(
+!confirm(
+"Confirm that you received the component?"
+)
+){
+
+return;
+
+}
+
+await updateDoc(
+
+orderRef,
+
+{
+
+deliveryConfirmed:true,
+
+deliveryConfirmedAt:
+serverTimestamp(),
+
+status:
+"delivery_confirmed",
+
+updatedAt:
+serverTimestamp()
+
+}
+
+);
+
+alert(
+"Delivery confirmed successfully.\n\n"+
+"The founder can now release seller payment."
+);
+
+await loadOrders();
+
+}
+
+catch(error){
 
 console.error(error);
 
 alert(
-"Payment may have completed, but order saving failed.\n\n"+
+"Could not confirm delivery:\n"+
 error.message
 );
 
@@ -2153,30 +2592,432 @@ error.message
 
 }
 
+window.confirmDelivery=
+confirmDelivery;
 
-/* =====================================================
-   SEARCH
-===================================================== */
+
+/* =========================
+ORDERS
+========================= */
+
+async function openOrders(){
+
+if(!auth.currentUser){
+
+openLogin();
+
+return;
+
+}
+
+document.getElementById(
+"ordersModal"
+).style.display="flex";
+
+await loadOrders();
+
+}
+
+window.openOrders=openOrders;
+
+
+function closeOrders(){
+
+document.getElementById(
+"ordersModal"
+).style.display="none";
+
+}
+
+window.closeOrders=closeOrders;
+
+
+async function loadOrders(){
+
+const box=
+document.getElementById("ordersList");
+
+box.innerHTML="Loading...";
+
+try{
+
+const q=
+query(
+
+collection(db,"orders"),
+
+where(
+"buyerUid",
+"==",
+auth.currentUser.uid
+)
+
+);
+
+const snapshot=
+await getDocs(q);
+
+if(snapshot.empty){
+
+box.innerHTML=
+"No orders yet.";
+
+return;
+
+}
+
+box.innerHTML="";
+
+snapshot.forEach(
+snap=>{
+
+const order=
+snap.data();
+
+const div=
+document.createElement("div");
+
+div.className="order-box";
+
+let action="";
+
+if(
+order.status==="paid" &&
+!order.deliveryConfirmed
+){
+
+action=`
+
+<button
+class="btn success"
+onclick="confirmDelivery('${snap.id}')">
+✓ Delivery Received
+</button>
+
+`;
+
+}else if(
+order.deliveryConfirmed
+){
+
+action=`
+
+<span class="approved">
+✓ Delivery Confirmed
+</span>
+
+`;
+
+}
+
+div.innerHTML=`
+
+<b>
+${escapeHtml(order.productName||"Component")}
+</b>
+
+<br><br>
+
+Amount:
+₹${Number(order.amount||0).toFixed(2)}
+
+<br>
+
+Order:
+${escapeHtml(order.cashfreeOrderId||snap.id)}
+
+<br><br>
+
+${action}
+
+`;
+
+box.appendChild(div);
+
+});
+
+}catch(error){
+
+box.innerHTML=
+escapeHtml(error.message);
+
+}
+
+}
+
+window.loadOrders=
+loadOrders;
+
+
+/* =========================
+FOUNDER ORDER
+========================= */
+
+async function openFounderOrder(listingId){
+
+if(
+!auth.currentUser||
+auth.currentUser.email!==
+FOUNDER_EMAIL
+){
+
+alert(
+"Founder access only."
+);
+
+return;
+
+}
+
+try{
+
+const q=
+query(
+collection(db,"orders"),
+where(
+"listingId",
+"==",
+listingId
+)
+);
+
+const snapshot=
+await getDocs(q);
+
+if(snapshot.empty){
+
+alert("Order not found.");
+
+return;
+
+}
+
+let html="";
+
+snapshot.forEach(
+snap=>{
+
+const order=
+snap.data();
+
+html+=`
+
+<div class="order-box">
+
+<b>
+${escapeHtml(order.productName||"")}
+</b>
+
+<br><br>
+
+Buyer:
+${escapeHtml(order.buyerEmail||"")}
+
+<br>
+
+Seller:
+${escapeHtml(order.sellerEmail||"")}
+
+<br>
+
+Amount:
+₹${Number(order.amount||0).toFixed(2)}
+
+<br>
+
+Commission:
+₹${Number(order.commissionAmount||0).toFixed(2)}
+
+<br>
+
+Seller Amount:
+₹${Number(order.sellerAmount||0).toFixed(2)}
+
+<br><br>
+
+<b>
+Seller UPI:
+${escapeHtml(order.sellerUpi||"Not provided")}
+</b>
+
+<br><br>
+
+Status:
+${escapeHtml(order.status||"")}
+
+<br><br>
+
+${
+order.deliveryConfirmed
+?
+`<span class="approved">
+✓ Customer confirmed delivery
+</span>`
+:
+`<span class="pending">
+Waiting for customer delivery confirmation
+</span>`
+}
+
+<br><br>
+
+${
+order.sellerPaid
+?
+`<span class="approved">
+✓ Seller Paid
+</span>`
+:
+order.deliveryConfirmed
+?
+`<button
+class="btn success"
+onclick="markSellerPaid('${snap.id}')">
+Mark Seller Payment Done
+</button>`
+:
+""
+}
+
+</div>
+
+`;
+
+});
+
+const box=
+document.getElementById("contactBox");
+
+document.getElementById(
+"contactTitle"
+).textContent=
+"Founder Order Management";
+
+box.innerHTML=html;
+
+document.getElementById(
+"contactModal"
+).style.display="flex";
+
+}catch(error){
+
+alert(
+"Could not load order:\n"+
+error.message
+);
+
+}
+
+}
+
+window.openFounderOrder=
+openFounderOrder;
+
+
+/* =========================
+MARK SELLER PAID
+========================= */
+
+async function markSellerPaid(orderId){
+
+if(
+!auth.currentUser||
+auth.currentUser.email!==
+FOUNDER_EMAIL
+){
+
+alert("Founder only.");
+
+return;
+
+}
+
+if(
+!confirm(
+"Have you manually sent the seller's payment?"
+)
+){
+
+return;
+
+}
+
+try{
+
+await updateDoc(
+
+doc(
+db,
+"orders",
+orderId
+),
+
+{
+
+sellerPaid:true,
+
+sellerPaidAt:
+serverTimestamp(),
+
+sellerPaidBy:
+auth.currentUser.uid,
+
+status:
+"seller_paid",
+
+updatedAt:
+serverTimestamp()
+
+}
+
+);
+
+alert(
+"Seller payment marked as completed."
+);
+
+closeContact();
+
+}catch(error){
+
+alert(
+"Could not update payment status:\n"+
+error.message
+);
+
+}
+
+}
+
+window.markSellerPaid=
+markSellerPaid;
+
+
+/* =========================
+SEARCH
+========================= */
 
 function getFilteredListings(){
 
-const q =
+const q=
 (
 document.getElementById("search")
-?.value || ""
+?.value||""
 )
 .toLowerCase()
 .trim();
 
-const condition =
-document.getElementById("condition")
-?.value || "";
+const condition=
+document.getElementById(
+"condition"
+)?.value||"";
 
-const location =
-document.getElementById("locationFilter")
-?.value || "";
+const location=
+document.getElementById(
+"locationFilter"
+)?.value||"";
 
-let data =
+let data=
 allListings.filter(x=>{
 
 const searchable=[
@@ -2193,29 +3034,27 @@ x.instagram
 .join(" ")
 .toLowerCase();
 
-const words =
+const words=
 q.split(/\s+/)
 .filter(Boolean);
 
-const matches =
+return(
+
 words.every(
 word=>searchable.includes(word)
-);
-
-return(
-matches &&
-(!condition ||
-x.condition===condition) &&
-(!location ||
+)&&
+(!condition||
+x.condition===condition)&&
+(!location||
 x.collegeLocation===location)
+
 );
 
 });
 
-
-const sort =
+const sort=
 document.getElementById("sort")
-?.value || "new";
+?.value||"new";
 
 if(sort==="low"){
 
@@ -2251,8 +3090,7 @@ return data;
 
 }
 
-
-window.filterCards =
+window.filterCards=
 function(){
 renderListings();
 };
@@ -2261,58 +3099,55 @@ renderListings();
 function syncHeroSearch(){
 
 document.getElementById("search")
-.value =
-document.getElementById("heroSearch")
-.value;
+.value=
+document.getElementById(
+"heroSearch"
+).value;
 
 document.getElementById("condition")
-.value =
-document.getElementById("heroCondition")
-.value;
+.value=
+document.getElementById(
+"heroCondition"
+).value;
 
 renderListings();
 
 }
 
-window.syncHeroSearch =
+window.syncHeroSearch=
 syncHeroSearch;
 
 
-/* =====================================================
-   LOCATION
-===================================================== */
+/* =========================
+LOCATION
+========================= */
 
 function updateLocationFilter(){
 
-const select =
+const select=
 document.getElementById(
 "locationFilter"
 );
 
-const current =
-select.value;
-
-const locations =
-[
+const locations=[
 ...new Set(
+
 allListings
 .map(x=>x.collegeLocation)
 .filter(Boolean)
-)
-]
-.sort();
 
-select.innerHTML =
-`
-<option value="">
+)
+].sort();
+
+select.innerHTML=
+`<option value="">
 All locations
-</option>
-`;
+</option>`;
 
 locations.forEach(
 location=>{
 
-const option =
+const option=
 document.createElement("option");
 
 option.value=location;
@@ -2323,20 +3158,16 @@ select.appendChild(option);
 
 });
 
-if(locations.includes(current)){
-select.value=current;
-}
-
 }
 
 
-/* =====================================================
-   EDIT
-===================================================== */
+/* =========================
+EDIT
+========================= */
 
 function editListing(id){
 
-const x =
+const x=
 allListings.find(
 item=>item.id===id
 );
@@ -2344,8 +3175,8 @@ item=>item.id===id
 if(!x)return;
 
 if(
-!auth.currentUser ||
-x.ownerUid !==
+!auth.currentUser||
+x.ownerUid!==
 auth.currentUser.uid
 ){
 
@@ -2361,7 +3192,8 @@ editingId=id;
 
 document.getElementById(
 "sellTitle"
-).textContent="Edit Listing";
+).textContent=
+"Edit Listing";
 
 document.getElementById("name")
 .value=x.name||"";
@@ -2380,7 +3212,8 @@ document.getElementById("college")
 
 document.getElementById(
 "collegeLocation"
-).value=x.collegeLocation||"";
+).value=
+x.collegeLocation||"";
 
 document.getElementById("whatsapp")
 .value=x.whatsapp||"";
@@ -2393,11 +3226,12 @@ document.getElementById("desc")
 
 document.getElementById(
 "restrictedCheck"
-).checked=Boolean(x.restricted);
+).checked=
+Boolean(x.restricted);
 
 selectedImage=x.image||"";
 
-const preview =
+const preview=
 document.getElementById("preview");
 
 if(x.image){
@@ -2408,30 +3242,28 @@ preview.style.display="block";
 
 }else{
 
-preview.src="";
-
 preview.style.display="none";
 
 }
 
 showCommission();
 
-document.getElementById("sellModal")
-.style.display="flex";
+document.getElementById(
+"sellModal"
+).style.display="flex";
 
 }
 
-window.editListing =
-editListing;
+window.editListing=editListing;
 
 
-/* =====================================================
-   DELETE
-===================================================== */
+/* =========================
+DELETE
+========================= */
 
 async function deleteListing(id){
 
-const x =
+const x=
 allListings.find(
 item=>item.id===id
 );
@@ -2439,13 +3271,23 @@ item=>item.id===id
 if(!x)return;
 
 if(
-!auth.currentUser ||
-x.ownerUid !==
+!auth.currentUser||
+x.ownerUid!==
 auth.currentUser.uid
 ){
 
 alert(
-"You can delete only your own listing."
+"You can delete only your listing."
+);
+
+return;
+
+}
+
+if(x.sold){
+
+alert(
+"Sold listing cannot be deleted."
 );
 
 return;
@@ -2454,13 +3296,9 @@ return;
 
 if(
 !confirm(
-"Delete this listing permanently?"
+"Delete this listing?"
 )
-){
-
-return;
-
-}
+)return;
 
 try{
 
@@ -2469,7 +3307,7 @@ doc(db,"listings",id)
 );
 
 alert(
-"Listing deleted successfully."
+"Listing deleted."
 );
 
 await loadListings();
@@ -2482,31 +3320,27 @@ alert(error.message);
 
 }
 
-window.deleteListing =
+window.deleteListing=
 deleteListing;
 
 
-/* =====================================================
-   FOUNDER APPROVE
-===================================================== */
+/* =========================
+APPROVE
+========================= */
 
 async function approveListing(id){
 
 if(
-!auth.currentUser ||
-auth.currentUser.email !==
+!auth.currentUser||
+auth.currentUser.email!==
 FOUNDER_EMAIL
 ){
 
-alert(
-"Only founder/admin can approve restricted listings."
-);
+alert("Founder only.");
 
 return;
 
 }
-
-try{
 
 await updateDoc(
 
@@ -2532,58 +3366,36 @@ serverTimestamp()
 
 );
 
-alert(
-"Listing approved successfully."
-);
+alert("Listing approved.");
 
 await loadListings();
 
-}catch(error){
-
-alert(
-"Approval failed:\n"+
-error.message
-);
-
 }
 
-}
-
-window.approveListing =
+window.approveListing=
 approveListing;
 
 
-/* =====================================================
-   REJECT
-===================================================== */
+/* =========================
+REJECT
+========================= */
 
 async function rejectListing(id){
 
 if(
-!auth.currentUser ||
-auth.currentUser.email !==
+!auth.currentUser||
+auth.currentUser.email!==
 FOUNDER_EMAIL
 ){
 
-alert(
-"Only founder/admin can reject restricted listings."
-);
+alert("Founder only.");
 
 return;
 
 }
 
-if(
-!confirm(
-"Reject this restricted listing?"
-)
-){
-
+if(!confirm("Reject listing?"))
 return;
-
-}
-
-try{
 
 await updateDoc(
 
@@ -2612,28 +3424,19 @@ alert("Listing rejected.");
 
 await loadListings();
 
-}catch(error){
-
-alert(
-"Rejection failed:\n"+
-error.message
-);
-
 }
 
-}
-
-window.rejectListing =
+window.rejectListing=
 rejectListing;
 
 
-/* =====================================================
-   CONTACT
-===================================================== */
+/* =========================
+CONTACT
+========================= */
 
 function contactSeller(id){
 
-const x =
+const x=
 allListings.find(
 item=>item.id===id
 );
@@ -2647,7 +3450,9 @@ document.getElementById(
 
 let html=`
 
-<b>${escapeHtml(x.name)}</b>
+<b>
+${escapeHtml(x.name||"")}
+</b>
 
 <br><br>
 
@@ -2657,11 +3462,12 @@ let html=`
 
 📍 ${escapeHtml(x.collegeLocation||"")}
 
+<br><br>
 `;
 
 if(x.whatsapp){
 
-const number =
+const number=
 String(x.whatsapp)
 .replace(/\D/g,"");
 
@@ -2672,9 +3478,7 @@ html+=`
 <a
 class="contact-link"
 target="_blank"
-rel="noopener"
-href="https://wa.me/${number}"
->
+href="https://wa.me/${number}">
 📱 Message on WhatsApp
 </a>
 
@@ -2686,7 +3490,7 @@ href="https://wa.me/${number}"
 
 if(x.instagram){
 
-const insta =
+const insta=
 String(x.instagram)
 .replace(/^@/,"");
 
@@ -2695,9 +3499,7 @@ html+=`
 <a
 class="contact-link"
 target="_blank"
-rel="noopener"
-href="https://instagram.com/${encodeURIComponent(insta)}"
->
+href="https://instagram.com/${encodeURIComponent(insta)}">
 📸 Instagram
 </a>
 
@@ -2715,7 +3517,7 @@ document.getElementById(
 
 }
 
-window.contactSeller =
+window.contactSeller=
 contactSeller;
 
 
@@ -2727,21 +3529,19 @@ document.getElementById(
 
 }
 
-window.closeContact =
+window.closeContact=
 closeContact;
 
 
-/* =====================================================
-   REQUIREMENT
-===================================================== */
+/* =========================
+REQUIREMENT
+========================= */
 
 function openRequirement(){
 
 if(!auth.currentUser){
 
-alert(
-"Please login first."
-);
+alert("Please login first.");
 
 openLogin();
 
@@ -2755,7 +3555,7 @@ document.getElementById(
 
 }
 
-window.openRequirement =
+window.openRequirement=
 openRequirement;
 
 
@@ -2767,7 +3567,7 @@ document.getElementById(
 
 }
 
-window.closeRequirement =
+window.closeRequirement=
 closeRequirement;
 
 
@@ -2777,15 +3577,19 @@ e.preventDefault();
 
 if(!auth.currentUser){
 
-alert(
-"Please login first."
-);
+alert("Please login.");
 
 return;
 
 }
 
-const req={
+try{
+
+await addDoc(
+
+collection(db,"requirements"),
+
+{
 
 name:
 document.getElementById("reqName")
@@ -2820,13 +3624,8 @@ auth.currentUser.email||"",
 createdAt:
 serverTimestamp()
 
-};
+}
 
-try{
-
-await addDoc(
-collection(db,"requirements"),
-req
 );
 
 alert(
@@ -2850,13 +3649,13 @@ error.message
 
 }
 
-window.addRequirement =
+window.addRequirement=
 addRequirement;
 
 
-/* =====================================================
-   HELPERS
-===================================================== */
+/* =========================
+HELPERS
+========================= */
 
 function escapeHtml(s){
 
@@ -2905,9 +3704,9 @@ return 0;
 }
 
 
-/* =====================================================
-   START
-===================================================== */
+/* =========================
+INITIAL
+========================= */
 
 loadListings();
 
