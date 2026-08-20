@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
+
 <title>Campus Components — Student Marketplace</title>
 
-<!-- Cashfree Checkout SDK -->
-const cashfree = Cashfree({
-    mode: "production"
-});
+<!-- CASHFREE PRODUCTION SDK -->
+<script src="https://sdk.cashfree.com/js/v3/cashfree.js"></script>
+
 <style>
 *{box-sizing:border-box}
 
@@ -357,6 +357,7 @@ margin-top:30px
 }
 
 @media(max-width:900px){
+
 .grid{
 grid-template-columns:repeat(2,1fr)
 }
@@ -364,9 +365,11 @@ grid-template-columns:repeat(2,1fr)
 .hero h1{
 font-size:34px
 }
+
 }
 
 @media(max-width:600px){
+
 header{
 padding:13px 4%
 }
@@ -391,6 +394,7 @@ grid-template-columns:1fr
 .logo{
 font-size:18px
 }
+
 }
 </style>
 </head>
@@ -429,6 +433,7 @@ Login
 
 </header>
 
+
 <section class="hero">
 
 <h1>
@@ -453,13 +458,8 @@ oninput="syncHeroSearch()"
 Any condition
 </option>
 
-<option>
-Working
-</option>
-
-<option>
-New
-</option>
+<option>Working</option>
+<option>New</option>
 
 </select>
 
@@ -473,6 +473,7 @@ Find Components
 </div>
 
 </section>
+
 
 <section class="container" id="browse">
 
@@ -489,9 +490,7 @@ Components near you
 </div>
 
 <div class="notice">
-
 💡 Search any component. Listings from students are loaded from Firebase automatically.
-
 </div>
 
 <div class="toolbar">
@@ -504,41 +503,23 @@ oninput="filterCards()"
 
 <select id="condition" onchange="filterCards()">
 
-<option value="">
-Any condition
-</option>
-
-<option>
-Working
-</option>
-
-<option>
-New
-</option>
+<option value="">Any condition</option>
+<option>Working</option>
+<option>New</option>
 
 </select>
 
 <select id="sort" onchange="filterCards()">
 
-<option value="new">
-Newest
-</option>
-
-<option value="low">
-Price: Low to High
-</option>
-
-<option value="high">
-Price: High to Low
-</option>
+<option value="new">Newest</option>
+<option value="low">Price: Low to High</option>
+<option value="high">Price: High to Low</option>
 
 </select>
 
 <select id="locationFilter" onchange="filterCards()">
 
-<option value="">
-All locations
-</option>
+<option value="">All locations</option>
 
 </select>
 
@@ -551,6 +532,7 @@ No matching components found.
 </div>
 
 </section>
+
 
 <footer>
 
@@ -566,19 +548,16 @@ Founder Platform · Tiered Platform Commission
 
 </footer>
 
+
 <!-- LOGIN -->
 
 <div class="modal" id="loginModal">
 
 <div class="modal-box">
 
-<button class="close" onclick="closeLogin()">
-×
-</button>
+<button class="close" onclick="closeLogin()">×</button>
 
-<h2 id="authTitle">
-Login
-</h2>
+<h2 id="authTitle">Login</h2>
 
 <form class="form" onsubmit="handleAuth(event)">
 
@@ -623,24 +602,18 @@ Create new account
 
 </div>
 
+
 <!-- SELL -->
 
 <div class="modal" id="sellModal">
 
 <div class="modal-box">
 
-<button class="close" onclick="closeSell()">
-×
-</button>
+<button class="close" onclick="closeSell()">×</button>
 
-<h2 id="sellTitle">
-Sell a Component
-</h2>
+<h2 id="sellTitle">Sell a Component</h2>
 
-<form
-class="form"
-onsubmit="saveListing(event)"
->
+<form class="form" onsubmit="saveListing(event)">
 
 <input
 id="name"
@@ -666,17 +639,9 @@ Platform commission will appear here.
 
 <select id="cond" required>
 
-<option value="">
-Condition
-</option>
-
-<option>
-Working
-</option>
-
-<option>
-New
-</option>
+<option value="">Condition</option>
+<option>Working</option>
+<option>New</option>
 
 </select>
 
@@ -710,9 +675,7 @@ placeholder="Instagram ID e.g. @username"
 
 <div class="upload-box">
 
-<strong>
-Upload component image
-</strong>
+<strong>Upload component image</strong>
 
 <br><br>
 
@@ -754,9 +717,6 @@ lab coat, drafter scale, calculator,
 Arduino, sensors, motors, project components,
 electronics tools and similar college-use items.
 
-Items that may be unsafe, illegal or inappropriate
-will require founder/team approval.
-
 </small>
 
 <button
@@ -772,27 +732,18 @@ Publish Listing
 
 </div>
 
+
 <!-- REQUIREMENT -->
 
 <div class="modal" id="reqModal">
 
 <div class="modal-box">
 
-<button
-class="close"
-onclick="closeRequirement()"
->
-×
-</button>
+<button class="close" onclick="closeRequirement()">×</button>
 
-<h2>
-Post a Requirement
-</h2>
+<h2>Post a Requirement</h2>
 
-<form
-class="form"
-onsubmit="addRequirement(event)"
->
+<form class="form" onsubmit="addRequirement(event)">
 
 <input
 id="reqName"
@@ -839,32 +790,23 @@ Post Requirement
 
 </div>
 
+
 <!-- CONTACT -->
 
 <div class="modal" id="contactModal">
 
 <div class="modal-box">
 
-<button
-class="close"
-onclick="closeContact()"
->
-×
-</button>
+<button class="close" onclick="closeContact()">×</button>
 
-<h2 id="contactTitle">
-Contact Seller
-</h2>
+<h2 id="contactTitle">Contact Seller</h2>
 
-<div
-id="contactBox"
-class="contact-info"
->
-</div>
+<div id="contactBox" class="contact-info"></div>
 
 </div>
 
 </div>
+
 
 <script type="module">
 
@@ -899,7 +841,7 @@ from
 
 
 /* =====================================================
-   FIREBASE CONFIG
+   FIREBASE
 ===================================================== */
 
 const firebaseConfig = {
@@ -927,23 +869,19 @@ measurementId:
 
 };
 
-const app =
-initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
 
-const auth =
-getAuth(app);
+const auth = getAuth(app);
 
-const db =
-getFirestore(app);
+const db = getFirestore(app);
 
 
 /* =====================================================
-   CASHFREE
+   CASHFREE — PRODUCTION
 ===================================================== */
 
-const cashfree =
-Cashfree({
-mode: "sandbox"
+const cashfree = Cashfree({
+mode: "production"
 });
 
 
@@ -990,7 +928,6 @@ const restrictedWords = [
 
 ];
 
-
 function checkRestricted(name,description){
 
 const text =
@@ -1011,11 +948,9 @@ function getCommissionRate(price){
 
 price = Number(price);
 
-if(price < 200)
-return 3;
+if(price < 200) return 3;
 
-if(price < 500)
-return 5;
+if(price < 500) return 5;
 
 return 10;
 
@@ -1059,12 +994,13 @@ const sellerAmount =
 price - commission;
 
 box.innerHTML =
-
-`Platform Commission:
+`
+Platform Commission:
 <b>${rate}%</b>
 (₹${commission.toFixed(2)})<br>
 Seller receives:
-<b>₹${sellerAmount.toFixed(2)}</b>`;
+<b>₹${sellerAmount.toFixed(2)}</b>
+`;
 
 }
 
@@ -1132,7 +1068,7 @@ previewImage;
 
 
 /* =====================================================
-   AUTH UI
+   LOGIN
 ===================================================== */
 
 function openLogin(){
@@ -1203,6 +1139,9 @@ document.getElementById("authPassword")
 const msg =
 document.getElementById("authMessage");
 
+msg.innerHTML =
+"Please wait...";
+
 try{
 
 if(authMode==="signup"){
@@ -1240,10 +1179,12 @@ closeLogin,
 
 }catch(error){
 
+console.error(error);
+
 msg.style.color="#b42318";
 
 msg.innerHTML =
-error.message;
+escapeHtml(error.message);
 
 }
 
@@ -1274,8 +1215,8 @@ user.email === FOUNDER_EMAIL;
 
 status.innerHTML =
 isFounder
-? "♠️ Founder · "+user.email
-: "👤 "+user.email;
+? "♠️ Founder · "+escapeHtml(user.email)
+: "👤 "+escapeHtml(user.email);
 
 loginBtn.textContent =
 "Logout";
@@ -1305,7 +1246,7 @@ renderListings();
 
 
 /* =====================================================
-   SELL MODAL
+   SELL
 ===================================================== */
 
 function openSell(){
@@ -1362,7 +1303,7 @@ closeSell;
 
 
 /* =====================================================
-   SAVE / UPDATE LISTING
+   SAVE LISTING
 ===================================================== */
 
 async function saveListing(e){
@@ -1420,9 +1361,7 @@ document.getElementById("restrictedCheck")
 .checked;
 
 if(checkRestricted(name,description)){
-
 restricted=true;
-
 }
 
 if(!whatsapp && !instagram){
@@ -1468,9 +1407,7 @@ x=>x.id===editingId
 
 if(!old){
 
-alert(
-"Listing not found."
-);
+alert("Listing not found.");
 
 return;
 
@@ -1487,13 +1424,7 @@ return;
 }
 
 await updateDoc(
-
-doc(
-db,
-"listings",
-editingId
-),
-
+doc(db,"listings",editingId),
 {
 
 name,
@@ -1525,7 +1456,6 @@ updatedAt:
 serverTimestamp()
 
 }
-
 );
 
 alert(
@@ -1549,13 +1479,10 @@ description,
 image:
 selectedImage || "",
 
-icon:
-"📦",
+icon:"📦",
 
-ownerUid:
 ownerUid,
 
-ownerEmail:
 ownerEmail,
 
 restricted,
@@ -1581,19 +1508,11 @@ collection(db,"listings"),
 listingData
 );
 
-if(restricted){
-
 alert(
-"Listing submitted for founder/team approval."
+restricted
+? "Listing submitted for founder/team approval."
+: "Listing published successfully!"
 );
-
-}else{
-
-alert(
-"Listing published successfully!"
-);
-
-}
 
 }
 
@@ -1619,7 +1538,7 @@ saveListing;
 
 
 /* =====================================================
-   LOAD LISTINGS
+   LOAD
 ===================================================== */
 
 async function loadListings(){
@@ -1638,9 +1557,7 @@ docSnap=>{
 
 allListings.push({
 
-id:
-docSnap.id,
-
+id:docSnap.id,
 ...docSnap.data()
 
 });
@@ -1657,11 +1574,12 @@ console.error(error);
 
 document.getElementById("grid")
 .innerHTML =
-
-`<div style="padding:20px;color:#b42318">
+`
+<div style="padding:20px;color:#b42318">
 <b>Firebase error</b><br><br>
 ${escapeHtml(error.message)}
-</div>`;
+</div>
+`;
 
 }
 
@@ -1696,9 +1614,7 @@ x.restricted &&
 !x.approved &&
 !founder
 ){
-
 return;
-
 }
 
 visibleCount++;
@@ -1710,9 +1626,7 @@ card.className="card";
 
 const imageHTML =
 x.image
-
 ? `<img src="${escapeAttribute(x.image)}">`
-
 : `<span>${escapeHtml(x.icon || "📦")}</span>`;
 
 const own =
@@ -1720,14 +1634,13 @@ auth.currentUser &&
 x.ownerUid ===
 auth.currentUser.uid;
 
-
 let buttons = `
 
 <button
 class="btn primary small-btn"
 onclick="buyNow('${escapeAttribute(x.id)}')"
 >
- Buy Now
+Buy Now
 </button>
 
 <button
@@ -1736,7 +1649,6 @@ onclick="contactSeller('${escapeAttribute(x.id)}')"
 >
 Message Seller
 </button>
-
 `;
 
 if(own){
@@ -1756,7 +1668,6 @@ onclick="deleteListing('${escapeAttribute(x.id)}')"
 >
 Delete
 </button>
-
 `;
 
 }
@@ -1782,7 +1693,6 @@ onclick="rejectListing('${escapeAttribute(x.id)}')"
 >
 Reject
 </button>
-
 `;
 
 }
@@ -1876,13 +1786,10 @@ ${statusBadge}
 </div>
 
 <div class="card-actions">
-
 ${buttons}
-
 </div>
 
 </div>
-
 `;
 
 grid.appendChild(card);
@@ -1903,22 +1810,19 @@ visibleCount
 
 
 /* =====================================================
-   BUY NOW
-   CASHFREE
+   CASHFREE PRODUCTION PAYMENT
 ===================================================== */
 
 async function buyNow(id){
 
 const listing =
 allListings.find(
-item => item.id === id
+item=>item.id===id
 );
 
 if(!listing){
 
-alert(
-"Listing not found."
-);
+alert("Listing not found.");
 
 return;
 
@@ -1954,9 +1858,7 @@ Number(listing.price || 0);
 
 if(!price || price < 1){
 
-alert(
-"Invalid listing price."
-);
+alert("Invalid listing price.");
 
 return;
 
@@ -1977,10 +1879,6 @@ return;
 
 try{
 
-/* =====================================================
-   CREATE CASHFREE ORDER
-===================================================== */
-
 const response =
 await fetch(
 "/api/create-order",
@@ -1996,8 +1894,7 @@ headers:{
 body:
 JSON.stringify({
 
-amount:
-price,
+amount:price,
 
 listingId:
 listing.id,
@@ -2034,17 +1931,15 @@ data.error ||
 if(!data.paymentSessionId){
 
 throw new Error(
-"Cashfree payment session was not received."
+"Payment session was not received."
 );
 
 }
 
 
-/* =====================================================
-   OPEN CASHFREE CHECKOUT
-===================================================== */
+/* PRODUCTION CASHFREE CHECKOUT */
 
-const checkoutResult =
+const result =
 await cashfree.checkout({
 
 paymentSessionId:
@@ -2055,12 +1950,10 @@ redirectTarget:
 
 });
 
-
-if(checkoutResult &&
-checkoutResult.error){
+if(result && result.error){
 
 throw new Error(
-checkoutResult.error.message ||
+result.error.message ||
 "Cashfree checkout failed."
 );
 
@@ -2068,7 +1961,8 @@ checkoutResult.error.message ||
 
 
 /*
-After checkout closes, verify the order.
+Checkout completed/closed.
+Verify payment from backend.
 */
 
 await verifyCashfreeOrder(
@@ -2079,7 +1973,7 @@ listing
 }catch(error){
 
 console.error(
-"Cashfree payment error:",
+"Payment error:",
 error
 );
 
@@ -2097,7 +1991,7 @@ buyNow;
 
 
 /* =====================================================
-   VERIFY CASHFREE ORDER
+   VERIFY PAYMENT
 ===================================================== */
 
 async function verifyCashfreeOrder(
@@ -2121,10 +2015,7 @@ headers:{
 
 body:
 JSON.stringify({
-
-orderId:
 orderId
-
 })
 
 }
@@ -2155,11 +2046,7 @@ return;
 }
 
 
-/* =====================================================
-   PAYMENT DETAILS
-===================================================== */
-
-let cashfreePaymentId = "";
+let cashfreePaymentId="";
 
 if(
 data.paymentDetails &&
@@ -2186,10 +2073,6 @@ successfulPayment.payment_id ||
 }
 
 
-/* =====================================================
-   COMMISSION
-===================================================== */
-
 const price =
 Number(listing.price || 0);
 
@@ -2202,10 +2085,6 @@ calculateCommission(price);
 const sellerAmount =
 price - commissionAmount;
 
-
-/* =====================================================
-   SAVE ORDER
-===================================================== */
 
 await addDoc(
 collection(db,"orders"),
@@ -2232,23 +2111,18 @@ listing.name || "",
 amount:
 price,
 
-commissionRate:
 commissionRate,
 
-commissionAmount:
 commissionAmount,
 
-sellerAmount:
 sellerAmount,
 
 cashfreeOrderId:
 orderId,
 
-cashfreePaymentId:
 cashfreePaymentId,
 
-status:
-"paid",
+status:"paid",
 
 createdAt:
 serverTimestamp()
@@ -2257,40 +2131,22 @@ serverTimestamp()
 );
 
 
-/* =====================================================
-   SUCCESS
-===================================================== */
-
 alert(
-
 "Payment successful!\n\n"+
-
 "Cashfree Order ID:\n"+
 orderId+
-
-"\n\n"+
-
-"Order saved successfully."+
-
-"\n\n"+
-
+"\n\nOrder saved successfully.\n\n"+
 "Seller Amount: ₹"+
 sellerAmount.toFixed(2)
-
 );
 
 }catch(error){
 
-console.error(
-"Verification/order error:",
-error
-);
+console.error(error);
 
 alert(
-
 "Payment may have completed, but order saving failed.\n\n"+
 error.message
-
 );
 
 }
@@ -2323,7 +2179,7 @@ document.getElementById("locationFilter")
 let data =
 allListings.filter(x=>{
 
-const searchable = [
+const searchable=[
 
 x.name,
 x.description,
@@ -2343,20 +2199,15 @@ q.split(/\s+/)
 
 const matches =
 words.every(
-word =>
-searchable.includes(word)
+word=>searchable.includes(word)
 );
 
-return (
-
+return(
 matches &&
-
 (!condition ||
-x.condition === condition) &&
-
+x.condition===condition) &&
 (!location ||
-x.collegeLocation === location)
-
+x.collegeLocation===location)
 );
 
 });
@@ -2366,13 +2217,12 @@ const sort =
 document.getElementById("sort")
 ?.value || "new";
 
-
 if(sort==="low"){
 
 data.sort(
 (a,b)=>
-Number(a.price || 0) -
-Number(b.price || 0)
+Number(a.price||0)-
+Number(b.price||0)
 );
 
 }
@@ -2381,8 +2231,8 @@ if(sort==="high"){
 
 data.sort(
 (a,b)=>
-Number(b.price || 0) -
-Number(a.price || 0)
+Number(b.price||0)-
+Number(a.price||0)
 );
 
 }
@@ -2391,7 +2241,7 @@ if(sort==="new"){
 
 data.sort(
 (a,b)=>
-getTime(b.createdAt) -
+getTime(b.createdAt)-
 getTime(a.createdAt)
 );
 
@@ -2404,9 +2254,7 @@ return data;
 
 window.filterCards =
 function(){
-
 renderListings();
-
 };
 
 
@@ -2447,23 +2295,19 @@ select.value;
 const locations =
 [
 ...new Set(
-
 allListings
-
-.map(
-x=>x.collegeLocation
-)
-
+.map(x=>x.collegeLocation)
 .filter(Boolean)
-
 )
 ]
 .sort();
 
 select.innerHTML =
-`<option value="">
+`
+<option value="">
 All locations
-</option>`;
+</option>
+`;
 
 locations.forEach(
 location=>{
@@ -2471,23 +2315,16 @@ location=>{
 const option =
 document.createElement("option");
 
-option.value =
-location;
+option.value=location;
 
-option.textContent =
-location;
+option.textContent=location;
 
 select.appendChild(option);
 
 });
 
-if(
-locations.includes(current)
-){
-
-select.value =
-current;
-
+if(locations.includes(current)){
+select.value=current;
 }
 
 }
@@ -2524,71 +2361,56 @@ editingId=id;
 
 document.getElementById(
 "sellTitle"
-).textContent =
-"Edit Listing";
+).textContent="Edit Listing";
 
 document.getElementById("name")
-.value =
-x.name || "";
+.value=x.name||"";
 
 document.getElementById("price")
-.value =
-x.price || "";
+.value=x.price||"";
 
 document.getElementById("cond")
-.value =
-x.condition || "";
+.value=x.condition||"";
 
 document.getElementById("seller")
-.value =
-x.seller || "";
+.value=x.seller||"";
 
 document.getElementById("college")
-.value =
-x.college || "";
+.value=x.college||"";
 
 document.getElementById(
 "collegeLocation"
-).value =
-x.collegeLocation || "";
+).value=x.collegeLocation||"";
 
 document.getElementById("whatsapp")
-.value =
-x.whatsapp || "";
+.value=x.whatsapp||"";
 
 document.getElementById("instagram")
-.value =
-x.instagram || "";
+.value=x.instagram||"";
 
 document.getElementById("desc")
-.value =
-x.description || "";
+.value=x.description||"";
 
 document.getElementById(
 "restrictedCheck"
-).checked =
-Boolean(x.restricted);
+).checked=Boolean(x.restricted);
 
-selectedImage =
-x.image || "";
+selectedImage=x.image||"";
 
 const preview =
 document.getElementById("preview");
 
 if(x.image){
 
-preview.src =
-x.image;
+preview.src=x.image;
 
-preview.style.display =
-"block";
+preview.style.display="block";
 
 }else{
 
 preview.src="";
 
-preview.style.display =
-"none";
+preview.style.display="none";
 
 }
 
@@ -2654,9 +2476,7 @@ await loadListings();
 
 }catch(error){
 
-alert(
-error.message
-);
+alert(error.message);
 
 }
 
@@ -2690,11 +2510,7 @@ try{
 
 await updateDoc(
 
-doc(
-db,
-"listings",
-id
-),
+doc(db,"listings",id),
 
 {
 
@@ -2738,7 +2554,7 @@ approveListing;
 
 
 /* =====================================================
-   FOUNDER REJECT
+   REJECT
 ===================================================== */
 
 async function rejectListing(id){
@@ -2771,11 +2587,7 @@ try{
 
 await updateDoc(
 
-doc(
-db,
-"listings",
-id
-),
+doc(db,"listings",id),
 
 {
 
@@ -2796,9 +2608,7 @@ serverTimestamp()
 
 );
 
-alert(
-"Listing rejected."
-);
+alert("Listing rejected.");
 
 await loadListings();
 
@@ -2832,27 +2642,22 @@ if(!x)return;
 
 document.getElementById(
 "contactTitle"
-).textContent =
-"Contact "+(x.seller || "Seller");
+).textContent=
+"Contact "+(x.seller||"Seller");
 
-let html = `
+let html=`
 
-<b>
-${escapeHtml(x.name)}
-</b>
+<b>${escapeHtml(x.name)}</b>
 
 <br><br>
 
-🏫
-${escapeHtml(x.college || "")}
+🏫 ${escapeHtml(x.college||"")}
 
 <br>
 
-📍
-${escapeHtml(x.collegeLocation || "")}
+📍 ${escapeHtml(x.collegeLocation||"")}
 
 `;
-
 
 if(x.whatsapp){
 
@@ -2862,7 +2667,7 @@ String(x.whatsapp)
 
 if(number){
 
-html += `
+html+=`
 
 <a
 class="contact-link"
@@ -2879,14 +2684,13 @@ href="https://wa.me/${number}"
 
 }
 
-
 if(x.instagram){
 
 const insta =
 String(x.instagram)
 .replace(/^@/,"");
 
-html += `
+html+=`
 
 <a
 class="contact-link"
@@ -2901,16 +2705,13 @@ href="https://instagram.com/${encodeURIComponent(insta)}"
 
 }
 
-
 document.getElementById(
 "contactBox"
-).innerHTML =
-html;
+).innerHTML=html;
 
 document.getElementById(
 "contactModal"
-).style.display =
-"flex";
+).style.display="flex";
 
 }
 
@@ -2922,8 +2723,7 @@ function closeContact(){
 
 document.getElementById(
 "contactModal"
-).style.display =
-"none";
+).style.display="none";
 
 }
 
@@ -2951,8 +2751,7 @@ return;
 
 document.getElementById(
 "reqModal"
-).style.display =
-"flex";
+).style.display="flex";
 
 }
 
@@ -2964,8 +2763,7 @@ function closeRequirement(){
 
 document.getElementById(
 "reqModal"
-).style.display =
-"none";
+).style.display="none";
 
 }
 
@@ -2987,56 +2785,47 @@ return;
 
 }
 
-const req = {
+const req={
 
 name:
-document.getElementById(
-"reqName"
-).value.trim(),
+document.getElementById("reqName")
+.value.trim(),
 
 budget:
 Number(
-document.getElementById(
-"reqBudget"
-).value || 0
+document.getElementById("reqBudget")
+.value||0
 ),
 
 qty:
 Number(
-document.getElementById(
-"reqQty"
-).value || 1
+document.getElementById("reqQty")
+.value||1
 ),
 
 details:
-document.getElementById(
-"reqDetails"
-).value.trim(),
+document.getElementById("reqDetails")
+.value.trim(),
 
 contact:
-document.getElementById(
-"reqContact"
-).value.trim(),
+document.getElementById("reqContact")
+.value.trim(),
 
 ownerUid:
 auth.currentUser.uid,
 
 ownerEmail:
-auth.currentUser.email || "",
+auth.currentUser.email||"",
 
 createdAt:
 serverTimestamp()
 
 };
 
-
 try{
 
 await addDoc(
-collection(
-db,
-"requirements"
-),
+collection(db,"requirements"),
 req
 );
 
@@ -3047,9 +2836,7 @@ alert(
 closeRequirement();
 
 document
-.querySelector(
-"#reqModal form"
-)
+.querySelector("#reqModal form")
 .reset();
 
 }catch(error){
@@ -3073,9 +2860,8 @@ addRequirement;
 
 function escapeHtml(s){
 
-return String(
-s ?? ""
-).replace(
+return String(s??"")
+.replace(
 /[&<>"']/g,
 m=>({
 
@@ -3093,9 +2879,7 @@ m=>({
 
 function escapeAttribute(s){
 
-return String(
-s ?? ""
-)
+return String(s??"")
 .replace(/&/g,"&amp;")
 .replace(/"/g,"&quot;")
 .replace(/</g,"&lt;")
@@ -3106,12 +2890,10 @@ s ?? ""
 
 function getTime(timestamp){
 
-if(!timestamp)
-return 0;
+if(!timestamp)return 0;
 
 if(
-typeof timestamp.toMillis ===
-"function"
+typeof timestamp.toMillis==="function"
 ){
 
 return timestamp.toMillis();
@@ -3124,7 +2906,7 @@ return 0;
 
 
 /* =====================================================
-   INITIAL LOAD
+   START
 ===================================================== */
 
 loadListings();
