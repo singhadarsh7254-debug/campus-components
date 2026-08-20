@@ -5,7 +5,8 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Campus Components — Student Marketplace</title>
 
-<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<!-- Cashfree Checkout SDK -->
+<script src="https://sdk.cashfree.com/js/v3/cashfree.js"></script>
 
 <style>
 *{box-sizing:border-box}
@@ -427,7 +428,6 @@ Login
 
 </header>
 
-
 <section class="hero">
 
 <h1>
@@ -472,7 +472,6 @@ Find Components
 </div>
 
 </section>
-
 
 <section class="container" id="browse">
 
@@ -552,7 +551,6 @@ No matching components found.
 
 </section>
 
-
 <footer>
 
 <b>CampusComponents</b>
@@ -566,7 +564,6 @@ Student electronics marketplace · Buy locally · Sell locally
 Founder Platform · Tiered Platform Commission
 
 </footer>
-
 
 <!-- LOGIN -->
 
@@ -624,7 +621,6 @@ Create new account
 </div>
 
 </div>
-
 
 <!-- SELL -->
 
@@ -775,7 +771,6 @@ Publish Listing
 
 </div>
 
-
 <!-- REQUIREMENT -->
 
 <div class="modal" id="reqModal">
@@ -843,7 +838,6 @@ Post Requirement
 
 </div>
 
-
 <!-- CONTACT -->
 
 <div class="modal" id="contactModal">
@@ -871,7 +865,6 @@ class="contact-info"
 
 </div>
 
-
 <script type="module">
 
 import {
@@ -879,7 +872,6 @@ initializeApp
 }
 from
 "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
-
 
 import {
 getAuth,
@@ -890,7 +882,6 @@ onAuthStateChanged
 }
 from
 "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
-
 
 import {
 getFirestore,
@@ -935,7 +926,6 @@ measurementId:
 
 };
 
-
 const app =
 initializeApp(firebaseConfig);
 
@@ -947,19 +937,21 @@ getFirestore(app);
 
 
 /* =====================================================
+   CASHFREE
+===================================================== */
+
+const cashfree =
+Cashfree({
+mode: "sandbox"
+});
+
+
+/* =====================================================
    FOUNDER
 ===================================================== */
 
 const FOUNDER_EMAIL =
 "singhadarsh7254@gmail.com";
-
-
-/* =====================================================
-   RAZORPAY TEST KEY
-===================================================== */
-
-const RAZORPAY_KEY_ID =
-"rzp_test_TQ18hydD3XfsCN";
 
 
 /* =====================================================
@@ -1281,7 +1273,7 @@ user.email === FOUNDER_EMAIL;
 
 status.innerHTML =
 isFounder
-? "👑 Founder · "+user.email
+? "♠️ Founder · "+user.email
 : "👤 "+user.email;
 
 loginBtn.textContent =
@@ -1734,7 +1726,7 @@ let buttons = `
 class="btn primary small-btn"
 onclick="buyNow('${escapeAttribute(x.id)}')"
 >
-💳 Buy Now
+ Buy Now
 </button>
 
 <button
@@ -1911,10 +1903,7 @@ visibleCount
 
 /* =====================================================
    BUY NOW
-   CREATE ORDER
-   RAZORPAY
-   VERIFY PAYMENT
-   SAVE ORDER
+   CASHFREE
 ===================================================== */
 
 async function buyNow(id){
@@ -1985,11 +1974,10 @@ return;
 
 }
 
-
 try{
 
 /* =====================================================
-   CREATE RAZORPAY ORDER
+   CREATE CASHFREE ORDER
 ===================================================== */
 
 const response =
@@ -2030,77 +2018,95 @@ listing.ownerUid ||
 }
 );
 
-
 const data =
 await response.json();
-
 
 if(!response.ok){
 
 throw new Error(
 data.error ||
-"Unable to create payment order."
+"Unable to create Cashfree order."
+);
+
+}
+
+if(!data.paymentSessionId){
+
+throw new Error(
+"Cashfree payment session was not received."
 );
 
 }
 
 
 /* =====================================================
-   RAZORPAY OPTIONS
+   OPEN CASHFREE CHECKOUT
 ===================================================== */
 
-const options = {
+const checkoutResult =
+await cashfree.checkout({
 
-key:
-RAZORPAY_KEY_ID,
+paymentSessionId:
+data.paymentSessionId,
 
-amount:
-data.amount,
+redirectTarget:
+"_modal"
 
-currency:
-data.currency ||
-"INR",
+});
 
-name:
-"CampusComponents",
 
-description:
-listing.name ||
-"Campus Component",
+if(checkoutResult &&
+checkoutResult.error){
 
-order_id:
+throw new Error(
+checkoutResult.error.message ||
+"Cashfree checkout failed."
+);
+
+}
+
+
+/*
+After checkout closes, verify the order.
+*/
+
+await verifyCashfreeOrder(
 data.orderId,
+listing
+);
 
-prefill:{
+}catch(error){
 
-email:
-auth.currentUser.email ||
-""
+console.error(
+"Cashfree payment error:",
+error
+);
 
-},
+alert(
+"Could not start payment.\n\n"+
+error.message
+);
 
-theme:{
+}
 
-color:
-"#2f80ed"
+}
 
-},
+window.buyNow =
+buyNow;
 
 
 /* =====================================================
-   PAYMENT SUCCESS
+   VERIFY CASHFREE ORDER
 ===================================================== */
 
-handler:
-async function(paymentResponse){
+async function verifyCashfreeOrder(
+orderId,
+listing
+){
 
 try{
 
-/* =====================================================
-   VERIFY PAYMENT
-===================================================== */
-
-const verifyResponse =
+const response =
 await fetch(
 "/api/verify-payment",
 {
@@ -2115,42 +2121,32 @@ headers:{
 body:
 JSON.stringify({
 
-razorpay_order_id:
-paymentResponse.razorpay_order_id,
-
-razorpay_payment_id:
-paymentResponse.razorpay_payment_id,
-
-razorpay_signature:
-paymentResponse.razorpay_signature
+orderId:
+orderId
 
 })
 
 }
 );
 
+const data =
+await response.json();
 
-const verifyData =
-await verifyResponse.json();
+if(!response.ok){
 
+throw new Error(
+data.error ||
+"Payment verification failed."
+);
 
-/* =====================================================
-   VERIFICATION FAILED
-===================================================== */
+}
 
-if(
-!verifyResponse.ok ||
-!verifyData.verified
-){
+if(!data.verified){
 
 alert(
-
-"Payment received, but verification failed.\n\n"+
-(
-verifyData.error ||
-"Please contact support."
-)
-
+"Payment is not completed yet.\n\n"+
+"Order status: "+
+(data.orderStatus || "UNKNOWN")
 );
 
 return;
@@ -2159,8 +2155,42 @@ return;
 
 
 /* =====================================================
-   CALCULATE COMMISSION
+   PAYMENT DETAILS
 ===================================================== */
+
+let cashfreePaymentId = "";
+
+if(
+data.paymentDetails &&
+Array.isArray(
+data.paymentDetails.payment_details
+)
+){
+
+const successfulPayment =
+data.paymentDetails.payment_details.find(
+payment =>
+payment.payment_status === "SUCCESS"
+);
+
+if(successfulPayment){
+
+cashfreePaymentId =
+successfulPayment.cf_payment_id ||
+successfulPayment.payment_id ||
+"";
+
+}
+
+}
+
+
+/* =====================================================
+   COMMISSION
+===================================================== */
+
+const price =
+Number(listing.price || 0);
 
 const commissionRate =
 getCommissionRate(price);
@@ -2173,11 +2203,11 @@ price - commissionAmount;
 
 
 /* =====================================================
-   SAVE ORDER TO FIRESTORE
+   SAVE ORDER
 ===================================================== */
 
 await addDoc(
-collection(db, "orders"),
+collection(db,"orders"),
 {
 
 buyerUid:
@@ -2210,11 +2240,11 @@ commissionAmount,
 sellerAmount:
 sellerAmount,
 
-razorpayOrderId:
-paymentResponse.razorpay_order_id,
+cashfreeOrderId:
+orderId,
 
-razorpayPaymentId:
-paymentResponse.razorpay_payment_id,
+cashfreePaymentId:
+cashfreePaymentId,
 
 status:
 "paid",
@@ -2227,15 +2257,15 @@ serverTimestamp()
 
 
 /* =====================================================
-   FINAL SUCCESS
+   SUCCESS
 ===================================================== */
 
 alert(
 
-"🎉 Payment successful!\n\n"+
+"Payment successful!\n\n"+
 
-"Payment ID:\n"+
-paymentResponse.razorpay_payment_id+
+"Cashfree Order ID:\n"+
+orderId+
 
 "\n\n"+
 
@@ -2244,25 +2274,20 @@ paymentResponse.razorpay_payment_id+
 "\n\n"+
 
 "Seller Amount: ₹"+
-sellerAmount.toFixed(2)+
-
-"\n\n"+
-
-"Payment has been verified successfully."
+sellerAmount.toFixed(2)
 
 );
-
 
 }catch(error){
 
 console.error(
-"Payment verification/order error:",
+"Verification/order error:",
 error
 );
 
 alert(
 
-"Payment was completed, but order saving failed.\n\n"+
+"Payment may have completed, but order saving failed.\n\n"+
 error.message
 
 );
@@ -2270,75 +2295,6 @@ error.message
 }
 
 }
-
-};
-
-
-/* =====================================================
-   RAZORPAY INSTANCE
-===================================================== */
-
-const razorpay =
-new Razorpay(options);
-
-
-/* =====================================================
-   PAYMENT FAILED
-===================================================== */
-
-razorpay.on(
-"payment.failed",
-function(response){
-
-console.error(
-"Razorpay payment failed:",
-response
-);
-
-alert(
-
-"Payment failed.\n\n"+
-(
-response.error &&
-response.error.description
-?
-response.error.description
-:
-"Please try another payment method."
-)
-
-);
-
-});
-
-
-/* =====================================================
-   OPEN CHECKOUT
-===================================================== */
-
-razorpay.open();
-
-
-}catch(error){
-
-console.error(
-"Payment error:",
-error
-);
-
-alert(
-
-"Could not start payment.\n\n"+
-error.message
-
-);
-
-}
-
-}
-
-window.buyNow =
-buyNow;
 
 
 /* =====================================================
@@ -2420,7 +2376,6 @@ Number(b.price || 0)
 
 }
 
-
 if(sort==="high"){
 
 data.sort(
@@ -2431,7 +2386,6 @@ Number(a.price || 0)
 
 }
 
-
 if(sort==="new"){
 
 data.sort(
@@ -2441,7 +2395,6 @@ getTime(a.createdAt)
 );
 
 }
-
 
 return data;
 
@@ -2960,7 +2913,6 @@ document.getElementById(
 
 }
 
-
 window.contactSeller =
 contactSeller;
 
@@ -3033,7 +2985,6 @@ alert(
 return;
 
 }
-
 
 const req = {
 
