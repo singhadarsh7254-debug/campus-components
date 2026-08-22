@@ -1499,12 +1499,18 @@ window.renderListings=function(){
 
       /* MESSAGE */
 
-      buttons+=`
-        <button
-          class="secondary small"
-          onclick="contactSeller('${x.id}')">
-          Message Seller
-        </button>`;
+      if(
+  x.sold &&
+  auth.currentUser &&
+  x.buyerUid === auth.currentUser.uid
+){
+  buttons+=`
+    <button class="secondary small"
+      onclick="contactSeller('${x.id}')">
+      💬 Message Seller
+    </button>
+  `;
+      }
 
 
       /* OWNER */
