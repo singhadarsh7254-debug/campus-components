@@ -472,7 +472,12 @@ footer{
     <p id="profileMsg"></p>
 
     <hr>
+<hr>
 
+<h3>📩 Component Enquiries</h3>
+
+<div id="myEnquiries"></div>
+    <hr>
     <h3>My Orders</h3>
 
     <div id="myOrders"></div>
@@ -1485,16 +1490,55 @@ window.renderListings=function(){
 
       /* BUY */
 
-      if(!x.sold){
+      /* ENQUIRY + BUY */
 
-        buttons+=`
-          <button
-            class="primary small"
-            onclick="buyNow('${x.id}')">
-            Buy Now
-          </button>`;
+if(!x.sold){
 
-      }
+  const currentUid =
+    auth.currentUser?.uid || "";
+
+  const enquiryStatus =
+    x.enquiryStatusMap?.[currentUid] || "";
+
+  if(enquiryStatus === "accepted"){
+
+    buttons+=`
+      <button
+        class="primary small"
+        onclick="buyNow('${x.id}')">
+        Buy Now
+      </button>`;
+
+  }else if(enquiryStatus === "pending"){
+
+    buttons+=`
+      <button
+        class="secondary small"
+        disabled>
+        Enquiry Sent ✓
+      </button>`;
+
+  }else if(enquiryStatus === "rejected"){
+
+    buttons+=`
+      <button
+        class="danger small"
+        disabled>
+        Seller Not Interested
+      </button>`;
+
+  }else{
+
+    buttons+=`
+      <button
+        class="secondary small"
+        onclick="sendEnquiry('${x.id}')">
+        📩 Enquiry
+      </button>`;
+
+  }
+
+}
 
 
       /* MESSAGE */
@@ -1637,7 +1681,149 @@ window.renderListings=function(){
 
 };
 
+/* =========================
+   SEND ENQUIRY
+========================= */
 
+window.sendEnquiry = async function(id){
+
+  if(!auth.currentUser){
+
+    alert("Please login first.");
+
+    openLogin();
+
+    return;
+
+  }
+
+  const listing =
+    listings.find(x => x.id === id);
+
+  if(!listing){
+
+    alert("Component not found.");
+
+    return;
+
+  }
+
+  if(listing.sold){
+
+    alert("This component is already SOLD OUT.");
+
+    return;
+
+  }
+
+  if(
+    listing.ownerUid ===
+    auth.currentUser.uid
+  ){
+
+    alert(
+      "You cannot send enquiry for your own component."
+    );
+
+    return;
+
+  }
+
+  try{
+
+    /* CHECK EXISTING ENQUIRY */
+
+    const q = query(
+      collection(db,"enquiries"),
+      where(
+        "listingId",
+        "==",
+        id
+      ),
+      where(
+        "buyerUid",
+        "==",
+        auth.currentUser.uid
+      )
+    );
+
+    const existing =
+      await getDocs(q);
+
+    if(!existing.empty){
+
+      alert(
+        "You have already sent an enquiry for this component."
+      );
+
+      return;
+
+    }
+
+    /* CREATE ENQUIRY */
+
+    await addDoc(
+      collection(db,"enquiries"),
+      {
+
+        listingId:
+          listing.id,
+
+        componentName:
+          listing.name || "",
+
+        price:
+          Number(listing.price || 0),
+
+        buyerUid:
+          auth.currentUser.uid,
+
+        buyerEmail:
+          auth.currentUser.email,
+
+        sellerUid:
+          listing.ownerUid,
+
+        sellerEmail:
+          listing.ownerEmail || "",
+
+        sellerName:
+          listing.seller || "",
+
+        status:
+          "pending",
+
+        createdAt:
+          serverTimestamp(),
+
+        respondedAt:
+          null
+
+      }
+    );
+
+    alert(
+      "Enquiry sent to seller successfully.\n\n"+
+      "Wait for seller confirmation before buying."
+    );
+
+    await loadListings();
+
+  }catch(error){
+
+    console.error(
+      "Enquiry Error:",
+      error
+    );
+
+    alert(
+      "Enquiry failed:\n\n"+
+      error.message
+    );
+
+  }
+
+};
 /* =========================
    BUY NOW
 ========================= */
@@ -1773,26 +1959,33 @@ window.buyNow=async function(id){
 
     /* CASHFREE CHECKOUT */
 
-    const result=
-      await cashfree.checkout({
+    const result =
+  await cashfree.checkout({
 
-        paymentSessionId:
-          data.paymentSessionId,
+    paymentSessionId:
+      data.paymentSessionId,
 
-        redirectTarget:
-          "_modal"
+    redirectTarget:
+      "_modal"
 
-      });
+  });
 
 
-    if(result?.error){
+/* USER EXITED PAYMENT */
 
-      throw new Error(
-        result.error.message ||
-        "Cashfree checkout failed."
-      );
+if(
+  result?.error ||
+  result?.status === "USER_DROPPED"
+){
 
-    }
+  alert(
+    "Payment cancelled.\n\n"+
+    "You can try again whenever you want."
+  );
+
+  return;
+
+}
 
 
     /* VERIFY PAYMENT */
@@ -2320,7 +2513,7 @@ window.openProfile=
         ?profileSnap.data().upiId||""
         :"";
 
-
+    await loadMyEnquiries();
     await loadMyOrders();
 
   }catch(error){
@@ -2402,7 +2595,364 @@ window.saveProfile=
 
 };
 
+/* =========================
+   SELLER ENQUIRIES
+========================= */
 
+async function loadMyEnquiries(){
+
+  const box =
+    document.getElementById(
+      "myEnquiries"
+    );
+
+  if(!box)return;
+
+  box.innerHTML="Loading...";
+
+  try{
+
+    const q =
+      query(
+        collection(db,"enquiries"),
+        where(
+          "sellerUid",
+          "==",
+          auth.currentUser.uid
+        )
+      );
+
+    const snap =
+      await getDocs(q);
+
+    box.innerHTML="";
+
+    if(snap.empty){
+
+      box.textContent =
+        "No enquiries.";
+
+      return;
+
+    }
+
+    for(
+      const d of snap.docs
+    ){
+
+      const x =
+        d.data();
+
+      let buttons="";
+
+      if(x.status==="pending"){
+
+        buttons=`
+
+          <br>
+
+          <button
+            class="primary small"
+            onclick="respondEnquiry('${d.id}','accepted')">
+
+            ✅ Yes, I want to sell
+
+          </button>
+
+          <button
+            class="danger small"
+            onclick="respondEnquiry('${d.id}','rejected')">
+
+            ❌ No
+
+          </button>
+
+        `;
+
+      }else if(
+        x.status==="accepted"
+      ){
+
+        buttons=`
+
+          <br>
+
+          <span class="badge green">
+            ✅ You accepted this enquiry
+          </span>
+
+        `;
+
+      }else{
+
+        buttons=`
+
+          <br>
+
+          <span class="badge red">
+            ❌ You rejected this enquiry
+          </span>
+
+        `;
+
+      }
+
+      box.innerHTML += `
+
+        <div class="order">
+
+          <b>
+            ${esc(
+              x.componentName || ""
+            )}
+          </b>
+
+          <br>
+
+          Price:
+          ₹${Number(
+            x.price || 0
+          ).toLocaleString("en-IN")}
+
+          <br>
+
+          Buyer:
+          ${esc(
+            x.buyerEmail || ""
+          )}
+
+          <br>
+
+          Status:
+          ${esc(
+            x.status || "pending"
+          )}
+
+          ${buttons}
+
+        </div>
+
+      `;
+
+    }
+
+  }catch(error){
+
+    console.error(error);
+
+    box.innerHTML =
+      `<span style="color:#b42318">
+        ${esc(error.message)}
+      </span>`;
+
+  }
+
+}
+  /* =========================
+   RESPOND TO ENQUIRY
+========================= */
+
+window.respondEnquiry =
+  async function(
+    enquiryId,
+    response
+  ){
+
+  if(!auth.currentUser){
+
+    alert(
+      "Please login first."
+    );
+
+    return;
+
+  }
+
+  try{
+
+    const enquiryRef =
+      doc(
+        db,
+        "enquiries",
+        enquiryId
+      );
+
+    const enquirySnap =
+      await getDoc(
+        enquiryRef
+      );
+
+    if(!enquirySnap.exists()){
+
+      alert(
+        "Enquiry not found."
+      );
+
+      return;
+
+    }
+
+    const enquiry =
+      enquirySnap.data();
+
+    if(
+      enquiry.sellerUid !==
+      auth.currentUser.uid
+    ){
+
+      alert(
+        "You cannot respond to this enquiry."
+      );
+
+      return;
+
+    }
+
+    const listingRef =
+      doc(
+        db,
+        "listings",
+        enquiry.listingId
+      );
+
+    const listingSnap =
+      await getDoc(
+        listingRef
+      );
+
+    if(!listingSnap.exists()){
+
+      alert(
+        "Component listing no longer exists."
+      );
+
+      return;
+
+    }
+
+    const listing =
+      listingSnap.data();
+
+    if(listing.sold){
+
+      alert(
+        "This component is already sold."
+      );
+
+      return;
+
+    }
+
+
+    /* SELLER ACCEPTED */
+
+    if(response === "accepted"){
+
+      await updateDoc(
+        enquiryRef,
+        {
+
+          status:
+            "accepted",
+
+          respondedAt:
+            serverTimestamp()
+
+        }
+      );
+
+
+      /*
+        Save accepted buyer
+        status inside listing
+      */
+
+      await updateDoc(
+        listingRef,
+        {
+
+          enquiryStatusMap:{
+
+            ...(listing.enquiryStatusMap || {}),
+
+            [enquiry.buyerUid]:
+              "accepted"
+
+          }
+
+        }
+      );
+
+
+      alert(
+        "Enquiry accepted.\n\n"+
+        "Buy Now is now active for this buyer."
+      );
+
+    }
+
+
+    /* SELLER REJECTED */
+
+    else{
+
+      await updateDoc(
+        enquiryRef,
+        {
+
+          status:
+            "rejected",
+
+          respondedAt:
+            serverTimestamp()
+
+        }
+      );
+
+
+      await updateDoc(
+        listingRef,
+        {
+
+          enquiryStatusMap:{
+
+            ...(listing.enquiryStatusMap || {}),
+
+            [enquiry.buyerUid]:
+              "rejected"
+
+          }
+
+        }
+      );
+
+
+      alert(
+        "Enquiry rejected."
+      );
+
+    }
+
+
+    await loadListings();
+
+    await loadMyEnquiries();
+
+  }catch(error){
+
+    console.error(
+      "Enquiry response error:",
+      error
+    );
+
+    alert(
+      "Could not update enquiry:\n\n"+
+      error.message
+    );
+
+  }
+
+};
 /* =========================
    MY ORDERS
 ========================= */
