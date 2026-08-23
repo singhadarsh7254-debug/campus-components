@@ -2026,16 +2026,16 @@ function commissionRate(price){
 
 
   if(price<200){
-    return 3;
-  }
-
-
-  if(price<500){
     return 5;
   }
 
 
-  return 10;
+  if(price<500){
+    return 3;
+  }
+
+
+  return 2;
 
 }
 
