@@ -34,6 +34,17 @@ nav{
   gap:8px;
   align-items:center;
   flex-wrap:wrap
+  <button
+  class="secondary"
+  onclick="openHelp()">
+  Help & Contact
+</button>
+
+<button
+  class="secondary"
+  onclick="openTerms()">
+  Terms & Conditions
+</button>
 }
 button{
   border:0;
@@ -277,6 +288,8 @@ footer{
 
 <!-- LOGIN -->
 
+<!-- LOGIN / SIGNUP -->
+
 <div class="modal" id="loginModal">
 
   <div class="box">
@@ -305,6 +318,56 @@ footer{
         minlength="6"
         required
         placeholder="Password">
+
+      <!-- SIGNUP ONLY -->
+
+      <div id="phoneSignupArea" style="display:none">
+
+        <input
+          id="authPhone"
+          type="tel"
+          placeholder="Mobile Number (+91XXXXXXXXXX)"
+          autocomplete="tel">
+
+        <div
+          id="recaptcha-container"
+          style="margin:10px 0">
+        </div>
+
+        <button
+          type="button"
+          class="secondary"
+          id="sendOtpBtn"
+          onclick="sendSignupOTP()">
+          Send OTP
+        </button>
+
+        <div
+          id="otpArea"
+          style="display:none;margin-top:10px">
+
+          <input
+            id="authOtp"
+            type="text"
+            inputmode="numeric"
+            maxlength="6"
+            placeholder="Enter 6-digit OTP">
+
+          <button
+            type="button"
+            class="secondary"
+            onclick="verifySignupOTP()">
+            Verify OTP
+          </button>
+
+        </div>
+
+        <p
+          id="phoneStatus"
+          style="font-size:13px">
+        </p>
+
+      </div>
 
       <button
         class="primary"
@@ -545,7 +608,11 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
-  onAuthStateChanged
+  onAuthStateChanged,
+  RecaptchaVerifier,
+  signInWithPhoneNumber,
+  PhoneAuthProvider,
+  linkWithCredential
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 
 import {
@@ -620,7 +687,158 @@ let editingId=null;
 let imageData="";
 
 let authMode="login";
+let recaptchaVerifier=null;
+let phoneConfirmationResult=null;
+let phoneVerified=false;
+let signupPhone="";
+  function setupRecaptcha(){
 
+  if(recaptchaVerifier){
+    return;
+  }
+
+  try{
+
+    recaptchaVerifier =
+      new RecaptchaVerifier(
+        auth,
+        "recaptcha-container",
+        {
+          size:"normal",
+
+          callback:()=>{
+            console.log(
+              "reCAPTCHA verified."
+            );
+          },
+
+          "expired-callback":()=>{
+
+            document.getElementById(
+              "phoneStatus"
+            ).textContent =
+              "reCAPTCHA expired. Please verify again.";
+
+          }
+        }
+      );
+
+    recaptchaVerifier.render();
+
+  }catch(error){
+
+    console.error(
+      "reCAPTCHA error:",
+      error
+    );
+
+  }
+
+}
+  window.sendSignupOTP=async function(){
+
+  const phoneInput =
+    document.getElementById("authPhone");
+
+  const phoneStatus =
+    document.getElementById("phoneStatus");
+
+  const sendBtn =
+    document.getElementById("sendOtpBtn");
+
+  const phone =
+    phoneInput.value.trim();
+
+  if(!phone){
+
+    phoneStatus.style.color="red";
+
+    phoneStatus.textContent =
+      "Enter your mobile number.";
+
+    return;
+
+  }
+
+  if(!/^\+91\d{10}$/.test(phone)){
+
+    phoneStatus.style.color="red";
+
+    phoneStatus.textContent =
+      "Enter number in +91XXXXXXXXXX format.";
+
+    return;
+
+  }
+
+  try{
+
+    if(!recaptchaVerifier){
+
+      setupRecaptcha();
+
+      await new Promise(
+        resolve=>setTimeout(resolve,500)
+      );
+
+    }
+
+    sendBtn.disabled=true;
+
+    phoneStatus.style.color="#1558a6";
+
+    phoneStatus.textContent =
+      "Sending OTP...";
+
+    phoneConfirmationResult =
+      await signInWithPhoneNumber(
+        auth,
+        phone,
+        recaptchaVerifier
+      );
+
+    signupPhone=phone;
+
+    document.getElementById("otpArea")
+      .style.display="block";
+
+    phoneStatus.style.color="green";
+
+    phoneStatus.textContent =
+      "OTP sent successfully.";
+
+  }catch(error){
+
+    console.error(
+      "OTP Error:",
+      error
+    );
+
+    phoneStatus.style.color="red";
+
+    phoneStatus.textContent =
+      error.message ||
+      "Unable to send OTP.";
+
+    if(recaptchaVerifier){
+
+      try{
+        recaptchaVerifier.clear();
+      }catch(e){}
+
+      recaptchaVerifier=null;
+
+    }
+
+    setupRecaptcha();
+
+  }finally{
+
+    sendBtn.disabled=false;
+
+  }
+
+};
 
 /* =========================
    HELPERS
@@ -670,58 +888,99 @@ window.openLogin=function(){
 
 window.toggleAuth=function(){
 
-  authMode=
+  authMode =
     authMode==="login"
-      ?"signup"
-      :"login";
+      ? "signup"
+      : "login";
 
-  document.getElementById("authTitle").textContent=
-    authMode==="login"
-      ?"Login"
-      :"Create Account";
+  const isSignup =
+    authMode==="signup";
 
-  document.getElementById("authSubmit").textContent=
-    authMode==="login"
-      ?"Login"
-      :"Create Account";
+  const phoneArea =
+    document.getElementById("phoneSignupArea");
 
-  document.getElementById("toggleAuth").textContent=
-    authMode==="login"
-      ?"Create new account"
-      :"Already have an account? Login";
+  if(phoneArea){
+
+    phoneArea.style.display =
+      isSignup
+        ? "block"
+        : "none";
+
+  }
+
+  document.getElementById("authTitle")
+    .textContent =
+      isSignup
+        ? "Create Account"
+        : "Login";
+
+  document.getElementById("authSubmit")
+    .textContent =
+      isSignup
+        ? "Create Account"
+        : "Login";
+
+  document.getElementById("toggleAuth")
+    .textContent =
+      isSignup
+        ? "Already have an account? Login"
+        : "Create new account";
+
+  document.getElementById("authMessage")
+    .textContent="";
+
+  phoneVerified=false;
+  phoneConfirmationResult=null;
+  signupPhone="";
+
+  if(isSignup){
+
+    setTimeout(()=>{
+      setupRecaptcha();
+    },100);
+
+  }else{
+
+    if(recaptchaVerifier){
+
+      try{
+        recaptchaVerifier.clear();
+      }catch(e){}
+
+      recaptchaVerifier=null;
+
+    }
+
+  }
 
 };
-
 
 window.handleAuth=async function(e){
 
   e.preventDefault();
 
-  const email=
+  const email =
     document.getElementById("authEmail")
-      .value
-      .trim();
+      .value.trim();
 
-  const password=
+  const password =
     document.getElementById("authPassword")
       .value;
 
-  const msg=
+  const msg =
     document.getElementById("authMessage");
 
   try{
 
     msg.textContent="";
 
-    if(authMode==="signup"){
 
-      await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
+    /* =========================
+       LOGIN
+       EMAIL + PASSWORD ONLY
+    ========================= */
 
-    }else{
+    if(authMode==="login"){
 
       await signInWithEmailAndPassword(
         auth,
@@ -729,27 +988,217 @@ window.handleAuth=async function(e){
         password
       );
 
+      msg.style.color="green";
+
+      msg.textContent =
+        "Login successful.";
+
+      setTimeout(()=>{
+        closeModal("loginModal");
+      },500);
+
+      return;
+
     }
 
-    msg.style.color="green";
-    msg.textContent="Success.";
 
-    setTimeout(()=>{
-      closeModal("loginModal");
-    },500);
+    /* =========================
+       SIGNUP
+       EMAIL + PASSWORD + OTP
+    ========================= */
+
+    if(authMode==="signup"){
+
+      if(!phoneConfirmationResult){
+
+        msg.style.color="red";
+
+        msg.textContent =
+          "Please send OTP to your mobile number.";
+
+        return;
+
+      }
+
+
+      if(!phoneVerified){
+
+        msg.style.color="red";
+
+        msg.textContent =
+          "Please verify your mobile number with OTP.";
+
+        return;
+
+      }
+
+
+      if(!signupPhone){
+
+        msg.style.color="red";
+
+        msg.textContent =
+          "Mobile number verification is required.";
+
+        return;
+
+      }
+
+
+      /* CREATE EMAIL/PASSWORD ACCOUNT */
+
+      await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+
+
+      /* SAVE VERIFIED PHONE */
+
+      await setDoc(
+        doc(
+          db,
+          "profiles",
+          auth.currentUser.uid
+        ),
+        {
+
+          email:
+            auth.currentUser.email,
+
+          phone:
+            signupPhone,
+
+          phoneVerified:true,
+
+          createdAt:
+            serverTimestamp(),
+
+          updatedAt:
+            serverTimestamp()
+
+        },
+        {
+          merge:true
+        }
+      );
+
+
+      msg.style.color="green";
+
+      msg.textContent =
+        "Account created successfully.";
+
+      setTimeout(()=>{
+        closeModal("loginModal");
+      },500);
+
+    }
+
 
   }catch(error){
 
-    console.error(error);
+    console.error(
+      "Authentication error:",
+      error
+    );
 
     msg.style.color="red";
-    msg.textContent=
-      error.message;
+
+    msg.textContent =
+      error.message ||
+      "Authentication failed.";
 
   }
 
 };
+  window.verifySignupOTP=async function(){
 
+  const otpInput =
+    document.getElementById("authOtp");
+
+  const phoneStatus =
+    document.getElementById("phoneStatus");
+
+  const otp =
+    otpInput.value.trim();
+
+
+  if(!otp){
+
+    phoneStatus.style.color="red";
+
+    phoneStatus.textContent =
+      "Enter the OTP.";
+
+    return;
+
+  }
+
+
+  if(!/^\d{6}$/.test(otp)){
+
+    phoneStatus.style.color="red";
+
+    phoneStatus.textContent =
+      "Enter the 6-digit OTP.";
+
+    return;
+
+  }
+
+
+  if(!phoneConfirmationResult){
+
+    phoneStatus.style.color="red";
+
+    phoneStatus.textContent =
+      "Please send OTP first.";
+
+    return;
+
+  }
+
+
+  try{
+
+    phoneStatus.style.color="#1558a6";
+
+    phoneStatus.textContent =
+      "Verifying OTP...";
+
+
+    await phoneConfirmationResult.confirm(otp);
+
+
+    phoneVerified=true;
+
+
+    phoneStatus.style.color="green";
+
+    phoneStatus.textContent =
+      "Mobile number verified successfully.";
+
+
+  }catch(error){
+
+    console.error(
+      "OTP Verification Error:",
+      error
+    );
+
+    phoneVerified=false;
+
+    phoneStatus.style.color="red";
+
+    phoneStatus.textContent =
+      error.message ||
+      "Invalid OTP.";
+
+  }
+
+};
 
 onAuthStateChanged(auth,async(user)=>{
 
