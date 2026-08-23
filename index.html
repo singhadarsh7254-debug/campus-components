@@ -282,7 +282,22 @@ footer{
 
 <footer>
   <b>CampusComponents</b><br><br>
+
   Student Electronics Marketplace
+
+  <br><br>
+
+  <button
+    class="secondary small"
+    onclick="openTerms()">
+    Terms & Conditions
+  </button>
+
+  <button
+    class="secondary small"
+    onclick="openHelp()">
+    Help & Contact
+  </button>
 </footer>
 
 
@@ -567,7 +582,152 @@ footer{
 
 </div>
 
+<!-- TERMS & CONDITIONS -->
 
+<div class="modal" id="termsModal">
+
+  <div class="box">
+
+    <button
+      class="close"
+      onclick="closeModal('termsModal')">
+      ×
+    </button>
+
+    <h2>Terms & Conditions</h2>
+
+    <div class="meta">
+
+      <h3>1. Component Quality</h3>
+
+      <p>
+        Buyer is responsible for checking the component
+        before accepting it. CampusComponents is only a
+        student marketplace platform and is not responsible
+        for defective, damaged, incompatible or non-working
+        components sold by sellers.
+      </p>
+
+      <h3>2. Buyer–Seller Interaction</h3>
+
+      <p>
+        After purchase, the buyer may contact the seller
+        using the contact information provided in the listing.
+        Any discussion regarding component quality, condition,
+        compatibility, delivery or replacement should be
+        directly handled between the buyer and seller.
+      </p>
+
+      <p>
+        CampusComponents is not responsible for the quality,
+        condition or performance of the component supplied
+        by the seller.
+      </p>
+
+      <h3>3. Payment</h3>
+
+      <p>
+        The buyer pays the component price through the
+        CampusComponents payment system.
+      </p>
+
+      <p>
+        A platform commission is charged to the buyer.
+        The seller receives the component price after deduction
+        of the applicable platform commission.
+      </p>
+
+      <h3>4. Refund</h3>
+
+      <p>
+        If the buyer has successfully made payment but the
+        seller does not deliver the purchased component,
+        the buyer may contact CampusComponents for a refund
+        review.
+      </p>
+
+      <p>
+        Refunds are not guaranteed for defective, damaged,
+        incompatible or unsatisfactory components when the
+        component has been delivered. Such matters should be
+        resolved directly between buyer and seller.
+      </p>
+
+      <h3>5. Seller Responsibility</h3>
+
+      <p>
+        Sellers must provide accurate information about the
+        component, including its condition, price and
+        description.
+      </p>
+
+      <h3>6. Platform Responsibility</h3>
+
+      <p>
+        CampusComponents provides the marketplace and payment
+        facilitation system. It does not manufacture, inspect,
+        guarantee or warrant components sold by individual
+        sellers.
+      </p>
+
+      <h3>7. Buyer Responsibility</h3>
+
+      <p>
+        Buyers should carefully check the component,
+        specifications and condition before accepting it.
+      </p>
+
+    </div>
+
+  </div>
+
+</div>
+
+  <!-- HELP & CONTACT -->
+
+<div class="modal" id="helpModal">
+
+  <div class="box">
+
+    <button
+      class="close"
+      onclick="closeModal('helpModal')">
+      ×
+    </button>
+
+    <h2>Help & Contact</h2>
+
+    <p>
+      Need help with CampusComponents?
+    </p>
+
+    <h3>Payment Problem</h3>
+
+    <p>
+      If your payment was successful but the component
+      was not delivered, contact us with your Order ID.
+    </p>
+
+    <h3>Component Problem</h3>
+
+    <p>
+      For component quality, condition or compatibility
+      issues, please contact the seller directly using
+      the contact information available after purchase.
+    </p>
+
+    <h3>General Support</h3>
+
+    <p>
+      Email:
+      <a href="mailto:singhadarsh7254@gmail.com">
+        singhadarsh7254@gmail.com
+      </a>
+    </p>
+
+  </div>
+
+</div>
 <!-- FOUNDER -->
 
 <div class="modal" id="founderModal">
@@ -847,6 +1007,26 @@ let signupPhone="";
 window.closeModal=function(id){
 
   document.getElementById(id).style.display="none";
+
+};
+  /* =========================
+   TERMS & HELP
+========================= */
+
+window.openTerms=function(){
+
+  document.getElementById(
+    "termsModal"
+  ).style.display="flex";
+
+};
+
+
+window.openHelp=function(){
+
+  document.getElementById(
+    "helpModal"
+  ).style.display="flex";
 
 };
 
@@ -2154,6 +2334,14 @@ window.buyNow=async function(id){
 
 
   try{
+    const productPrice =
+  Number(listing.price);
+
+const commission =
+  commissionAmount(productPrice);
+
+const buyerTotal =
+  productPrice + commission;
 
     /* CREATE CASHFREE ORDER */
 
@@ -2222,17 +2410,36 @@ window.buyNow=async function(id){
 
     /* CASHFREE CHECKOUT */
 
-    const result=
-      await cashfree.checkout({
+    const result =
+  await cashfree.checkout({
 
-        paymentSessionId:
-          data.paymentSessionId,
+    paymentSessionId:
+      data.paymentSessionId,
 
-        redirectTarget:
-          "_modal"
+    redirectTarget:
+      "_modal"
 
-      });
+  });
 
+
+/* USER EXITED / CLOSED PAYMENT */
+
+if(
+  result?.error
+){
+
+  console.log(
+    "Payment cancelled:",
+    result.error
+  );
+
+  alert(
+    "Payment cancelled. Your component is still available."
+  );
+
+  return;
+
+}
 
     if(result?.error){
 
@@ -2299,15 +2506,17 @@ window.buyNow=async function(id){
       );
 
 
-    const commission=
-      commissionAmount(
-        listing.price
-      );
+    const productPrice =
+  Number(listing.price);
 
+const commission =
+  commissionAmount(productPrice);
 
-    const sellerAmount=
-      Number(listing.price)-
-      commission;
+const buyerTotal =
+  productPrice + commission;
+
+const sellerAmount =
+  productPrice;
 
 
     await runTransaction(
@@ -2371,9 +2580,12 @@ window.buyNow=async function(id){
 
             productName:
               current.name||"",
+            
+            productPrice:
+              Number(current.price),
 
             amount:
-              Number(current.price),
+              buyerTotal,
 
             commissionRate:
               commissionRate(
