@@ -635,7 +635,7 @@ hr{
         <input
           id="price"
           type="number"
-          min="20"
+          min="5"
           required
           placeholder="Price ₹">
 
@@ -2066,10 +2066,10 @@ function(e){
   }
 
 
-  if(file.size>700000){
+  if(file.size>2000000){
 
     alert(
-      "Image must be smaller than 700 KB."
+      "Image must be smaller than  2 Mb."
     );
 
 
@@ -2401,11 +2401,11 @@ async function(e){
 
   if(
     !data.price ||
-    data.price<20
+    data.price<5
   ){
 
     alert(
-      "Minimum selling price is ₹20."
+      "Minimum selling price is ₹5."
     );
 
     return;
