@@ -3,9 +3,8 @@
 <head>
 
 <meta charset="UTF-8">
-<meta
-  name="viewport"
-  content="width=device-width,initial-scale=1.0">
+<meta name="viewport"
+      content="width=device-width,initial-scale=1.0">
 
 <title>Campus Components — Student Marketplace</title>
 
@@ -126,10 +125,6 @@ textarea{
   background:#fff
 }
 
-input[type="checkbox"]{
-  width:auto
-}
-
 .grid{
   display:grid;
   grid-template-columns:repeat(4,1fr);
@@ -163,6 +158,4824 @@ input[type="checkbox"]{
   padding:15px
 }
 
+.card h3{
+  margin:0 0 8px
+}
+
+.price{
+  font-size:21px;
+  font-weight:800
+}
+
+.meta{
+  font-size:13px;
+  color:#667085;
+  line-height:1.7;
+  margin:10px 0
+}
+
+.actions{
+  display:flex;
+  gap:6px;
+  flex-wrap:wrap
+}
+
+.small{
+  padding:8px 10px;
+  font-size:12px
+}
+
+.badge{
+  display:inline-block;
+  padding:5px 8px;
+  border-radius:20px;
+  font-size:11px;
+  font-weight:700
+}
+
+.green{
+  background:#e9f8ef;
+  color:#16834a
+}
+
+.orange{
+  background:#fff4e5;
+  color:#9a5b00
+}
+
+.red{
+  background:#fee4e2;
+  color:#b42318
+}
+
+.purple{
+  background:#f3e8ff;
+  color:#7e22ce
+}
+
+.modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:#0008;
+  align-items:center;
+  justify-content:center;
+  z-index:100
+}
+
+.box{
+  background:#fff;
+  width:min(620px,94%);
+  max-height:92vh;
+  overflow:auto;
+  border-radius:14px;
+  padding:22px
+}
+
+.close{
+  float:right;
+  background:none;
+  font-size:25px;
+  padding:0
+}
+
+.form{
+  display:grid;
+  gap:11px
+}
+
+.row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px
+}
+
+.order{
+  border:1px solid #ddd;
+  border-radius:10px;
+  padding:13px;
+  margin:9px 0
+}
+
+.payment-summary{
+  background:#f8fafc;
+  border:1px solid #e4e7ec;
+  border-radius:10px;
+  padding:15px;
+  margin:15px 0;
+  line-height:1.9
+}
+
+.payment-buttons{
+  display:flex;
+  gap:10px;
+  margin-top:15px
+}
+
+footer{
+  background:#101828;
+  color:#cbd5e1;
+  padding:30px 5%;
+  margin-top:30px
+}
+
+@media(max-width:900px){
+
+  .grid{
+    grid-template-columns:repeat(2,1fr)
+  }
+
+}
+
+@media(max-width:600px){
+
+  .grid{
+    grid-template-columns:1fr
+  }
+
+  .hero h1{
+    font-size:30px
+  }
+
+  .row{
+    grid-template-columns:1fr
+  }
+
+  .payment-buttons{
+    flex-direction:column
+  }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header>
+
+  <div class="logo">
+    Campus<span>Components</span>
+  </div>
+
+  <div id="status">
+    Not logged in
+  </div>
+
+  <nav>
+
+    <button
+      class="secondary"
+      id="loginBtn"
+      onclick="openLogin()">
+      Login
+    </button>
+
+    <button
+      class="primary"
+      onclick="openSell()">
+      + Sell Component
+    </button>
+
+    <button
+      class="secondary"
+      onclick="openProfile()">
+      Profile
+    </button>
+
+    <button
+      class="secondary"
+      onclick="openHelp()">
+      Help & Contact
+    </button>
+
+    <button
+      class="secondary"
+      onclick="openTerms()">
+      Terms & Conditions
+    </button>
+
+    <button
+      class="dark"
+      id="founderBtn"
+      style="display:none"
+      onclick="openFounder()">
+      Founder Panel
+    </button>
+
+  </nav>
+
+</header>
+
+
+<!-- =====================================================
+     HERO
+===================================================== -->
+
+<section class="hero">
+
+  <h1>
+    Buy & Sell Electronics Components on Campus
+  </h1>
+
+  <p>
+    Find electronics components and student-use items
+    from sellers near your college.
+  </p>
+
+</section>
+
+
+<!-- =====================================================
+     LISTINGS
+===================================================== -->
+
+<section class="container">
+
+  <div class="toolbar">
+
+    <input
+      id="search"
+      placeholder="Search MQ2, Arduino, NRF24L01..."
+      oninput="renderListings()">
+
+    <select
+      id="condition"
+      onchange="renderListings()">
+
+      <option value="">
+        Any condition
+      </option>
+
+      <option>
+        New
+      </option>
+
+      <option>
+        Working
+      </option>
+
+    </select>
+
+    <select
+      id="locationFilter"
+      onchange="renderListings()">
+
+      <option value="">
+        All locations
+      </option>
+
+    </select>
+
+  </div>
+
+  <div
+    id="grid"
+    class="grid">
+  </div>
+
+</section>
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer>
+
+  <b>
+    CampusComponents
+  </b>
+
+  <br><br>
+
+  Student Electronics Marketplace
+
+  <br><br>
+
+  <button
+    class="secondary small"
+    onclick="openTerms()">
+    Terms & Conditions
+  </button>
+
+  <button
+    class="secondary small"
+    onclick="openHelp()">
+    Help & Contact
+  </button>
+
+</footer>
+
+
+<!-- =====================================================
+     LOGIN / SIGNUP
+===================================================== -->
+
+<div
+  class="modal"
+  id="loginModal">
+
+  <div class="box">
+
+    <button
+      class="close"
+      onclick="closeModal('loginModal')">
+      ×
+    </button>
+
+    <h2 id="authTitle">
+      Login
+    </h2>
+
+    <form
+      class="form"
+      onsubmit="handleAuth(event)">
+
+      <input
+        id="authEmail"
+        type="email"
+        required
+        placeholder="Email">
+
+      <input
+        id="authPassword"
+        type="password"
+        minlength="6"
+        required
+        placeholder="Password">
+
+      <!-- SIGNUP ONLY -->
+
+      <div
+        id="phoneSignupArea"
+        style="display:none">
+
+        <input
+          id="authPhone"
+          type="tel"
+          placeholder="+91XXXXXXXXXX"
+          autocomplete="tel">
+
+        <div
+          id="recaptcha-container"
+          style="margin:10px 0">
+        </div>
+
+        <button
+          type="button"
+          class="secondary"
+          id="sendOtpBtn"
+          onclick="sendSignupOTP()">
+
+          Send OTP
+
+        </button>
+
+        <div
+          id="otpArea"
+          style="display:none;margin-top:10px">
+
+          <input
+            id="authOtp"
+            type="text"
+            inputmode="numeric"
+            maxlength="6"
+            placeholder="Enter 6-digit OTP">
+
+        </div>
+
+        <p
+          id="phoneStatus"
+          style="font-size:13px">
+        </p>
+
+      </div>
+
+      <button
+        class="primary"
+        id="authSubmit">
+
+        Login
+
+      </button>
+
+    </form>
+
+    <br>
+
+    <button
+      class="secondary"
+      onclick="toggleAuth()"
+      id="toggleAuth">
+
+      Create new account
+
+    </button>
+
+    <p
+      id="authMessage">
+    </p>
+
+  </div>
+
+</div>
+
+
+<!-- =====================================================
+     SELL COMPONENT
+===================================================== -->
+
+<div
+  class="modal"
+  id="sellModal">
+
+  <div class="box">
+
+    <button
+      class="close"
+      onclick="closeModal('sellModal')">
+      ×
+    </button>
+
+    <h2 id="sellTitle">
+      Sell Component
+    </h2>
+
+    <form
+      class="form"
+      onsubmit="saveListing(event)">
+
+      <input
+        id="name"
+        required
+        placeholder="Component name">
+
+      <div class="row">
+
+        <input
+          id="price"
+          type="number"
+          min="2"
+          required
+          placeholder="Price per piece ₹">
+
+        <input
+          id="quantity"
+          type="number"
+          min="1"
+          required
+          placeholder="Available quantity">
+
+      </div>
+
+      <select
+        id="cond"
+        required>
+
+        <option value="">
+          Condition
+        </option>
+
+        <option>
+          New
+        </option>
+
+        <option>
+          Working
+        </option>
+
+      </select>
+
+      <input
+        id="seller"
+        required
+        placeholder="Seller name">
+
+      <input
+        id="college"
+        required
+        placeholder="College name">
+
+      <input
+        id="collegeLocation"
+        required
+        placeholder="College location">
+
+      <div class="row">
+
+        <input
+          id="whatsapp"
+          placeholder="WhatsApp">
+
+        <input
+          id="instagram"
+          placeholder="Instagram">
+
+      </div>
+
+      <input
+        id="image"
+        type="file"
+        accept="image/*"
+        onchange="readImage(event)">
+
+      <img
+        id="preview"
+        style="
+          display:none;
+          width:100%;
+          height:180px;
+          object-fit:cover;
+          border-radius:10px">
+
+      <textarea
+        id="description"
+        rows="4"
+        placeholder="Description">
+      </textarea>
+
+      <label>
+
+        <input
+          type="checkbox"
+          id="restricted">
+
+        This item needs founder approval
+
+      </label>
+
+      <button
+        class="primary">
+
+        Save Listing
+
+      </button>
+
+    </form>
+
+  </div>
+
+</div>
+
+
+<!-- =====================================================
+     PAYMENT REVIEW
+===================================================== -->
+
+<div
+  class="modal"
+  id="paymentModal">
+
+  <div class="box">
+
+    <button
+      class="close"
+      onclick="closePayment()">
+      ×
+    </button>
+
+    <h2>
+      Payment
+    </h2>
+
+    <div
+      id="paymentSummary"
+      class="payment-summary">
+    </div>
+
+    <div class="payment-buttons">
+
+      <button
+        class="primary"
+        id="continuePaymentBtn"
+        onclick="startPayment()">
+
+        Continue to Payment
+
+      </button>
+
+      <button
+        class="secondary"
+        onclick="closePayment()">
+
+        Exit Payment
+
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- =====================================================
+     PROFILE
+===================================================== -->
+
+<div
+  class="modal"
+  id="profileModal">
+
+  <div class="box">
+
+    <button
+      class="close"
+      onclick="closeModal('profileModal')">
+      ×
+    </button>
+
+    <h2>
+      My Profile
+    </h2>
+
+    <p id="profileEmail"></p>
+
+    <form
+      class="form"
+      onsubmit="saveProfile(event)">
+
+      <input
+        id="profileUpi"
+        placeholder="Your Seller UPI ID">
+
+      <button
+        class="primary">
+
+        Save UPI ID
+
+      </button>
+
+    </form>
+
+    <p id="profileMsg"></p>
+
+    <hr>
+
+    <h3>
+      My Orders
+    </h3>
+
+    <div id="myOrders"></div>
+
+  </div>
+
+</div>
+
+
+<!-- =====================================================
+     CONTACT SELLER
+===================================================== -->
+
+<div
+  class="modal"
+  id="contactModal">
+
+  <div class="box">
+
+    <button
+      class="close"
+      onclick="closeModal('contactModal')">
+      ×
+    </button>
+
+    <h2 id="contactTitle">
+      Contact Seller
+    </h2>
+
+    <div id="contactInfo"></div>
+
+  </div>
+
+</div>
+
+
+<!-- =====================================================
+     TERMS
+===================================================== -->
+
+<div
+  class="modal"
+  id="termsModal">
+
+  <div class="box">
+
+    <button
+      class="close"
+      onclick="closeModal('termsModal')">
+      ×
+    </button>
+
+    <h2>
+      Terms & Conditions
+    </h2>
+
+    <div class="meta">
+
+      <h3>
+        1. Marketplace
+      </h3>
+
+      <p>
+        CampusComponents is a student marketplace platform
+        connecting buyers and sellers. The platform does not
+        manufacture or guarantee components listed by sellers.
+      </p>
+
+      <h3>
+        2. Component Quality
+      </h3>
+
+      <p>
+        Buyer should check the component, specifications,
+        compatibility and condition before accepting it.
+        CampusComponents is not responsible for defective,
+        damaged, incompatible or non-working components
+        after delivery.
+      </p>
+
+      <h3>
+        3. Buyer–Seller Interaction
+      </h3>
+
+      <p>
+        Questions about quality, condition, compatibility,
+        delivery or replacement should be handled directly
+        between buyer and seller using the contact information
+        provided by the seller.
+      </p>
+
+      <p>
+        CampusComponents is not responsible for the result
+        of such direct interaction.
+      </p>
+
+      <h3>
+        4. Payment & Buyer Commission
+      </h3>
+
+      <p>
+        The buyer pays the component price plus the applicable
+        CampusComponents platform commission.
+      </p>
+
+      <p>
+        The seller receives the component selling amount
+        according to the platform payout process.
+      </p>
+
+      <h3>
+        5. Quantity
+      </h3>
+
+      <p>
+        Sellers must enter the actual quantity available.
+        Buyers can purchase only the quantity currently
+        available in the listing.
+      </p>
+
+      <h3>
+        6. Refund
+      </h3>
+
+      <p>
+        If payment was successfully completed but the seller
+        does not deliver the purchased component, the buyer
+        may contact CampusComponents for a refund review.
+      </p>
+
+      <p>
+        Defective, damaged, incompatible or unsatisfactory
+        components after delivery are not automatically
+        refundable by CampusComponents and should first be
+        resolved directly with the seller.
+      </p>
+
+      <h3>
+        7. Seller Responsibility
+      </h3>
+
+      <p>
+        Sellers must provide accurate information regarding
+        price, condition, description and available quantity.
+      </p>
+
+      <h3>
+        8. Platform Limitation
+      </h3>
+
+      <p>
+        CampusComponents provides marketplace and payment
+        facilitation features. It does not inspect, manufacture,
+        guarantee or warrant every component sold by individual
+        sellers.
+      </p>
+
+      <p>
+        <b>
+          Important:
+        </b>
+        These terms are a platform-policy draft and should be
+        reviewed for compliance with applicable Indian law
+        before production use.
+      </p>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- =====================================================
+     HELP
+===================================================== -->
+
+<div
+  class="modal"
+  id="helpModal">
+
+  <div class="box">
+
+    <button
+      class="close"
+      onclick="closeModal('helpModal')">
+      ×
+    </button>
+
+    <h2>
+      Help & Contact
+    </h2>
+
+    <h3>
+      Payment Problem
+    </h3>
+
+    <p>
+      If payment was successful but the seller did not
+      deliver the component, contact support with your
+      Order ID.
+    </p>
+
+    <h3>
+      Component Problem
+    </h3>
+
+    <p>
+      For quality, condition or compatibility problems,
+      contact the seller directly using the seller's
+      contact information.
+    </p>
+
+    <h3>
+      Quantity Problem
+    </h3>
+
+    <p>
+      The buyer can select only the quantity currently
+      available in the listing.
+    </p>
+
+    <h3>
+      General Support
+    </h3>
+
+    <p>
+      Email:
+      <a href="mailto:singhadarsh7254@gmail.com">
+        singhadarsh7254@gmail.com
+      </a>
+    </p>
+
+  </div>
+
+</div>
+
+
+<!-- =====================================================
+     FOUNDER
+===================================================== -->
+
+<div
+  class="modal"
+  id="founderModal">
+
+  <div class="box">
+
+    <button
+      class="close"
+      onclick="closeModal('founderModal')">
+      ×
+    </button>
+
+    <h2>
+      Founder Panel
+    </h2>
+
+    <h3>
+      Pending Listings
+    </h3>
+
+    <div id="pendingListings"></div>
+
+    <hr>
+
+    <h3>
+      Orders / Seller Payments
+    </h3>
+
+    <div id="founderOrders"></div>
+
+  </div>
+
+</div>
+
+
+<script type="module">
+
+/* =====================================================
+   FIREBASE IMPORTS
+===================================================== */
+
+import {
+  initializeApp
+}
+from
+"https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+
+
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged,
+  RecaptchaVerifier,
+  signInWithPhoneNumber,
+  PhoneAuthProvider,
+  linkWithCredential,
+  deleteUser
+}
+from
+"https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
+
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  getDocs,
+  getDoc,
+  doc,
+  setDoc,
+  updateDoc,
+  deleteDoc,
+  query,
+  where,
+  serverTimestamp,
+  runTransaction
+}
+from
+"https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+
+/* =====================================================
+   FIREBASE CONFIG
+===================================================== */
+
+const firebaseConfig = {
+
+  apiKey:
+    "AIzaSyAkETZr4bZQRlLfpbHVlCdvwK7iub-gVmQ",
+
+  authDomain:
+    "campus-components-2c641.firebaseapp.com",
+
+  projectId:
+    "campus-components-2c641",
+
+  storageBucket:
+    "campus-components-2c641.firebasestorage.app",
+
+  messagingSenderId:
+    "174888026978",
+
+  appId:
+    "1:174888026978:web:9170ceb1880bf9334f223b",
+
+  measurementId:
+    "G-0JYEYHLHDC"
+
+};
+
+
+const app =
+  initializeApp(firebaseConfig);
+
+const auth =
+  getAuth(app);
+
+const db =
+  getFirestore(app);
+
+
+/* =====================================================
+   CASHFREE
+===================================================== */
+
+const cashfree =
+  typeof window.Cashfree === "function"
+    ? window.Cashfree({
+        mode:"production"
+      })
+    : null;
+
+
+/* =====================================================
+   CONSTANTS
+===================================================== */
+
+const FOUNDER_EMAIL =
+  "singhadarsh7254@gmail.com";
+
+
+/* =====================================================
+   STATE
+===================================================== */
+
+let listings = [];
+
+let editingId = null;
+
+let imageData = "";
+
+let authMode = "login";
+
+let recaptchaVerifier = null;
+
+let phoneConfirmationResult = null;
+
+let phoneVerified = false;
+
+let signupPhone = "";
+
+let phoneCredential = null;
+
+
+/* PAYMENT STATE */
+
+let selectedListing = null;
+
+let selectedQuantity = 1;
+
+
+/* =====================================================
+   RECAPTCHA
+===================================================== */
+
+function setupRecaptcha(){
+
+  if(recaptchaVerifier){
+    return;
+  }
+
+  try{
+
+    recaptchaVerifier =
+      new RecaptchaVerifier(
+        auth,
+        "recaptcha-container",
+        {
+
+          size:"normal",
+
+          callback:()=>{
+
+            console.log(
+              "reCAPTCHA verified."
+            );
+
+          },
+
+          "expired-callback":()=>{
+
+            const el =
+              document.getElementById(
+                "phoneStatus"
+              );
+
+            if(el){
+
+              el.style.color="red";
+
+              el.textContent =
+                "reCAPTCHA expired. Please verify again.";
+
+            }
+
+          }
+
+        }
+      );
+
+    recaptchaVerifier.render();
+
+  }catch(error){
+
+    console.error(
+      "reCAPTCHA error:",
+      error
+    );
+
+  }
+
+}
+
+
+/* =====================================================
+   SEND OTP
+===================================================== */
+
+window.sendSignupOTP =
+async function(){
+
+  const phoneInput =
+    document.getElementById(
+      "authPhone"
+    );
+
+  const phoneStatus =
+    document.getElementById(
+      "phoneStatus"
+    );
+
+  const sendBtn =
+    document.getElementById(
+      "sendOtpBtn"
+    );
+
+  const phone =
+    phoneInput.value.trim();
+
+
+  if(!phone){
+
+    phoneStatus.style.color="red";
+
+    phoneStatus.textContent =
+      "Enter your mobile number.";
+
+    return;
+
+  }
+
+
+  if(!/^\+91\d{10}$/.test(phone)){
+
+    phoneStatus.style.color="red";
+
+    phoneStatus.textContent =
+      "Enter number in +91XXXXXXXXXX format.";
+
+    return;
+
+  }
+
+
+  try{
+
+    if(!recaptchaVerifier){
+
+      setupRecaptcha();
+
+      await new Promise(
+        resolve =>
+          setTimeout(resolve,500)
+      );
+
+    }
+
+
+    sendBtn.disabled=true;
+
+    phoneStatus.style.color="#1558a6";
+
+    phoneStatus.textContent =
+      "Sending OTP...";
+
+
+    phoneConfirmationResult =
+      await signInWithPhoneNumber(
+        auth,
+        phone,
+        recaptchaVerifier
+      );
+
+
+    signupPhone =
+      phone;
+
+
+    phoneVerified=false;
+
+    phoneCredential=null;
+
+
+    document.getElementById(
+      "otpArea"
+    ).style.display="block";
+
+
+    phoneStatus.style.color="green";
+
+    phoneStatus.textContent =
+      "OTP sent successfully.";
+
+  }catch(error){
+
+    console.error(
+      "OTP Error:",
+      error
+    );
+
+    phoneStatus.style.color="red";
+
+    phoneStatus.textContent =
+      error.message ||
+      "Unable to send OTP.";
+
+
+    if(recaptchaVerifier){
+
+      try{
+        recaptchaVerifier.clear();
+      }catch(e){}
+
+      recaptchaVerifier=null;
+
+    }
+
+    setupRecaptcha();
+
+  }finally{
+
+    sendBtn.disabled=false;
+
+  }
+
+};
+
+
+/* =====================================================
+   HELPERS
+===================================================== */
+
+window.closeModal =
+function(id){
+
+  const el =
+    document.getElementById(id);
+
+  if(el){
+    el.style.display="none";
+  }
+
+};
+
+
+function founder(){
+
+  return !!(
+    auth.currentUser &&
+    auth.currentUser.email ===
+      FOUNDER_EMAIL
+  );
+
+}
+
+
+function esc(value){
+
+  return String(value ?? "")
+    .replace(
+      /[&<>"']/g,
+      m => ({
+
+        "&":"&amp;",
+        "<":"&lt;",
+        ">":"&gt;",
+        '"':"&quot;",
+        "'":"&#039;"
+
+      }[m])
+    );
+
+}
+
+
+/* =====================================================
+   TERMS / HELP
+===================================================== */
+
+window.openTerms =
+function(){
+
+  document.getElementById(
+    "termsModal"
+  ).style.display="flex";
+
+};
+
+
+window.openHelp =
+function(){
+
+  document.getElementById(
+    "helpModal"
+  ).style.display="flex";
+
+};
+
+
+/* =====================================================
+   LOGIN
+===================================================== */
+
+window.openLogin =
+function(){
+
+  authMode="login";
+
+  document.getElementById(
+    "loginModal"
+  ).style.display="flex";
+
+  document.getElementById(
+    "authTitle"
+  ).textContent="Login";
+
+  document.getElementById(
+    "authSubmit"
+  ).textContent="Login";
+
+  document.getElementById(
+    "toggleAuth"
+  ).textContent="Create new account";
+
+  document.getElementById(
+    "phoneSignupArea"
+  ).style.display="none";
+
+  document.getElementById(
+    "authMessage"
+  ).textContent="";
+
+};
+
+
+/* =====================================================
+   TOGGLE AUTH
+===================================================== */
+
+window.toggleAuth =
+function(){
+
+  authMode =
+    authMode === "login"
+      ? "signup"
+      : "login";
+
+
+  const signup =
+    authMode === "signup";
+
+
+  document.getElementById(
+    "authTitle"
+  ).textContent =
+    signup
+      ? "Create Account"
+      : "Login";
+
+
+  document.getElementById(
+    "authSubmit"
+  ).textContent =
+    signup
+      ? "Create Account"
+      : "Login";
+
+
+  document.getElementById(
+    "toggleAuth"
+  ).textContent =
+    signup
+      ? "Already have an account? Login"
+      : "Create new account";
+
+
+  document.getElementById(
+    "phoneSignupArea"
+  ).style.display =
+    signup
+      ? "block"
+      : "none";
+
+
+  document.getElementById(
+    "authMessage"
+  ).textContent="";
+
+
+  phoneVerified=false;
+
+  phoneConfirmationResult=null;
+
+  phoneCredential=null;
+
+  signupPhone="";
+
+
+  if(signup){
+
+    setTimeout(
+      setupRecaptcha,
+      100
+    );
+
+  }else{
+
+    if(recaptchaVerifier){
+
+      try{
+        recaptchaVerifier.clear();
+      }catch(e){}
+
+      recaptchaVerifier=null;
+
+    }
+
+  }
+
+};
+
+
+/* =====================================================
+   AUTH
+===================================================== */
+
+window.handleAuth =
+async function(e){
+
+  e.preventDefault();
+
+
+  const email =
+    document.getElementById(
+      "authEmail"
+    ).value.trim();
+
+
+  const password =
+    document.getElementById(
+      "authPassword"
+    ).value;
+
+
+  const msg =
+    document.getElementById(
+      "authMessage"
+    );
+
+
+  try{
+
+    msg.textContent="";
+
+
+    /* LOGIN */
+
+    if(authMode==="login"){
+
+      await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+
+
+      msg.style.color="green";
+
+      msg.textContent =
+        "Login successful.";
+
+
+      setTimeout(
+        ()=>{
+          closeModal("loginModal");
+        },
+        500
+      );
+
+      return;
+
+    }
+
+
+    /* SIGNUP */
+
+    if(!phoneConfirmationResult){
+
+      msg.style.color="red";
+
+      msg.textContent =
+        "Please send OTP first.";
+
+      return;
+
+    }
+
+
+    if(!phoneCredential){
+
+      msg.style.color="red";
+
+      msg.textContent =
+        "Please enter and verify OTP.";
+
+      return;
+
+    }
+
+
+    if(!signupPhone){
+
+      msg.style.color="red";
+
+      msg.textContent =
+        "Mobile number is required.";
+
+      return;
+
+    }
+
+
+    /*
+      Create EMAIL/PASSWORD account first.
+      Then link verified PHONE credential.
+    */
+
+    const userCredential =
+      await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+
+
+    const user =
+      userCredential.user;
+
+
+    try{
+
+      await linkWithCredential(
+        user,
+        phoneCredential
+      );
+
+    }catch(linkError){
+
+      /*
+        If phone linking fails, remove
+        the newly created email account.
+      */
+
+      try{
+        await deleteUser(user);
+      }catch(e){}
+
+      throw linkError;
+
+    }
+
+
+    await setDoc(
+      doc(
+        db,
+        "profiles",
+        user.uid
+      ),
+      {
+
+        email:
+          user.email,
+
+        phone:
+          signupPhone,
+
+        phoneVerified:true,
+
+        createdAt:
+          serverTimestamp(),
+
+        updatedAt:
+          serverTimestamp()
+
+      },
+      {
+        merge:true
+      }
+    );
+
+
+    msg.style.color="green";
+
+    msg.textContent =
+      "Account created successfully.";
+
+
+    setTimeout(
+      ()=>{
+        closeModal("loginModal");
+      },
+      700
+    );
+
+
+  }catch(error){
+
+    console.error(
+      "Authentication error:",
+      error
+    );
+
+
+    msg.style.color="red";
+
+    msg.textContent =
+      error.message ||
+      "Authentication failed.";
+
+  }
+
+};
+
+
+/* =====================================================
+   VERIFY OTP
+===================================================== */
+
+window.verifySignupOTP =
+async function(){
+
+  const otp =
+    document.getElementById(
+      "authOtp"
+    ).value.trim();
+
+
+  const phoneStatus =
+    document.getElementById(
+      "phoneStatus"
+    );
+
+
+  if(!otp){
+
+    phoneStatus.style.color="red";
+
+    phoneStatus.textContent =
+      "Enter OTP.";
+
+    return;
+
+  }
+
+
+  if(!/^\d{6}$/.test(otp)){
+
+    phoneStatus.style.color="red";
+
+    phoneStatus.textContent =
+      "Enter 6-digit OTP.";
+
+    return;
+
+  }
+
+
+  if(!phoneConfirmationResult){
+
+    phoneStatus.style.color="red";
+
+    phoneStatus.textContent =
+      "Please send OTP first.";
+
+    return;
+
+  }
+
+
+  try{
+
+    phoneStatus.style.color="#1558a6";
+
+    phoneStatus.textContent =
+      "Verifying OTP...";
+
+
+    /*
+      IMPORTANT:
+      We create credential from the
+      verificationId + OTP.
+      Actual linking in handleAuth()
+      verifies it with Firebase.
+    */
+
+    phoneCredential =
+      PhoneAuthProvider.credential(
+        phoneConfirmationResult.verificationId,
+        otp
+      );
+
+
+    phoneVerified=true;
+
+
+    phoneStatus.style.color="green";
+
+    phoneStatus.textContent =
+      "OTP entered. Click Create Account to finish registration.";
+
+  }catch(error){
+
+    console.error(error);
+
+    phoneVerified=false;
+
+    phoneCredential=null;
+
+    phoneStatus.style.color="red";
+
+    phoneStatus.textContent =
+      error.message ||
+      "Invalid OTP.";
+
+  }
+
+};
+
+
+/* =====================================================
+   AUTH STATE
+===================================================== */
+
+onAuthStateChanged(
+  auth,
+  async user => {
+
+    const status =
+      document.getElementById(
+        "status"
+      );
+
+    const loginBtn =
+      document.getElementById(
+        "loginBtn"
+      );
+
+    const founderBtn =
+      document.getElementById(
+        "founderBtn"
+      );
+
+
+    if(user){
+
+      status.textContent =
+        founder()
+          ? "Founder · "+user.email
+          : user.email;
+
+
+      loginBtn.textContent =
+        "Logout";
+
+
+      loginBtn.onclick =
+        async ()=>{
+          await signOut(auth);
+        };
+
+
+      founderBtn.style.display =
+        founder()
+          ? "inline-block"
+          : "none";
+
+
+    }else{
+
+      status.textContent =
+        "Not logged in";
+
+
+      loginBtn.textContent =
+        "Login";
+
+
+      loginBtn.onclick =
+        openLogin;
+
+
+      founderBtn.style.display =
+        "none";
+
+    }
+
+
+    await loadListings();
+
+  }
+);
+
+
+/* =====================================================
+   COMMISSION
+===================================================== */
+
+function commissionRate(
+  price
+){
+
+  price=Number(price);
+
+
+  if(price < 200)
+    return 6;
+
+
+  if(price < 500)
+    return 5;
+
+
+  return 2;
+
+}
+
+
+function commissionAmount(
+  productTotal
+){
+
+  return Number(productTotal) *
+    commissionRate(productTotal) /
+    100;
+
+}
+
+
+/* =====================================================
+   IMAGE
+===================================================== */
+
+window.readImage =
+function(e){
+
+  const file =
+    e.target.files[0];
+
+
+  if(!file)
+    return;
+
+
+  if(file.size > 2000000){
+
+    alert(
+      "Image must be smaller than 2 MB ."
+    );
+
+    e.target.value="";
+
+    return;
+
+  }
+
+
+  const reader =
+    new FileReader();
+
+
+  reader.onload =
+    ()=>{
+
+      imageData =
+        reader.result;
+
+
+      const preview =
+        document.getElementById(
+          "preview"
+        );
+
+
+      preview.src =
+        imageData;
+
+
+      preview.style.display =
+        "block";
+
+    };
+
+
+  reader.readAsDataURL(file);
+
+};
+
+
+/* =====================================================
+   SELL
+===================================================== */
+
+window.openSell =
+function(){
+
+  if(!auth.currentUser){
+
+    alert(
+      "Please login first."
+    );
+
+    openLogin();
+
+    return;
+
+  }
+
+
+  editingId=null;
+
+  imageData="";
+
+
+  document.getElementById(
+    "sellTitle"
+  ).textContent =
+    "Sell Component";
+
+
+  document.querySelector(
+    "#sellModal form"
+  ).reset();
+
+
+  document.getElementById(
+    "preview"
+  ).style.display =
+    "none";
+
+
+  document.getElementById(
+    "sellModal"
+  ).style.display =
+    "flex";
+
+};
+
+
+/* =====================================================
+   EDIT
+===================================================== */
+
+window.editListing =
+function(id){
+
+  const x =
+    listings.find(
+      a=>a.id===id
+    );
+
+
+  if(!x)
+    return;
+
+
+  if(
+    !auth.currentUser ||
+    x.ownerUid !==
+      auth.currentUser.uid
+  ){
+
+    alert(
+      "You can edit only your own listing."
+    );
+
+    return;
+
+  }
+
+
+  if(x.sold){
+
+    alert(
+      "Sold out listing cannot be edited."
+    );
+
+    return;
+
+  }
+
+
+  editingId=id;
+
+
+  document.getElementById(
+    "sellTitle"
+  ).textContent =
+    "Edit Listing";
+
+
+  document.getElementById(
+    "name"
+  ).value =
+    x.name || "";
+
+
+  document.getElementById(
+    "price"
+  ).value =
+    x.price || "";
+
+
+  document.getElementById(
+    "quantity"
+  ).value =
+    x.quantityAvailable ||
+    x.quantity ||
+    1;
+
+
+  document.getElementById(
+    "cond"
+  ).value =
+    x.condition || "";
+
+
+  document.getElementById(
+    "seller"
+  ).value =
+    x.seller || "";
+
+
+  document.getElementById(
+    "college"
+  ).value =
+    x.college || "";
+
+
+  document.getElementById(
+    "collegeLocation"
+  ).value =
+    x.collegeLocation || "";
+
+
+  document.getElementById(
+    "whatsapp"
+  ).value =
+    x.whatsapp || "";
+
+
+  document.getElementById(
+    "instagram"
+  ).value =
+    x.instagram || "";
+
+
+  document.getElementById(
+    "description"
+  ).value =
+    x.description || "";
+
+
+  document.getElementById(
+    "restricted"
+  ).checked =
+    !!x.restricted;
+
+
+  imageData =
+    x.image || "";
+
+
+  const preview =
+    document.getElementById(
+      "preview"
+    );
+
+
+  if(x.image){
+
+    preview.src =
+      x.image;
+
+    preview.style.display =
+      "block";
+
+  }else{
+
+    preview.src="";
+
+    preview.style.display =
+      "none";
+
+  }
+
+
+  document.getElementById(
+    "sellModal"
+  ).style.display =
+    "flex";
+
+};
+
+
+/* =====================================================
+   SAVE LISTING
+===================================================== */
+
+window.saveListing =
+async function(e){
+
+  e.preventDefault();
+
+
+  if(!auth.currentUser){
+
+    alert(
+      "Please login first."
+    );
+
+    return;
+
+  }
+
+
+  const price =
+    Number(
+      document.getElementById(
+        "price"
+      ).value
+    );
+
+
+  const quantity =
+    Number(
+      document.getElementById(
+        "quantity"
+      ).value
+    );
+
+
+  if(!price || price < 2){
+
+    alert(
+      "Minimum price is ₹2."
+    );
+
+    return;
+
+  }
+
+
+  if(!quantity || quantity < 1){
+
+    alert(
+      "Quantity must be at least 1."
+    );
+
+    return;
+
+  }
+
+
+  const data = {
+
+    name:
+      document.getElementById(
+        "name"
+      ).value.trim(),
+
+    price,
+
+    quantityAvailable:
+      quantity,
+
+    condition:
+      document.getElementById(
+        "cond"
+      ).value,
+
+    seller:
+      document.getElementById(
+        "seller"
+      ).value.trim(),
+
+    college:
+      document.getElementById(
+        "college"
+      ).value.trim(),
+
+    collegeLocation:
+      document.getElementById(
+        "collegeLocation"
+      ).value.trim(),
+
+    whatsapp:
+      document.getElementById(
+        "whatsapp"
+      ).value.trim(),
+
+    instagram:
+      document.getElementById(
+        "instagram"
+      ).value.trim(),
+
+    description:
+      document.getElementById(
+        "description"
+      ).value.trim(),
+
+    image:
+      imageData,
+
+    restricted:
+      document.getElementById(
+        "restricted"
+      ).checked,
+
+    updatedAt:
+      serverTimestamp()
+
+  };
+
+
+  try{
+
+    if(editingId){
+
+      const old =
+        listings.find(
+          x=>x.id===editingId
+        );
+
+
+      if(!old){
+
+        alert(
+          "Listing not found."
+        );
+
+        return;
+
+      }
+
+
+      if(old.ownerUid !==
+         auth.currentUser.uid){
+
+        alert(
+          "You can edit only your own listing."
+        );
+
+        return;
+
+      }
+
+
+      if(old.sold){
+
+        alert(
+          "Sold listing cannot be edited."
+        );
+
+        return;
+
+      }
+
+
+      data.approved =
+        data.restricted
+          ? !!old.approved
+          : true;
+
+
+      await updateDoc(
+        doc(
+          db,
+          "listings",
+          editingId
+        ),
+        data
+      );
+
+
+      alert(
+        "Listing updated successfully."
+      );
+
+
+    }else{
+
+      await addDoc(
+        collection(
+          db,
+          "listings"
+        ),
+        {
+
+          ...data,
+
+          ownerUid:
+            auth.currentUser.uid,
+
+          ownerEmail:
+            auth.currentUser.email,
+
+          approved:
+            data.restricted
+              ? false
+              : true,
+
+          sold:false,
+
+          buyerUid:"",
+
+          buyerEmail:"",
+
+          orderId:"",
+
+          deliveryConfirmed:false,
+
+          createdAt:
+            serverTimestamp()
+
+        }
+      );
+
+
+      alert(
+        data.restricted
+          ? "Listing submitted for founder approval."
+          : "Listing published successfully."
+      );
+
+    }
+
+
+    editingId=null;
+
+    imageData="";
+
+    closeModal(
+      "sellModal"
+    );
+
+
+    await loadListings();
+
+  }catch(error){
+
+    console.error(error);
+
+    alert(
+      "Could not save listing:\n\n"+
+      error.message
+    );
+
+  }
+
+};
+
+
+/* =====================================================
+   DELETE
+===================================================== */
+
+window.deleteListing =
+async function(id){
+
+  const x =
+    listings.find(
+      a=>a.id===id
+    );
+
+
+  if(!x)
+    return;
+
+
+  if(
+    !auth.currentUser ||
+    x.ownerUid !==
+      auth.currentUser.uid
+  ){
+
+    alert(
+      "You can delete only your own listing."
+    );
+
+    return;
+
+  }
+
+
+  if(x.sold){
+
+    alert(
+      "Sold listing cannot be deleted."
+    );
+
+    return;
+
+  }
+
+
+  if(
+    !confirm(
+      "Delete this listing?"
+    )
+  )
+    return;
+
+
+  try{
+
+    await deleteDoc(
+      doc(
+        db,
+        "listings",
+        id
+      )
+    );
+
+
+    alert(
+      "Listing deleted successfully."
+    );
+
+
+    await loadListings();
+
+  }catch(error){
+
+    alert(
+      "Delete failed:\n\n"+
+      error.message
+    );
+
+  }
+
+};
+
+
+/* =====================================================
+   LOAD LISTINGS
+===================================================== */
+
+async function loadListings(){
+
+  try{
+
+    const snap =
+      await getDocs(
+        collection(
+          db,
+          "listings"
+        )
+      );
+
+
+    listings=[];
+
+
+    snap.forEach(
+      d=>{
+
+        listings.push({
+
+          id:d.id,
+
+          ...d.data()
+
+        });
+
+      }
+    );
+
+
+    updateLocations();
+
+    renderListings();
+
+  }catch(error){
+
+    console.error(error);
+
+    document.getElementById(
+      "grid"
+    ).innerHTML =
+      `
+      <div style="color:#b42318;padding:20px">
+
+        Firebase error:<br>
+
+        ${esc(error.message)}
+
+      </div>
+      `;
+
+  }
+
+}
+
+
+/* =====================================================
+   LOCATIONS
+===================================================== */
+
+function updateLocations(){
+
+  const select =
+    document.getElementById(
+      "locationFilter"
+    );
+
+
+  const current =
+    select.value;
+
+
+  const locations =
+    [
+      ...new Set(
+        listings
+          .map(
+            x=>x.collegeLocation
+          )
+          .filter(Boolean)
+      )
+    ].sort();
+
+
+  select.innerHTML =
+    `
+    <option value="">
+      All locations
+    </option>
+    `;
+
+
+  locations.forEach(
+    location=>{
+
+      const option =
+        document.createElement(
+          "option"
+        );
+
+
+      option.value =
+        location;
+
+
+      option.textContent =
+        location;
+
+
+      select.appendChild(
+        option
+      );
+
+    }
+  );
+
+
+  if(
+    locations.includes(
+      current
+    )
+  ){
+
+    select.value =
+      current;
+
+  }
+
+}
+
+
+/* =====================================================
+   RENDER
+===================================================== */
+
+window.renderListings =
+function(){
+
+  const grid =
+    document.getElementById(
+      "grid"
+    );
+
+
+  grid.innerHTML="";
+
+
+  const search =
+    document.getElementById(
+      "search"
+    )
+    .value
+    .toLowerCase()
+    .trim();
+
+
+  const condition =
+    document.getElementById(
+      "condition"
+    ).value;
+
+
+  const location =
+    document.getElementById(
+      "locationFilter"
+    ).value;
+
+
+  listings
+    .filter(
+      x=>{
+
+        const text =
+          [
+
+            x.name,
+            x.description,
+            x.seller,
+            x.college,
+            x.collegeLocation,
+            x.condition
+
+          ]
+          .join(" ")
+          .toLowerCase();
+
+
+        return (
+
+          text.includes(
+            search
+          )
+
+          &&
+
+          (
+            !condition ||
+            x.condition ===
+              condition
+          )
+
+          &&
+
+          (
+            !location ||
+            x.collegeLocation ===
+              location
+          )
+
+        );
+
+      }
+    )
+    .forEach(
+      x=>{
+
+        if(
+          x.restricted &&
+          !x.approved &&
+          !founder()
+        )
+          return;
+
+
+        const stock =
+          Number(
+            x.quantityAvailable ??
+            x.quantity ??
+            1
+          );
+
+
+        const soldOut =
+          x.sold === true ||
+          stock <= 0;
+
+
+        const own =
+          auth.currentUser &&
+          x.ownerUid ===
+            auth.currentUser.uid;
+
+
+        let status;
+
+
+        if(soldOut){
+
+          status =
+            `
+            <span class="badge red">
+              SOLD OUT
+            </span>
+            `;
+
+        }else if(
+          x.restricted &&
+          !x.approved
+        ){
+
+          status =
+            `
+            <span class="badge orange">
+              Pending Approval
+            </span>
+            `;
+
+        }else{
+
+          status =
+            `
+            <span class="badge green">
+              Available: ${stock}
+            </span>
+            `;
+
+        }
+
+
+        let buttons="";
+
+
+        /* BUY */
+
+        if(
+          !soldOut &&
+          !own &&
+          !(
+            x.restricted &&
+            !x.approved
+          )
+        ){
+
+          buttons +=
+            `
+            <button
+              class="primary small"
+              onclick="openBuy('${x.id}')">
+
+              Buy Now
+
+            </button>
+            `;
+
+        }
+
+
+        /* OWNER */
+
+        if(
+          own &&
+          !soldOut
+        ){
+
+          buttons +=
+            `
+            <button
+              class="secondary small"
+              onclick="editListing('${x.id}')">
+
+              Edit
+
+            </button>
+
+            <button
+              class="danger small"
+              onclick="deleteListing('${x.id}')">
+
+              Delete
+
+            </button>
+            `;
+
+        }
+
+
+        /* CONTACT AFTER PURCHASE */
+
+        if(
+          auth.currentUser &&
+          x.buyerUid ===
+            auth.currentUser.uid
+        ){
+
+          buttons +=
+            `
+            <button
+              class="secondary small"
+              onclick="contactSeller('${x.id}')">
+
+              💬 Message Seller
+
+            </button>
+            `;
+
+        }
+
+
+        /* DELIVERY */
+
+        if(
+          auth.currentUser &&
+          x.buyerUid ===
+            auth.currentUser.uid &&
+          !x.deliveryConfirmed
+        ){
+
+          buttons +=
+            `
+            <button
+              class="primary small"
+              onclick="confirmDelivery('${x.id}')">
+
+              Delivery Done
+
+            </button>
+            `;
+
+        }
+
+
+        if(x.deliveryConfirmed){
+
+          buttons +=
+            `
+            <span
+              class="badge green">
+
+              Delivery Confirmed
+
+            </span>
+            `;
+
+        }
+
+
+        const image =
+          x.image
+            ? `<img src="${esc(x.image)}">`
+            : `<span>📦</span>`;
+
+
+        const card =
+          document.createElement(
+            "div"
+          );
+
+
+        card.className="card";
+
+
+        card.innerHTML =
+          `
+
+          <div class="pic">
+
+            ${image}
+
+          </div>
+
+          <div class="card-body">
+
+            <h3>
+              ${esc(x.name || "")}
+            </h3>
+
+            <div class="price">
+
+              ₹${Number(
+                x.price || 0
+              ).toLocaleString(
+                "en-IN"
+              )}
+              / piece
+
+            </div>
+
+            <div class="meta">
+
+              ${esc(
+                x.condition || ""
+              )}
+
+              <br>
+
+              Seller:
+              ${esc(
+                x.seller || ""
+              )}
+
+              <br>
+
+              🏫
+              ${esc(
+                x.college || ""
+              )}
+
+              <br>
+
+              📍
+              ${esc(
+                x.collegeLocation || ""
+              )}
+
+              <br>
+
+              Quantity:
+              <b>
+                ${stock}
+              </b>
+
+              <br><br>
+
+              ${status}
+
+            </div>
+
+            <div class="actions">
+
+              ${buttons}
+
+            </div>
+
+          </div>
+
+          `;
+
+
+        grid.appendChild(
+          card
+        );
+
+      }
+    );
+
+};
+
+
+/* =====================================================
+   BUY QUANTITY
+===================================================== */
+
+window.openBuy =
+function(id){
+
+  if(!auth.currentUser){
+
+    alert(
+      "Please login first."
+    );
+
+    openLogin();
+
+    return;
+
+  }
+
+
+  const listing =
+    listings.find(
+      x=>x.id===id
+    );
+
+
+  if(!listing)
+    return;
+
+
+  if(
+    listing.ownerUid ===
+    auth.currentUser.uid
+  ){
+
+    alert(
+      "You cannot buy your own component."
+    );
+
+    return;
+
+  }
+
+
+  const stock =
+    Number(
+      listing.quantityAvailable ??
+      listing.quantity ??
+      1
+    );
+
+
+  if(
+    listing.sold ||
+    stock <= 0
+  ){
+
+    alert(
+      "This component is sold out."
+    );
+
+    return;
+
+  }
+
+
+  if(
+    listing.restricted &&
+    !listing.approved
+  ){
+
+    alert(
+      "This listing is waiting for founder approval."
+    );
+
+    return;
+
+  }
+
+
+  selectedListing =
+    listing;
+
+
+  selectedQuantity=1;
+
+
+  const commissionRateValue =
+    commissionRate(
+      Number(listing.price)
+    );
+
+
+  document.getElementById(
+    "paymentSummary"
+  ).innerHTML =
+    `
+
+    <b>
+      ${esc(listing.name)}
+    </b>
+
+    <br><br>
+
+    Price per piece:
+    ₹${Number(
+      listing.price
+    ).toLocaleString("en-IN")}
+
+    <br>
+
+    Available:
+    ${stock}
+
+    <br><br>
+
+    <label>
+      <b>
+        Quantity to buy
+      </b>
+
+      <select
+        id="buyQuantity"
+        onchange="updatePaymentSummary()">
+
+        ${
+          Array.from(
+            {length:stock},
+            (_,i)=>
+              `
+              <option value="${i+1}">
+                ${i+1}
+              </option>
+              `
+          ).join("")
+        }
+
+      </select>
+
+    </label>
+
+    <br>
+
+    Commission:
+    ${commissionRateValue}%
+
+    <br>
+
+    <span id="paymentTotal">
+    </span>
+
+    `;
+
+
+  updatePaymentSummary();
+
+
+  document.getElementById(
+    "paymentModal"
+  ).style.display="flex";
+
+};
+
+
+/* =====================================================
+   UPDATE PAYMENT SUMMARY
+===================================================== */
+
+window.updatePaymentSummary =
+function(){
+
+  if(!selectedListing)
+    return;
+
+
+  const qty =
+    Number(
+      document.getElementById(
+        "buyQuantity"
+      ).value
+    );
+
+
+  selectedQuantity =
+    qty;
+
+
+  const productTotal =
+    Number(
+      selectedListing.price
+    ) * qty;
+
+
+  const commission =
+    commissionAmount(
+      productTotal
+    );
+
+
+  const buyerTotal =
+    productTotal +
+    commission;
+
+
+  document.getElementById(
+    "paymentTotal"
+  ).innerHTML =
+    `
+
+    Product total:
+    <b>
+      ₹${productTotal.toFixed(2)}
+    </b>
+
+    <br>
+
+    Buyer commission:
+    <b>
+      ₹${commission.toFixed(2)}
+    </b>
+
+    <br>
+
+    <strong>
+      Total payable:
+      ₹${buyerTotal.toFixed(2)}
+    </strong>
+
+    `;
+
+};
+
+
+/* =====================================================
+   CLOSE PAYMENT
+===================================================== */
+
+window.closePayment =
+function(){
+
+  selectedListing=null;
+
+  selectedQuantity=1;
+
+  document.getElementById(
+    "paymentModal"
+  ).style.display="none";
+
+};
+
+
+/* =====================================================
+   START PAYMENT
+===================================================== */
+
+window.startPayment =
+async function(){
+
+  if(!selectedListing){
+
+    alert(
+      "No component selected."
+    );
+
+    return;
+
+  }
+
+
+  if(!auth.currentUser){
+
+    alert(
+      "Please login first."
+    );
+
+    closePayment();
+
+    openLogin();
+
+    return;
+
+  }
+
+
+  const listing =
+    selectedListing;
+
+
+  const quantity =
+    Number(
+      selectedQuantity
+    );
+
+
+  const currentStock =
+    Number(
+      listing.quantityAvailable ??
+      listing.quantity ??
+      1
+    );
+
+
+  if(
+    quantity < 1 ||
+    quantity > currentStock
+  ){
+
+    alert(
+      "Selected quantity is not available."
+    );
+
+    return;
+
+  }
+
+
+  const productTotal =
+    Number(
+      listing.price
+    ) * quantity;
+
+
+  const commission =
+    commissionAmount(
+      productTotal
+    );
+
+
+  const buyerTotal =
+    productTotal +
+    commission;
+
+
+  const button =
+    document.getElementById(
+      "continuePaymentBtn"
+    );
+
+
+  try{
+
+    button.disabled=true;
+
+    button.textContent =
+      "Creating payment...";
+
+
+    if(!cashfree){
+
+      throw new Error(
+        "Cashfree checkout library could not be loaded."
+      );
+
+    }
+
+
+    /*
+      BACKEND MUST ALSO VALIDATE:
+      quantity, listing price and stock.
+    */
+
+    const response =
+      await fetch(
+        "/api/create-order",
+        {
+
+          method:"POST",
+
+          headers:{
+            "Content-Type":
+              "application/json"
+          },
+
+          body:
+            JSON.stringify({
+
+              amount:
+                buyerTotal,
+
+              listingId:
+                listing.id,
+
+              productName:
+                listing.name,
+
+              quantity,
+
+              productPrice:
+                Number(
+                  listing.price
+                ),
+
+              commission,
+
+              buyerEmail:
+                auth.currentUser.email,
+
+              buyerUid:
+                auth.currentUser.uid,
+
+              sellerUid:
+                listing.ownerUid
+
+            })
+
+        }
+      );
+
+
+    const data =
+      await response.json();
+
+
+    if(!response.ok){
+
+      throw new Error(
+        data.error ||
+        "Unable to create payment order."
+      );
+
+    }
+
+
+    if(!data.paymentSessionId){
+
+      throw new Error(
+        "Cashfree payment session missing."
+      );
+
+    }
+
+
+    closePayment();
+
+
+    const result =
+      await cashfree.checkout({
+
+        paymentSessionId:
+          data.paymentSessionId,
+
+        redirectTarget:
+          "_modal"
+
+      });
+
+
+    /*
+      USER CLOSED CASHFREE
+    */
+
+    if(result?.error){
+
+      alert(
+        "Payment cancelled. Nothing was purchased."
+      );
+
+      return;
+
+    }
+
+
+    /*
+      VERIFY PAYMENT
+    */
+
+    const verifyResponse =
+      await fetch(
+        "/api/verify-payment",
+        {
+
+          method:"POST",
+
+          headers:{
+            "Content-Type":
+              "application/json"
+          },
+
+          body:
+            JSON.stringify({
+
+              orderId:
+                data.orderId
+
+            })
+
+        }
+      );
+
+
+    const verified =
+      await verifyResponse.json();
+
+
+    if(
+      !verifyResponse.ok ||
+      !verified.verified
+    ){
+
+      alert(
+        "Payment verification failed.\n\n"+
+        "Order ID: "+
+        data.orderId
+      );
+
+      return;
+
+    }
+
+
+    /*
+      FIRESTORE TRANSACTION
+    */
+
+    const orderRef =
+      doc(
+        collection(
+          db,
+          "orders"
+        )
+      );
+
+
+    await runTransaction(
+      db,
+      async transaction => {
+
+        const listingRef =
+          doc(
+            db,
+            "listings",
+            listing.id
+          );
+
+
+        const fresh =
+          await transaction.get(
+            listingRef
+          );
+
+
+        if(!fresh.exists()){
+
+          throw new Error(
+            "Listing no longer exists."
+          );
+
+        }
+
+
+        const current =
+          fresh.data();
+
+
+        const available =
+          Number(
+            current.quantityAvailable ??
+            current.quantity ??
+            0
+          );
+
+
+        if(
+          current.sold === true ||
+          available <= 0
+        ){
+
+          throw new Error(
+            "Component is already sold out."
+          );
+
+        }
+
+
+        if(
+          quantity > available
+        ){
+
+          throw new Error(
+            "Only "+
+            available+
+            " pieces are available now."
+          );
+
+        }
+
+
+        const remaining =
+          available -
+          quantity;
+
+
+        const finalSold =
+          remaining <= 0;
+
+
+        /*
+          ORDER
+        */
+
+        transaction.set(
+          orderRef,
+          {
+
+            buyerUid:
+              auth.currentUser.uid,
+
+            buyerEmail:
+              auth.currentUser.email,
+
+            sellerUid:
+              current.ownerUid,
+
+            sellerEmail:
+              current.ownerEmail ||
+              "",
+
+            listingId:
+              listing.id,
+
+            productName:
+              current.name ||
+              "",
+
+            quantity,
+
+            unitPrice:
+              Number(
+                current.price
+              ),
+
+            productTotal,
+
+            amount:
+              buyerTotal,
+
+            commissionRate:
+              commissionRate(
+                productTotal
+              ),
+
+            commissionAmount:
+              commission,
+
+            sellerAmount:
+              productTotal,
+
+            cashfreeOrderId:
+              data.orderId,
+
+            status:
+              "paid",
+
+            deliveryConfirmed:
+              false,
+
+            sellerPaid:
+              false,
+
+            createdAt:
+              serverTimestamp()
+
+          }
+
+        );
+
+
+        /*
+          UPDATE STOCK
+        */
+
+        transaction.update(
+          listingRef,
+          {
+
+            quantityAvailable:
+              remaining,
+
+            sold:
+              finalSold,
+
+            buyerUid:
+              auth.currentUser.uid,
+
+            buyerEmail:
+              auth.currentUser.email,
+
+            orderId:
+              data.orderId,
+
+            soldAt:
+              serverTimestamp(),
+
+            deliveryConfirmed:
+              false
+
+          }
+        );
+
+      }
+    );
+
+
+    alert(
+      "Payment successful!\n\n"+
+      "Quantity purchased: "+
+      quantity+
+      "\n\n"+
+      "Remaining quantity: "+
+      Math.max(
+        0,
+        currentStock -
+        quantity
+      )
+    );
+
+
+    await loadListings();
+
+
+  }catch(error){
+
+    console.error(
+      "Payment error:",
+      error
+    );
+
+
+    alert(
+      "Payment/Order Error:\n\n"+
+      error.message
+    );
+
+  }finally{
+
+    button.disabled=false;
+
+    button.textContent =
+      "Continue to Payment";
+
+  }
+
+};
+
+
+/* =====================================================
+   CONTACT SELLER
+===================================================== */
+
+window.contactSeller =
+function(id){
+
+  const x =
+    listings.find(
+      a=>a.id===id
+    );
+
+
+  if(!x)
+    return;
+
+
+  if(
+    !auth.currentUser ||
+    x.buyerUid !==
+      auth.currentUser.uid
+  ){
+
+    alert(
+      "Seller contact is available after purchase."
+    );
+
+    return;
+
+  }
+
+
+  document.getElementById(
+    "contactTitle"
+  ).textContent =
+    "Contact "+
+    (
+      x.seller ||
+      "Seller"
+    );
+
+
+  let html =
+    `
+
+    <b>
+      ${esc(x.name)}
+    </b>
+
+    <br><br>
+
+    College:
+    ${esc(x.college || "")}
+
+    <br>
+
+    Location:
+    ${esc(
+      x.collegeLocation || ""
+    )}
+
+    `;
+
+
+  if(x.whatsapp){
+
+    const number =
+      String(
+        x.whatsapp
+      ).replace(
+        /\D/g,
+        ""
+      );
+
+
+    if(number){
+
+      html +=
+        `
+
+        <br><br>
+
+        <a
+          target="_blank"
+          href="https://wa.me/${number}">
+
+          📱 Message on WhatsApp
+
+        </a>
+
+        `;
+
+    }
+
+  }
+
+
+  if(x.instagram){
+
+    const insta =
+      String(
+        x.instagram
+      ).replace(
+        /^@/,
+        ""
+      );
+
+
+    html +=
+      `
+
+      <br><br>
+
+      <a
+        target="_blank"
+        href="https://instagram.com/${encodeURIComponent(insta)}">
+
+        📸 Instagram
+
+      </a>
+
+      `;
+
+  }
+
+
+  document.getElementById(
+    "contactInfo"
+  ).innerHTML =
+    html;
+
+
+  document.getElementById(
+    "contactModal"
+  ).style.display =
+    "flex";
+
+};
+
+
+/* =====================================================
+   DELIVERY
+===================================================== */
+
+window.confirmDelivery =
+async function(id){
+
+  if(!auth.currentUser){
+
+    alert(
+      "Please login first."
+    );
+
+    return;
+
+  }
+
+
+  const listing =
+    listings.find(
+      x=>x.id===id
+    );
+
+
+  if(!listing)
+    return;
+
+
+  if(
+    listing.buyerUid !==
+    auth.currentUser.uid
+  ){
+
+    alert(
+      "Only buyer can confirm delivery."
+    );
+
+    return;
+
+  }
+
+
+  if(
+    listing.deliveryConfirmed
+  ){
+
+    alert(
+      "Delivery already confirmed."
+    );
+
+    return;
+
+  }
+
+
+  if(
+    !confirm(
+      "Have you received the component?\n\n"+
+      "Confirm Delivery Done?"
+    )
+  )
+    return;
+
+
+  try{
+
+    const orderQuery =
+      query(
+        collection(
+          db,
+          "orders"
+        ),
+        where(
+          "listingId",
+          "==",
+          id
+        ),
+        where(
+          "buyerUid",
+          "==",
+          auth.currentUser.uid
+        )
+      );
+
+
+    const orderSnap =
+      await getDocs(
+        orderQuery
+      );
+
+
+    await runTransaction(
+      db,
+      async transaction => {
+
+        const listingRef =
+          doc(
+            db,
+            "listings",
+            id
+          );
+
+
+        transaction.update(
+          listingRef,
+          {
+
+            deliveryConfirmed:
+              true,
+
+            deliveryConfirmedAt:
+              serverTimestamp()
+
+          }
+        );
+
+
+        orderSnap.forEach(
+          orderDoc=>{
+
+            transaction.update(
+              doc(
+                db,
+                "orders",
+                orderDoc.id
+              ),
+              {
+
+                deliveryConfirmed:
+                  true,
+
+                deliveryConfirmedAt:
+                  serverTimestamp(),
+
+                status:
+                  "delivery_confirmed"
+
+              }
+            );
+
+          }
+        );
+
+      }
+    );
+
+
+    alert(
+      "Delivery confirmed.\n\n"+
+      "Founder can now pay seller."
+    );
+
+
+    await loadListings();
+
+  }catch(error){
+
+    console.error(error);
+
+    alert(
+      "Delivery confirmation failed:\n\n"+
+      error.message
+    );
+
+  }
+
+};
+
+
+/* =====================================================
+   PROFILE
+===================================================== */
+
+window.openProfile =
+async function(){
+
+  if(!auth.currentUser){
+
+    alert(
+      "Please login first."
+    );
+
+    openLogin();
+
+    return;
+
+  }
+
+
+  document.getElementById(
+    "profileModal"
+  ).style.display =
+    "flex";
+
+
+  document.getElementById(
+    "profileEmail"
+  ).textContent =
+    "Email: "+
+    auth.currentUser.email;
+
+
+  try{
+
+    const snap =
+      await getDoc(
+        doc(
+          db,
+          "profiles",
+          auth.currentUser.uid
+        )
+      );
+
+
+    document.getElementById(
+      "profileUpi"
+    ).value =
+      snap.exists()
+        ? snap.data().upiId || ""
+        : "";
+
+
+    await loadMyOrders();
+
+  }catch(error){
+
+    alert(
+      "Profile loading failed:\n\n"+
+      error.message
+    );
+
+  }
+
+};
+
+
+/* =====================================================
+   SAVE PROFILE
+===================================================== */
+
+window.saveProfile =
+async function(e){
+
+  e.preventDefault();
+
+
+  if(!auth.currentUser)
+    return;
+
+
+  const upi =
+    document.getElementById(
+      "profileUpi"
+    ).value.trim();
+
+
+  if(!upi){
+
+    alert(
+      "Enter UPI ID."
+    );
+
+    return;
+
+  }
+
+
+  try{
+
+    await setDoc(
+      doc(
+        db,
+        "profiles",
+        auth.currentUser.uid
+      ),
+      {
+
+        upiId:
+          upi,
+
+        email:
+          auth.currentUser.email,
+
+        updatedAt:
+          serverTimestamp()
+
+      },
+      {
+        merge:true
+      }
+    );
+
+
+    document.getElementById(
+      "profileMsg"
+    ).textContent =
+      "UPI ID saved successfully.";
+
+  }catch(error){
+
+    alert(
+      error.message
+    );
+
+  }
+
+};
+
+
+/* =====================================================
+   MY ORDERS
+===================================================== */
+
+async function loadMyOrders(){
+
+  const box =
+    document.getElementById(
+      "myOrders"
+    );
+
+
+  box.innerHTML =
+    "Loading...";
+
+
+  const q =
+    query(
+      collection(
+        db,
+        "orders"
+      ),
+      where(
+        "buyerUid",
+        "==",
+        auth.currentUser.uid
+      )
+    );
+
+
+  const snap =
+    await getDocs(q);
+
+
+  box.innerHTML="";
+
+
+  if(snap.empty){
+
+    box.textContent =
+      "No orders.";
+
+    return;
+
+  }
+
+
+  snap.forEach(
+    d=>{
+
+      const x =
+        d.data();
+
+
+      box.innerHTML +=
+        `
+
+        <div class="order">
+
+          <b>
+            ${esc(
+              x.productName ||
+              ""
+            )}
+          </b>
+
+          <br>
+
+          Quantity:
+          ${Number(
+            x.quantity ||
+            1
+          )}
+
+          <br>
+
+          Amount:
+          ₹${Number(
+            x.amount ||
+            0
+          ).toLocaleString(
+            "en-IN"
+          )}
+
+          <br>
+
+          Status:
+          ${esc(
+            x.status ||
+            "paid"
+          )}
+
+          <br>
+
+          Delivery:
+          ${
+            x.deliveryConfirmed
+              ? "Confirmed"
+              : "Waiting for confirmation"
+          }
+
+        </div>
+
+        `;
+
+    }
+  );
+
+}
+
+
+/* =====================================================
+   FOUNDER
+===================================================== */
+
+window.openFounder =
+async function(){
+
+  if(!founder()){
+
+    alert(
+      "Founder only."
+    );
+
+    return;
+
+  }
+
+
+  document.getElementById(
+    "founderModal"
+  ).style.display =
+    "flex";
+
+
+  await loadPendingListings();
+
+  await loadFounderOrders();
+
+};
+
+
+/* =====================================================
+   PENDING LISTINGS
+===================================================== */
+
+async function loadPendingListings(){
+
+  const box =
+    document.getElementById(
+      "pendingListings"
+    );
+
+
+  box.innerHTML =
+    "Loading...";
+
+
+  const q =
+    query(
+      collection(
+        db,
+        "listings"
+      ),
+      where(
+        "restricted",
+        "==",
+        true
+      ),
+      where(
+        "approved",
+        "==",
+        false
+      )
+    );
+
+
+  const snap =
+    await getDocs(q);
+
+
+  box.innerHTML="";
+
+
+  if(snap.empty){
+
+    box.textContent =
+      "No pending listings.";
+
+    return;
+
+  }
+
+
+  snap.forEach(
+    d=>{
+
+      const x =
+        d.data();
+
+
+      box.innerHTML +=
+        `
+
+        <div class="order">
+
+          <b>
+            ${esc(x.name)}
+          </b>
+
+          <br>
+
+          ₹${Number(
+            x.price || 0
+          )}
+
+          <br>
+
+          Quantity:
+          ${Number(
+            x.quantityAvailable ||
+            x.quantity ||
+            0
+          )}
+
+          <br>
+
+          Seller:
+          ${esc(
+            x.seller ||
+            ""
+          )}
+
+          <br><br>
+
+          <button
+            class="primary small"
+            onclick="approveListing('${d.id}')">
+
+            Approve
+
+          </button>
+
+        </div>
+
+        `;
+
+    }
+  );
+
+}
+
+
+/* =====================================================
+   APPROVE
+===================================================== */
+
+window.approveListing =
+async function(id){
+
+  if(!founder()){
+
+    alert(
+      "Founder only."
+    );
+
+    return;
+
+  }
+
+
+  try{
+
+    await updateDoc(
+      doc(
+        db,
+        "listings",
+        id
+      ),
+      {
+
+        approved:true,
+
+        approvedBy:
+          auth.currentUser.uid,
+
+        approvedByEmail:
+          auth.currentUser.email,
+
+        approvedAt:
+          serverTimestamp()
+
+      }
+    );
+
+
+    alert(
+      "Listing approved."
+    );
+
+
+    await loadListings();
+
+    await loadPendingListings();
+
+  }catch(error){
+
+    alert(
+      error.message
+    );
+
+  }
+
+};
+
+
+/* =====================================================
+   FOUNDER ORDERS
+===================================================== */
+
+async function loadFounderOrders(){
+
+  const box =
+    document.getElementById(
+      "founderOrders"
+    );
+
+
+  box.innerHTML =
+    "Loading...";
+
+
+  const snap =
+    await getDocs(
+      collection(
+        db,
+        "orders"
+      )
+    );
+
+
+  box.innerHTML="";
+
+
+  if(snap.empty){
+
+    box.textContent =
+      "No orders.";
+
+    return;
+
+  }
+
+
+  for(
+    const d of snap.docs
+  ){
+
+    const x =
+      d.data();
+
+
+    let sellerUpi="";
+
+
+    if(x.sellerUid){
+
+      const profile =
+        await getDoc(
+          doc(
+            db,
+            "profiles",
+            x.sellerUid
+          )
+        );
+
+
+      if(profile.exists()){
+
+        sellerUpi =
+          profile.data().upiId ||
+          "";
+
+      }
+
+    }
+
+
+    const ready =
+      x.deliveryConfirmed === true &&
+      x.sellerPaid !== true;
+
+
+    box.innerHTML +=
+      `
+
+      <div class="order">
+
+        <b>
+          ${esc(
+            x.productName ||
+            ""
+          )}
+        </b>
+
+        <br>
+
+        Quantity:
+        ${Number(
+          x.quantity ||
+          1
+        )}
+
+        <br>
+
+        Order:
+        ${esc(
+          x.cashfreeOrderId ||
+          ""
+        )}
+
+        <br>
+
+        Amount:
+        ₹${Number(
+          x.amount ||
+          0
+        ).toLocaleString(
+          "en-IN"
+        )}
+
+        <br>
+
+        Commission:
+        ₹${Number(
+          x.commissionAmount ||
+          0
+        ).toFixed(2)}
+
+        <br>
+
+        Seller Amount:
+        ₹${Number(
+          x.sellerAmount ||
+          0
+        ).toFixed(2)}
+
+        <br><br>
+
+        Seller UPI:
+        <b>
+          ${esc(
+            sellerUpi ||
+            "Not provided"
+          )}
+        </b>
+
+        <br><br>
+
+        Delivery:
+        ${
+          x.deliveryConfirmed
+            ? "✅ Done"
+            : "⏳ Pending"
+        }
+
+        <br>
+
+        Seller Payment:
+        ${
+          x.sellerPaid
+            ? "✅ Paid"
+            : "⏳ Not Paid"
+        }
+
+        <br><br>
+
+        ${
+          ready
+            ?
+
+            `
+
+            <button
+              class="primary small"
+              onclick="markSellerPaid('${d.id}')">
+
+              Mark Seller Paid
+
+            </button>
+
+            `
+
+            :
+
+            ""
+        }
+
+      </div>
+
+      `;
+
+  }
+
+}
+
+
+/* =====================================================
+   MARK SELLER PAID
+===================================================== */
+
+window.markSellerPaid =
+async function(orderId){
+
+  if(!founder()){
+
+    alert(
+      "Founder only."
+    );
+
+    return;
+
+  }
+
+
+  const snap =
+    await getDoc(
+      doc(
+        db,
+        "orders",
+        orderId
+      )
+    );
+
+
+  if(!snap.exists()){
+
+    alert(
+      "Order not found."
+    );
+
+    return;
+
+  }
+
+
+  const order =
+    snap.data();
+
+
+  if(
+    !order.deliveryConfirmed
+  ){
+
+    alert(
+      "Buyer has not confirmed delivery yet."
+    );
+
+    return;
+
+  }
+
+
+  if(order.sellerPaid){
+
+    alert(
+      "Seller is already marked paid."
+    );
+
+    return;
+
+  }
+
+
+  if(
+    !confirm(
+      "Have you actually sent the seller's payment?"
+    )
+  )
+    return;
+
+
+  try{
+
+    await updateDoc(
+      doc(
+        db,
+        "orders",
+        orderId
+      ),
+      {
+
+        sellerPaid:true,
+
+        sellerPaidBy:
+          auth.currentUser.uid,
+
+        sellerPaidByEmail:
+          auth.currentUser.email,
+
+        sellerPaidAt:
+          serverTimestamp(),
+
+        status:
+          "seller_paid"
+
+      }
+    );
+
+
+    alert(
+      "Seller marked as Paid."
+    );
+
+
+    await loadFounderOrders();
+
+  }catch(error){
+
+    alert(
+      error.message
+    );
+
+  }
+
+};
+
+</script>
+
+</body>
+</html>
 .card h3{
   margin:0 0 8px
 }
