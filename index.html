@@ -737,9 +737,9 @@ const file=e.target.files[0];
 
 if(!file)return;
 
-if(file.size>700000){
+if(file.size>2000000){
 
-alert("Image must be smaller than 700 KB.");
+alert("Image must be smaller than 2 MB.");
 e.target.value="";
 return;
 
@@ -899,9 +899,9 @@ updatedAt:serverTimestamp()
 
 };
 
-if(!data.price||data.price<20){
+if(!data.price||data.price<2){
 
-alert("Minimum selling price is ₹20.");
+alert("Minimum selling price is ₹2.");
 return;
 
 }
