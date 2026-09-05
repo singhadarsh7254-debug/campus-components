@@ -1,115 +1,1099 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
-<meta name="viewport"
-      content="width=device-width,initial-scale=1.0">
-
-<title>Campus Components — Student Marketplace</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>CampusComponents — Student Marketplace</title>
 
 <script src="https://sdk.cashfree.com/js/v3/cashfree.js"></script>
 
 <style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#f6f7fb;color:#172033}
+header{background:#101828;color:#fff;padding:15px 5%;display:flex;align-items:center;justify-content:space-between;gap:12px;position:sticky;top:0;z-index:20}
+.logo{font-size:21px;font-weight:800}
+.logo span{color:#63b3ed}
+nav{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+button{border:0;border-radius:8px;padding:10px 14px;font-weight:700;cursor:pointer}
+button:disabled{opacity:.6;cursor:not-allowed}
+.primary{background:#2f80ed;color:#fff}
+.secondary{background:#eaf2ff;color:#1558a6}
+.danger{background:#fee4e2;color:#b42318}
+.dark{background:#344054;color:#fff}
+.hero{padding:45px 5%;background:linear-gradient(135deg,#eaf3ff,#fff)}
+.hero h1{font-size:38px;margin:0 0 10px}
+.hero p{color:#667085;font-size:17px}
+.container{padding:30px 5%}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px}
+.toolbar input{max-width:600px}
+input,select,textarea{width:100%;padding:11px;border:1px solid #d6dce5;border-radius:8px;background:#fff}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.card{background:#fff;border:1px solid #e5e9f0;border-radius:13px;overflow:hidden;box-shadow:0 2px 8px #1018280d}
+.pic{height:170px;background:#eef2f7;display:flex;align-items:center;justify-content:center;font-size:55px}
+.pic img{width:100%;height:100%;object-fit:cover}
+.card-body{padding:15px}
+.card h3{margin:0 0 8px}
+.price{font-size:21px;font-weight:800}
+.meta{font-size:13px;color:#667085;line-height:1.7;margin:10px 0}
+.actions{display:flex;gap:6px;flex-wrap:wrap}
+.small{padding:8px 10px;font-size:12px}
+.badge{display:inline-block;padding:5px 8px;border-radius:20px;font-size:11px;font-weight:700}
+.green{background:#e9f8ef;color:#16834a}
+.orange{background:#fff4e5;color:#9a5b00}
+.red{background:#fee4e2;color:#b42318}
+.purple{background:#f3e8ff;color:#7e22ce}
+.modal{display:none;position:fixed;inset:0;background:#0008;align-items:center;justify-content:center;z-index:100}
+.box{background:#fff;width:min(620px,94%);max-height:92vh;overflow:auto;border-radius:14px;padding:22px}
+.close{float:right;background:none;font-size:25px;padding:0}
+.form{display:grid;gap:11px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.order{border:1px solid #ddd;border-radius:10px;padding:13px;margin:9px 0}
+.payment-summary{background:#f8fafc;border:1px solid #e4e7ec;border-radius:10px;padding:15px;margin:15px 0;line-height:1.9}
+.payment-buttons{display:flex;gap:10px;margin-top:15px}
+.message{padding:10px;border-radius:8px;margin-top:10px}
+.success{background:#e9f8ef;color:#16834a}
+.error{background:#fee4e2;color:#b42318}
+footer{background:#101828;color:#cbd5e1;padding:30px 5%;margin-top:30px}
 
-*{
-  box-sizing:border-box
+@media(max-width:900px){
+.grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:600px){
+.grid{grid-template-columns:1fr}
+.hero h1{font-size:30px}
+.row{grid-template-columns:1fr}
+.payment-buttons{flex-direction:column}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<div class="logo">Campus<span>Components</span></div>
+
+<div id="status">Not logged in</div>
+
+<nav>
+<button class="secondary" id="loginBtn" onclick="openLogin()">Login</button>
+<button class="primary" onclick="openSell()">+ Sell Component</button>
+<button class="secondary" onclick="openProfile()">Profile</button>
+<button class="secondary" onclick="openHelp()">Help & Contact</button>
+<button class="secondary" onclick="openTerms()">Terms & Conditions</button>
+<button class="dark" id="founderBtn" style="display:none" onclick="openFounder()">Founder Panel</button>
+</nav>
+</header>
+
+<section class="hero">
+<h1>Buy & Sell Electronics Components on Campus</h1>
+<p>Find electronics components and student-use items from sellers near your college.</p>
+</section>
+
+<section class="container">
+<div class="toolbar">
+
+<input id="search"
+placeholder="Search MQ2, Arduino, NRF24L01..."
+oninput="renderListings()">
+
+<select id="condition" onchange="renderListings()">
+<option value="">Any condition</option>
+<option>New</option>
+<option>Working</option>
+</select>
+
+<select id="locationFilter" onchange="renderListings()">
+<option value="">All locations</option>
+</select>
+
+</div>
+
+<div id="grid" class="grid"></div>
+</section>
+
+<footer>
+<b>CampusComponents</b><br><br>
+Student Electronics Marketplace
+<br><br>
+<button class="secondary small" onclick="openTerms()">Terms & Conditions</button>
+<button class="secondary small" onclick="openHelp()">Help & Contact</button>
+</footer>
+
+
+<!-- LOGIN / SIGNUP -->
+
+<div class="modal" id="loginModal">
+<div class="box">
+
+<button class="close" onclick="closeModal('loginModal')">×</button>
+
+<h2 id="authTitle">Login</h2>
+
+<form class="form" onsubmit="handleAuth(event)">
+
+<input id="authEmail"
+type="email"
+required
+placeholder="Email">
+
+<input id="authPassword"
+type="password"
+minlength="6"
+required
+placeholder="Password">
+
+<div id="phoneSignupArea" style="display:none">
+
+<input id="authPhone"
+type="tel"
+placeholder="Mobile Number (+91XXXXXXXXXX)"
+autocomplete="tel">
+
+<div id="recaptcha-container" style="margin:10px 0"></div>
+
+<button
+type="button"
+class="secondary"
+id="sendOtpBtn"
+onclick="sendSignupOTP()">
+Send OTP
+</button>
+
+<div id="otpArea" style="display:none;margin-top:10px">
+
+<input
+id="authOtp"
+type="text"
+inputmode="numeric"
+maxlength="6"
+placeholder="Enter 6-digit OTP">
+
+<button
+type="button"
+class="secondary"
+onclick="verifySignupOTP()">
+Verify OTP
+</button>
+
+</div>
+
+<p id="phoneStatus" style="font-size:13px"></p>
+
+</div>
+
+<button class="primary" id="authSubmit">Login</button>
+
+</form>
+
+<br>
+
+<button
+class="secondary"
+onclick="toggleAuth()"
+id="toggleAuth">
+Create new account
+</button>
+
+<p id="authMessage"></p>
+
+</div>
+</div>
+
+
+<!-- SELL -->
+
+<div class="modal" id="sellModal">
+<div class="box">
+
+<button class="close" onclick="closeModal('sellModal')">×</button>
+
+<h2 id="sellTitle">Sell Component</h2>
+
+<form class="form" onsubmit="saveListing(event)">
+
+<input id="name" required placeholder="Component name">
+
+<div class="row">
+
+<input
+id="price"
+type="number"
+min="20"
+required
+placeholder="Price ₹">
+
+<select id="cond" required>
+<option value="">Condition</option>
+<option>New</option>
+<option>Working</option>
+</select>
+
+</div>
+
+<input id="seller" required placeholder="Seller name">
+
+<input id="college" required placeholder="College name">
+
+<input id="collegeLocation" required placeholder="College location">
+
+<div class="row">
+
+<input id="whatsapp" placeholder="WhatsApp">
+
+<input id="instagram" placeholder="Instagram">
+
+</div>
+
+<input
+id="image"
+type="file"
+accept="image/*"
+onchange="readImage(event)">
+
+<img
+id="preview"
+style="display:none;width:100%;height:180px;object-fit:cover;border-radius:10px">
+
+<textarea
+id="description"
+rows="4"
+placeholder="Description"></textarea>
+
+<label>
+<input type="checkbox" id="restricted">
+This item needs founder approval
+</label>
+
+<button class="primary">Save Listing</button>
+
+</form>
+
+</div>
+</div>
+
+
+<!-- PAYMENT -->
+
+<div class="modal" id="paymentModal">
+<div class="box">
+
+<button class="close" onclick="closePayment()">×</button>
+
+<h2>Payment</h2>
+
+<div id="paymentSummary" class="payment-summary"></div>
+
+<div class="payment-buttons">
+
+<button
+class="primary"
+id="continuePaymentBtn"
+onclick="startPayment()">
+Continue to Payment
+</button>
+
+<button
+class="secondary"
+onclick="closePayment()">
+Exit Payment
+</button>
+
+</div>
+
+</div>
+</div>
+
+
+<!-- PROFILE -->
+
+<div class="modal" id="profileModal">
+<div class="box">
+
+<button class="close" onclick="closeModal('profileModal')">×</button>
+
+<h2>My Profile</h2>
+
+<p id="profileEmail"></p>
+
+<form class="form" onsubmit="saveProfile(event)">
+
+<input
+id="profileUpi"
+placeholder="Your Seller UPI ID">
+
+<button class="primary">Save UPI ID</button>
+
+</form>
+
+<p id="profileMsg"></p>
+
+<hr>
+
+<h3>My Orders</h3>
+
+<div id="myOrders"></div>
+
+</div>
+</div>
+
+
+<!-- CONTACT -->
+
+<div class="modal" id="contactModal">
+<div class="box">
+
+<button class="close" onclick="closeModal('contactModal')">×</button>
+
+<h2 id="contactTitle">Contact Seller</h2>
+
+<div id="contactInfo"></div>
+
+</div>
+</div>
+
+
+<!-- TERMS -->
+
+<div class="modal" id="termsModal">
+<div class="box">
+
+<button class="close" onclick="closeModal('termsModal')">×</button>
+
+<h2>Terms & Conditions</h2>
+
+<div class="meta">
+
+<h3>1. Marketplace</h3>
+<p>
+CampusComponents is a student marketplace platform connecting buyers and sellers.
+The platform does not manufacture or guarantee components listed by sellers.
+</p>
+
+<h3>2. Component Quality</h3>
+<p>
+Buyer should check the component, specifications, compatibility and condition
+before accepting it.
+</p>
+
+<h3>3. Buyer–Seller Interaction</h3>
+<p>
+Questions about quality, condition, compatibility, delivery or replacement
+should be handled directly between buyer and seller.
+</p>
+
+<h3>4. Payment & Buyer Commission</h3>
+<p>
+The buyer pays the component price plus the applicable CampusComponents platform commission.
+</p>
+
+<h3>5. Quantity</h3>
+<p>
+Sellers must enter the actual quantity available.
+</p>
+
+<h3>6. Refund</h3>
+<p>
+If payment was successfully completed but the seller does not deliver the
+purchased component, the buyer may contact CampusComponents for a refund review.
+</p>
+
+<h3>7. Seller Responsibility</h3>
+<p>
+Sellers must provide accurate information regarding price, condition,
+description and available quantity.
+</p>
+
+<h3>8. Platform Limitation</h3>
+<p>
+CampusComponents provides marketplace and payment facilitation features.
+It does not inspect, manufacture, guarantee or warrant every component.
+</p>
+
+<p>
+<b>Important:</b>
+These terms are a platform-policy draft and should be reviewed for
+compliance with applicable Indian law before production use.
+</p>
+
+</div>
+</div>
+</div>
+
+
+<!-- HELP -->
+
+<div class="modal" id="helpModal">
+<div class="box">
+
+<button class="close" onclick="closeModal('helpModal')">×</button>
+
+<h2>Help & Contact</h2>
+
+<h3>Payment Problem</h3>
+<p>
+If payment was successful but the seller did not deliver the component,
+contact support with your Order ID.
+</p>
+
+<h3>Component Problem</h3>
+<p>
+For quality, condition or compatibility problems, contact the seller directly.
+</p>
+
+<h3>Quantity Problem</h3>
+<p>
+The buyer can select only the quantity currently available in the listing.
+</p>
+
+<h3>General Support</h3>
+<p>
+Email:
+<a href="mailto:singhadarsh7254@gmail.com">
+singhadarsh7254@gmail.com
+</a>
+</p>
+
+</div>
+</div>
+
+
+<!-- FOUNDER -->
+
+<div class="modal" id="founderModal">
+<div class="box">
+
+<button class="close" onclick="closeModal('founderModal')">×</button>
+
+<h2>Founder Panel</h2>
+
+<h3>Pending Listings</h3>
+<div id="pendingListings"></div>
+
+<hr>
+
+<h3>Orders / Seller Payments</h3>
+<div id="founderOrders"></div>
+
+</div>
+</div>
+
+
+<script type="module">
+
+import {
+initializeApp
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+
+import {
+getAuth,
+createUserWithEmailAndPassword,
+signInWithEmailAndPassword,
+signOut,
+onAuthStateChanged,
+RecaptchaVerifier,
+signInWithPhoneNumber,
+linkWithCredential,
+deleteUser
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
+import {
+getFirestore,
+collection,
+addDoc,
+getDocs,
+getDoc,
+doc,
+setDoc,
+updateDoc,
+deleteDoc,
+query,
+where,
+serverTimestamp,
+runTransaction
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+
+/* FIREBASE */
+
+const firebaseConfig={
+apiKey:"AIzaSyAkETZr4bZQRlLfpbHVlCdvwK7iub-gVmQ",
+authDomain:"campus-components-2c641.firebaseapp.com",
+projectId:"campus-components-2c641",
+storageBucket:"campus-components-2c641.firebasestorage.app",
+messagingSenderId:"174888026978",
+appId:"1:174888026978:web:9170ceb1880bf9334f223b",
+measurementId:"G-0JYEYHLHDC"
+};
+
+const app=initializeApp(firebaseConfig);
+const auth=getAuth(app);
+const db=getFirestore(app);
+
+
+/* CASHFREE */
+
+const cashfree=
+typeof window.Cashfree==="function"
+?window.Cashfree({mode:"production"})
+:null;
+
+
+/* FOUNDER */
+
+const FOUNDER_EMAIL="singhadarsh7254@gmail.com";
+
+
+/* STATE */
+
+let listings=[];
+let editingId=null;
+let imageData="";
+let authMode="login";
+
+let recaptchaVerifier=null;
+let recaptchaRenderPromise=null;
+
+let phoneConfirmationResult=null;
+let phoneVerified=false;
+let signupPhone="";
+let phoneCredential=null;
+
+let selectedListing=null;
+let selectedQuantity=1;
+
+
+/* RECAPTCHA */
+
+function setupRecaptcha(){
+
+if(recaptchaVerifier){
+return recaptchaVerifier;
 }
 
-body{
-  margin:0;
-  font-family:Arial,Helvetica,sans-serif;
-  background:#f6f7fb;
-  color:#172033
+const container=
+document.getElementById("recaptcha-container");
+
+if(!container){
+return null;
 }
 
-header{
-  background:#101828;
-  color:#fff;
-  padding:15px 5%;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:12px;
-  position:sticky;
-  top:0;
-  z-index:20
+try{
+
+recaptchaVerifier=
+new RecaptchaVerifier(
+auth,
+"recaptcha-container",
+{
+size:"normal",
+
+callback:()=>{
+
+const status=
+document.getElementById("phoneStatus");
+
+if(status){
+status.style.color="#1558a6";
+status.textContent=
+"reCAPTCHA verified. Now tap Send OTP.";
 }
 
-.logo{
-  font-size:21px;
-  font-weight:800
+},
+
+"expired-callback":()=>{
+
+const status=
+document.getElementById("phoneStatus");
+
+if(status){
+status.style.color="red";
+status.textContent=
+"reCAPTCHA expired. Please verify again.";
 }
 
-.logo span{
-  color:#63b3ed
+}
+}
+);
+
+recaptchaRenderPromise=
+recaptchaVerifier.render().catch(error=>{
+
+console.error(error);
+
+try{
+recaptchaVerifier.clear();
+}catch(e){}
+
+recaptchaVerifier=null;
+recaptchaRenderPromise=null;
+
+});
+
+return recaptchaVerifier;
+
+}catch(error){
+
+console.error(error);
+
+recaptchaVerifier=null;
+recaptchaRenderPromise=null;
+
+return null;
 }
 
-nav{
-  display:flex;
-  gap:8px;
-  align-items:center;
-  flex-wrap:wrap
 }
 
-button{
-  border:0;
-  border-radius:8px;
-  padding:10px 14px;
-  font-weight:700;
-  cursor:pointer
+
+/* SEND OTP */
+
+window.sendSignupOTP=async function(){
+
+const phoneInput=
+document.getElementById("authPhone");
+
+const phoneStatus=
+document.getElementById("phoneStatus");
+
+const sendBtn=
+document.getElementById("sendOtpBtn");
+
+const phone=
+phoneInput.value.trim();
+
+if(!/^\+91\d{10}$/.test(phone)){
+
+phoneStatus.style.color="red";
+phoneStatus.textContent=
+"Enter number in +91XXXXXXXXXX format.";
+
+return;
 }
 
-button:disabled{
-  opacity:.6;
-  cursor:not-allowed
+try{
+
+sendBtn.disabled=true;
+
+phoneStatus.style.color="#1558a6";
+phoneStatus.textContent=
+"Preparing reCAPTCHA...";
+
+if(!recaptchaVerifier){
+
+const verifier=setupRecaptcha();
+
+if(!verifier){
+throw new Error(
+"reCAPTCHA could not be initialized. Refresh and try again."
+);
 }
 
-.primary{
-  background:#2f80ed;
-  color:#fff
+if(recaptchaRenderPromise){
+await recaptchaRenderPromise;
 }
 
-.secondary{
-  background:#eaf2ff;
-  color:#1558a6
 }
 
-.danger{
-  background:#fee4e2;
-  color:#b42318
+phoneStatus.textContent="Sending OTP...";
+
+phoneConfirmationResult=
+await signInWithPhoneNumber(
+auth,
+phone,
+recaptchaVerifier
+);
+
+signupPhone=phone;
+phoneVerified=false;
+phoneCredential=null;
+
+document.getElementById("otpArea")
+.style.display="block";
+
+phoneStatus.style.color="green";
+phoneStatus.textContent=
+"OTP sent successfully. Enter the 6-digit OTP.";
+
+}catch(error){
+
+console.error("OTP Error:",error);
+
+phoneStatus.style.color="red";
+phoneStatus.textContent=
+getAuthErrorMessage(error);
+
+if(recaptchaVerifier){
+
+try{
+recaptchaVerifier.clear();
+}catch(e){}
+
+recaptchaVerifier=null;
+recaptchaRenderPromise=null;
 }
 
-.dark{
-  background:#344054;
-  color:#fff
+setTimeout(
+()=>setupRecaptcha(),
+100
+);
+
+}finally{
+
+sendBtn.disabled=false;
+
 }
 
-.hero{
-  padding:45px 5%;
-  background:linear-gradient(135deg,#eaf3ff,#fff)
+};
+
+
+/* VERIFY OTP */
+
+window.verifySignupOTP=async function(){
+
+const otp=
+document.getElementById("authOtp")
+.value.trim();
+
+const phoneStatus=
+document.getElementById("phoneStatus");
+
+if(!phoneConfirmationResult){
+
+phoneStatus.style.color="red";
+phoneStatus.textContent=
+"Please send OTP first.";
+
+return;
 }
 
-.hero h1{
-  font-size:38px;
-  margin:0 0 10px
+if(!/^\d{6}$/.test(otp)){
+
+phoneStatus.style.color="red";
+phoneStatus.textContent=
+"Enter the 6-digit OTP.";
+
+return;
 }
 
-.hero p{
-  color:#667085;
-  font-size:17px
+try{
+
+phoneStatus.style.color="#1558a6";
+phoneStatus.textContent="Verifying OTP...";
+
+const result=
+await phoneConfirmationResult.confirm(otp);
+
+if(
+result.additionalUserInfo &&
+result.additionalUserInfo.isNewUser===false
+){
+
+await signOut(auth);
+
+phoneConfirmationResult=null;
+phoneCredential=null;
+phoneVerified=false;
+
+phoneStatus.style.color="red";
+phoneStatus.textContent=
+"This mobile number is already registered. Please use Login.";
+
+return;
 }
 
-.container{
-  padding:30px 5%
+phoneCredential=
+result.credential || null;
+
+await signOut(auth);
+
+if(!phoneCredential){
+
+throw new Error(
+"Phone verification succeeded, but the phone credential was not returned. Please try again."
+);
+
 }
 
-.toolbar{
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap;
-  margin-bottom:20px
+phoneVerified=true;
+phoneConfirmationResult=null;
+
+phoneStatus.style.color="green";
+phoneStatus.textContent=
+"Phone verified successfully. Now tap Create Account.";
+
+document.getElementById("authOtp").disabled=true;
+
+}catch(error){
+
+console.error(error);
+
+phoneVerified=false;
+phoneCredential=null;
+
+phoneStatus.style.color="red";
+phoneStatus.textContent=
+getAuthErrorMessage(error);
+
 }
+
+};
+
+
+/* AUTH ERRORS */
+
+function getAuthErrorMessage(error){
+
+const code=error?.code || "";
+
+const messages={
+
+"auth/invalid-phone-number":
+"Invalid mobile number. Use +91XXXXXXXXXX format.",
+
+"auth/missing-phone-number":
+"Enter your mobile number.",
+
+"auth/captcha-check-failed":
+"reCAPTCHA verification failed. Please try again.",
+
+"auth/too-many-requests":
+"Too many attempts. Please wait and try again later.",
+
+"auth/quota-exceeded":
+"SMS limit reached. Please try again later.",
+
+"auth/code-expired":
+"OTP expired. Please send a new OTP.",
+
+"auth/invalid-verification-code":
+"Incorrect OTP. Please check the code and try again.",
+
+"auth/credential-already-in-use":
+"This mobile number is already linked to another account.",
+
+"auth/email-already-in-use":
+"This email is already registered. Please use Login.",
+
+"auth/weak-password":
+"Password should be at least 6 characters."
+
+};
+
+return messages[code] ||
+error?.message ||
+"Something went wrong. Please try again.";
+
+}
+
+
+/* HELPERS */
+
+window.closeModal=function(id){
+
+const modal=document.getElementById(id);
+
+if(modal){
+modal.style.display="none";
+}
+
+};
+
+
+function founder(){
+
+return auth.currentUser &&
+auth.currentUser.email===FOUNDER_EMAIL;
+
+}
+
+
+function esc(value){
+
+return String(value??"")
+.replace(/[&<>"']/g,m=>({
+
+"&":"&amp;",
+"<":"&lt;",
+">":"&gt;",
+'"':"&quot;",
+"'":"&#039;"
+
+}[m]));
+
+}
+
+
+/* LOGIN */
+
+window.openLogin=function(){
+
+document.getElementById("loginModal")
+.style.display="flex";
+
+};
+
+
+/* TOGGLE LOGIN/SIGNUP */
+
+window.toggleAuth=function(){
+
+authMode=
+authMode==="login"
+?"signup"
+:"login";
+
+const isSignup=
+authMode==="signup";
+
+document.getElementById("authTitle")
+.textContent=
+isSignup
+?"Create Account"
+:"Login";
+
+document.getElementById("authSubmit")
+.textContent=
+isSignup
+?"Create Account"
+:"Login";
+
+document.getElementById("toggleAuth")
+.textContent=
+isSignup
+?"Already have an account? Login"
+:"Create new account";
+
+document.getElementById("phoneSignupArea")
+.style.display=
+isSignup
+?"block"
+:"none";
+
+document.getElementById("authMessage")
+.textContent="";
+
+phoneVerified=false;
+phoneConfirmationResult=null;
+phoneCredential=null;
+signupPhone="";
+
+const otpInput=
+document.getElementById("authOtp");
+
+if(otpInput){
+otpInput.value="";
+otpInput.disabled=false;
+}
+
+const otpArea=
+document.getElementById("otpArea");
+
+if(otpArea){
+otpArea.style.display="none";
+}
+
+const phoneStatus=
+document.getElementById("phoneStatus");
+
+if(phoneStatus){
+phoneStatus.textContent="";
+}
+
+if(isSignup){
+
+setTimeout(
+()=>setupRecaptcha(),
+100
+);
+
+}else{
+
+if(recaptchaVerifier){
+
+try{
+recaptchaVerifier.clear();
+}catch(e){}
+
+recaptchaVerifier=null;
+recaptchaRenderPromise=null;
+
+}
+
+}
+
+};
+
+
+/* HANDLE AUTH */
+
+window.handleAuth=async function(e){
+
+e.preventDefault();
+
+const email=
+document.getElementById("authEmail")
+.value.trim();
+
+const password=
+document.getElementById("authPassword")
+.value;
+
+const msg=
+document.getElementById("authMessage");
+
+try{
+
+msg.textContent="";
+
+if(authMode==="signup"){
+
+if(
+!phoneVerified ||
+!phoneCredential ||
+!signupPhone
+){
+
+msg.style.color="red";
+msg.textContent=
+"Please verify your mobile number with OTP first.";
+
+return;
+}
+
+msg.style.color="#1558a6";
+msg.textContent="Creating your account...";
+
+const userCredential=
+await createUserWithEmailAndPassword(
+auth,
+email,
+password
+);
+
+try{
+
+await linkWithCredential(
+userCredential.user,
+phoneCredential
+);
+
+}catch(linkError){
+
+try{
+await deleteUser(userCredential.user);
+}catch(deleteError){
+console.error(deleteError);
+}
+
+throw linkError;
+
+}
+
+phoneVerified=false;
+phoneCredential=null;
+signupPhone="";
+
+}else{
+
+await signInWithEmailAndPassword}
 
 .toolbar input{
   max-width:600px
