@@ -1,115 +1,4232 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>CampusComponents — Student Marketplace</title>
+
+<meta name="viewport"
+      content="width=device-width,initial-scale=1.0">
+
+<title>Campus Components — Student Marketplace</title>
 
 <script src="https://sdk.cashfree.com/js/v3/cashfree.js"></script>
 
 <style>
-*{box-sizing:border-box}
-body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#f6f7fb;color:#172033}
-header{background:#101828;color:#fff;padding:15px 5%;display:flex;align-items:center;justify-content:space-between;gap:12px;position:sticky;top:0;z-index:20}
-.logo{font-size:21px;font-weight:800}
-.logo span{color:#63b3ed}
-nav{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-button{border:0;border-radius:8px;padding:10px 14px;font-weight:700;cursor:pointer}
-button:disabled{opacity:.6;cursor:not-allowed}
-.primary{background:#2f80ed;color:#fff}
-.secondary{background:#eaf2ff;color:#1558a6}
-.danger{background:#fee4e2;color:#b42318}
-.dark{background:#344054;color:#fff}
-.hero{padding:45px 5%;background:linear-gradient(135deg,#eaf3ff,#fff)}
-.hero h1{font-size:38px;margin:0 0 10px}
-.hero p{color:#667085;font-size:17px}
-.container{padding:30px 5%}
-.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px}
-.toolbar input{max-width:600px}
-input,select,textarea{width:100%;padding:11px;border:1px solid #d6dce5;border-radius:8px;background:#fff}
-.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
-.card{background:#fff;border:1px solid #e5e9f0;border-radius:13px;overflow:hidden;box-shadow:0 2px 8px #1018280d}
-.pic{height:170px;background:#eef2f7;display:flex;align-items:center;justify-content:center;font-size:55px}
-.pic img{width:100%;height:100%;object-fit:cover}
-.card-body{padding:15px}
-.card h3{margin:0 0 8px}
-.price{font-size:21px;font-weight:800}
-.meta{font-size:13px;color:#667085;line-height:1.7;margin:10px 0}
-.actions{display:flex;gap:6px;flex-wrap:wrap}
-.small{padding:8px 10px;font-size:12px}
-.badge{display:inline-block;padding:5px 8px;border-radius:20px;font-size:11px;font-weight:700}
-.green{background:#e9f8ef;color:#16834a}
-.orange{background:#fff4e5;color:#9a5b00}
-.red{background:#fee4e2;color:#b42318}
-.purple{background:#f3e8ff;color:#7e22ce}
-.modal{display:none;position:fixed;inset:0;background:#0008;align-items:center;justify-content:center;z-index:100}
-.box{background:#fff;width:min(620px,94%);max-height:92vh;overflow:auto;border-radius:14px;padding:22px}
-.close{float:right;background:none;font-size:25px;padding:0}
-.form{display:grid;gap:11px}
-.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.order{border:1px solid #ddd;border-radius:10px;padding:13px;margin:9px 0}
-.payment-summary{background:#f8fafc;border:1px solid #e4e7ec;border-radius:10px;padding:15px;margin:15px 0;line-height:1.9}
-.payment-buttons{display:flex;gap:10px;margin-top:15px}
-.message{padding:10px;border-radius:8px;margin-top:10px}
-.success{background:#e9f8ef;color:#16834a}
-.error{background:#fee4e2;color:#b42318}
-footer{background:#101828;color:#cbd5e1;padding:30px 5%;margin-top:30px}
+
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:#f6f7fb;
+  color:#172033;
+}
+
+header{
+  background:#101828;
+  color:#fff;
+  padding:15px 5%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  position:sticky;
+  top:0;
+  z-index:20;
+}
+
+.logo{
+  font-size:21px;
+  font-weight:800;
+}
+
+.logo span{
+  color:#63b3ed;
+}
+
+#status{
+  font-size:13px;
+  color:#d0d5dd;
+  margin-left:auto;
+}
+
+nav{
+  display:flex;
+  gap:8px;
+  align-items:center;
+  flex-wrap:wrap;
+}
+
+button{
+  border:0;
+  border-radius:8px;
+  padding:10px 14px;
+  font-weight:700;
+  cursor:pointer;
+}
+
+button:disabled{
+  opacity:.6;
+  cursor:not-allowed;
+}
+
+.primary{
+  background:#2f80ed;
+  color:#fff;
+}
+
+.secondary{
+  background:#eaf2ff;
+  color:#1558a6;
+}
+
+.danger{
+  background:#fee4e2;
+  color:#b42318;
+}
+
+.dark{
+  background:#344054;
+  color:#fff;
+}
+
+.hero{
+  padding:45px 5%;
+  background:linear-gradient(135deg,#eaf3ff,#fff);
+}
+
+.hero h1{
+  font-size:38px;
+  margin:0 0 10px;
+}
+
+.hero p{
+  color:#667085;
+  font-size:17px;
+}
+
+.container{
+  padding:30px 5%;
+}
+
+.toolbar{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-bottom:20px;
+}
+
+.toolbar input{
+  max-width:600px;
+}
+
+input,
+select,
+textarea{
+  width:100%;
+  padding:11px;
+  border:1px solid #d6dce5;
+  border-radius:8px;
+  background:#fff;
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+  outline:2px solid #b8d7ff;
+  border-color:#2f80ed;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:18px;
+}
+
+.card{
+  background:#fff;
+  border:1px solid #e5e9f0;
+  border-radius:13px;
+  overflow:hidden;
+  box-shadow:0 2px 8px #1018280d;
+}
+
+.pic{
+  height:170px;
+  background:#eef2f7;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:55px;
+}
+
+.pic img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.card-body{
+  padding:15px;
+}
+
+.card h3{
+  margin:0 0 8px;
+}
+
+.price{
+  font-size:21px;
+  font-weight:800;
+}
+
+.meta{
+  font-size:13px;
+  color:#667085;
+  line-height:1.7;
+  margin:10px 0;
+}
+
+.actions{
+  display:flex;
+  gap:6px;
+  flex-wrap:wrap;
+}
+
+.small{
+  padding:8px 10px;
+  font-size:12px;
+}
+
+.badge{
+  display:inline-block;
+  padding:5px 8px;
+  border-radius:20px;
+  font-size:11px;
+  font-weight:700;
+}
+
+.green{
+  background:#e9f8ef;
+  color:#16834a;
+}
+
+.orange{
+  background:#fff4e5;
+  color:#9a5b00;
+}
+
+.red{
+  background:#fee4e2;
+  color:#b42318;
+}
+
+.purple{
+  background:#f3e8ff;
+  color:#7e22ce;
+}
+
+.modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:#0008;
+  align-items:center;
+  justify-content:center;
+  z-index:100;
+}
+
+.box{
+  background:#fff;
+  width:min(620px,94%);
+  max-height:92vh;
+  overflow:auto;
+  border-radius:14px;
+  padding:22px;
+}
+
+.close{
+  float:right;
+  background:none;
+  font-size:25px;
+  padding:0;
+}
+
+.form{
+  display:grid;
+  gap:11px;
+}
+
+.row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+
+.order{
+  border:1px solid #ddd;
+  border-radius:10px;
+  padding:13px;
+  margin:9px 0;
+}
+
+.payment-summary{
+  background:#f8fafc;
+  border:1px solid #e4e7ec;
+  border-radius:10px;
+  padding:15px;
+  margin:15px 0;
+  line-height:1.9;
+}
+
+.payment-buttons{
+  display:flex;
+  gap:10px;
+  margin-top:15px;
+}
+
+.empty{
+  text-align:center;
+  padding:40px 10px;
+  color:#667085;
+  grid-column:1/-1;
+}
+
+hr{
+  border:0;
+  border-top:1px solid #eee;
+  margin:20px 0;
+}
+
+footer{
+  background:#101828;
+  color:#cbd5e1;
+  padding:30px 5%;
+  margin-top:30px;
+}
+
+#recaptcha-container{
+  overflow:hidden;
+}
 
 @media(max-width:900px){
-.grid{grid-template-columns:repeat(2,1fr)}
+
+  .grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
 }
+
+@media(max-width:700px){
+
+  header{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+
+  #status{
+    margin-left:0;
+  }
+
+  nav{
+    width:100%;
+  }
+
+}
+
 @media(max-width:600px){
-.grid{grid-template-columns:1fr}
-.hero h1{font-size:30px}
-.row{grid-template-columns:1fr}
-.payment-buttons{flex-direction:column}
+
+  .grid{
+    grid-template-columns:1fr;
+  }
+
+  .hero h1{
+    font-size:30px;
+  }
+
+  .row{
+    grid-template-columns:1fr;
+  }
+
+  .payment-buttons{
+    flex-direction:column;
+  }
+
 }
+
 </style>
+
 </head>
 
 <body>
 
-<header>
-<div class="logo">Campus<span>Components</span></div>
 
-<div id="status">Not logged in</div>
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header>
+
+<div class="logo">
+Campus<span>Components</span>
+</div>
+
+<div id="status">
+Not logged in
+</div>
 
 <nav>
-<button class="secondary" id="loginBtn" onclick="openLogin()">Login</button>
-<button class="primary" onclick="openSell()">+ Sell Component</button>
-<button class="secondary" onclick="openProfile()">Profile</button>
-<button class="secondary" onclick="openHelp()">Help & Contact</button>
-<button class="secondary" onclick="openTerms()">Terms & Conditions</button>
-<button class="dark" id="founderBtn" style="display:none" onclick="openFounder()">Founder Panel</button>
+
+<button
+class="secondary"
+id="loginBtn"
+onclick="openLogin()">
+
+Login
+
+</button>
+
+<button
+class="primary"
+onclick="openSell()">
+
++ Sell Component
+
+</button>
+
+<button
+class="secondary"
+onclick="openProfile()">
+
+Profile
+
+</button>
+
+<button
+class="secondary"
+onclick="openHelp()">
+
+Help & Contact
+
+</button>
+
+<button
+class="secondary"
+onclick="openTerms()">
+
+Terms & Conditions
+
+</button>
+
+<button
+class="dark"
+id="founderBtn"
+style="display:none"
+onclick="openFounder()">
+
+Founder Panel
+
+</button>
+
+<button
+class="danger"
+id="logoutBtn"
+style="display:none"
+onclick="logoutUser()">
+
+Logout
+
+</button>
+
 </nav>
+
 </header>
 
+
+<!-- =====================================================
+     HERO
+===================================================== -->
+
 <section class="hero">
-<h1>Buy & Sell Electronics Components on Campus</h1>
-<p>Find electronics components and student-use items from sellers near your college.</p>
+
+<h1>
+Buy & Sell Electronics Components on Campus
+</h1>
+
+<p>
+Find electronics components and student-use items
+from sellers near your college.
+</p>
+
 </section>
 
+
+<!-- =====================================================
+     LISTINGS
+===================================================== -->
+
 <section class="container">
+
 <div class="toolbar">
 
-<input id="search"
+<input
+id="search"
 placeholder="Search MQ2, Arduino, NRF24L01..."
 oninput="renderListings()">
 
-<select id="condition" onchange="renderListings()">
-<option value="">Any condition</option>
-<option>New</option>
-<option>Working</option>
+<select
+id="condition"
+onchange="renderListings()">
+
+<option value="">
+Any condition
+</option>
+
+<option>
+New
+</option>
+
+<option>
+Working
+</option>
+
 </select>
 
-<select id="locationFilter" onchange="renderListings()">
-<option value="">All locations</option>
+<select
+id="locationFilter"
+onchange="renderListings()">
+
+<option value="">
+All locations
+</option>
+
 </select>
 
 </div>
 
-<div id="grid" class="grid"></div>
+<div
+id="grid"
+class="grid">
+
+</div>
+
 </section>
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer>
+
+<b>
+CampusComponents
+</b>
+
+<br><br>
+
+Student Electronics Marketplace
+
+<br><br>
+
+<button
+class="secondary small"
+onclick="openTerms()">
+
+Terms & Conditions
+
+</button>
+
+<button
+class="secondary small"
+onclick="openHelp()">
+
+Help & Contact
+
+</button>
+
+</footer>
+
+
+<!-- =====================================================
+     LOGIN / SIGNUP
+===================================================== -->
+
+<div
+class="modal"
+id="loginModal">
+
+<div class="box">
+
+<button
+class="close"
+onclick="closeModal('loginModal')">
+
+×
+
+</button>
+
+<h2 id="authTitle">
+Login
+</h2>
+
+<form
+class="form"
+onsubmit="handleAuth(event)">
+
+<input
+id="authEmail"
+type="email"
+required
+placeholder="Email">
+
+<input
+id="authPassword"
+type="password"
+minlength="6"
+required
+placeholder="Password">
+
+
+<!-- SIGNUP ONLY -->
+
+<div
+id="phoneSignupArea"
+style="display:none">
+
+<input
+id="authPhone"
+type="tel"
+placeholder="+91XXXXXXXXXX"
+autocomplete="tel">
+
+<div
+id="recaptcha-container"
+style="margin:10px 0">
+
+</div>
+
+<button
+type="button"
+class="secondary"
+id="sendOtpBtn"
+onclick="sendSignupOTP()">
+
+Send OTP
+
+</button>
+
+<div
+id="otpArea"
+style="display:none;margin-top:10px">
+
+<input
+id="authOtp"
+type="text"
+inputmode="numeric"
+maxlength="6"
+placeholder="Enter 6-digit OTP">
+
+<button
+type="button"
+class="primary"
+style="margin-top:8px"
+onclick="verifySignupOTP()">
+
+Verify OTP
+
+</button>
+
+</div>
+
+<p
+id="phoneStatus"
+style="font-size:13px">
+
+</p>
+
+</div>
+
+
+<button
+type="submit"
+class="primary"
+id="authSubmit">
+
+Login
+
+</button>
+
+</form>
+
+<br>
+
+<button
+class="secondary"
+onclick="toggleAuth()"
+id="toggleAuth">
+
+Create new account
+
+</button>
+
+<p id="authMessage"></p>
+
+</div>
+
+</div>
+
+
+<!-- =====================================================
+     SELL COMPONENT
+===================================================== -->
+
+<div
+class="modal"
+id="sellModal">
+
+<div class="box">
+
+<button
+class="close"
+onclick="closeModal('sellModal')">
+
+×
+
+</button>
+
+<h2>
+Sell Component
+</h2>
+
+<form
+class="form"
+onsubmit="saveListing(event)">
+
+<input
+id="name"
+required
+placeholder="Component name">
+
+<div class="row">
+
+<input
+id="price"
+type="number"
+min="2"
+required
+placeholder="Price per piece ₹">
+
+<input
+id="quantity"
+type="number"
+min="1"
+required
+placeholder="Available quantity">
+
+</div>
+
+<select
+id="cond"
+required>
+
+<option value="">
+Condition
+</option>
+
+<option>
+New
+</option>
+
+<option>
+Working
+</option>
+
+</select>
+
+<input
+id="seller"
+required
+placeholder="Seller name">
+
+<input
+id="college"
+required
+placeholder="College name">
+
+<input
+id="collegeLocation"
+required
+placeholder="College location">
+
+<div class="row">
+
+<input
+id="whatsapp"
+placeholder="WhatsApp">
+
+<input
+id="instagram"
+placeholder="Instagram">
+
+</div>
+
+<input
+id="image"
+type="file"
+accept="image/*"
+onchange="readImage(event)">
+
+<img
+id="preview"
+style="
+display:none;
+width:100%;
+height:180px;
+object-fit:cover;
+border-radius:10px">
+
+<textarea
+id="description"
+rows="4"
+placeholder="Description"></textarea>
+
+<label>
+
+<input
+type="checkbox"
+id="restricted">
+
+This item needs founder approval
+
+</label>
+
+<button
+class="primary">
+
+Save Listing
+
+</button>
+
+</form>
+
+</div>
+
+</div>
+
+
+<!-- =====================================================
+     PAYMENT REVIEW
+===================================================== -->
+
+<div
+class="modal"
+id="paymentModal">
+
+<div class="box">
+
+<button
+class="close"
+onclick="closePayment()">
+
+×
+
+</button>
+
+<h2>
+Payment
+</h2>
+
+<div
+id="paymentSummary"
+class="payment-summary">
+
+</div>
+
+<div class="payment-buttons">
+
+<button
+class="primary"
+id="continuePaymentBtn"
+onclick="startPayment()">
+
+Continue to Payment
+
+</button>
+
+<button
+class="secondary"
+onclick="closePayment()">
+
+Exit Payment
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- =====================================================
+     PROFILE
+===================================================== -->
+
+<div
+class="modal"
+id="profileModal">
+
+<div class="box">
+
+<button
+class="close"
+onclick="closeModal('profileModal')">
+
+×
+
+</button>
+
+<h2>
+My Profile
+</h2>
+
+<p id="profileEmail"></p>
+
+<form
+class="form"
+onsubmit="saveProfile(event)">
+
+<input
+id="profileUpi"
+placeholder="Your Seller UPI ID">
+
+<button
+class="primary">
+
+Save UPI ID
+
+</button>
+
+</form>
+
+<p id="profileMsg"></p>
+
+<hr>
+
+<h3>
+My Orders
+</h3>
+
+<div id="myOrders"></div>
+
+</div>
+
+</div>
+
+
+<!-- =====================================================
+     CONTACT SELLER
+===================================================== -->
+
+<div
+class="modal"
+id="contactModal">
+
+<div class="box">
+
+<button
+class="close"
+onclick="closeModal('contactModal')">
+
+×
+
+</button>
+
+<h2 id="contactTitle">
+Contact Seller
+</h2>
+
+<div id="contactInfo"></div>
+
+</div>
+
+</div>
+
+
+<!-- =====================================================
+     TERMS
+===================================================== -->
+
+<div
+class="modal"
+id="termsModal">
+
+<div class="box">
+
+<button
+class="close"
+onclick="closeModal('termsModal')">
+
+×
+
+</button>
+
+<h2>
+Terms & Conditions
+</h2>
+
+<div class="meta">
+
+<h3>
+1. Marketplace
+</h3>
+
+<p>
+CampusComponents is a student marketplace platform
+connecting buyers and sellers. The platform does not
+manufacture or guarantee components listed by sellers.
+</p>
+
+<h3>
+2. Component Quality
+</h3>
+
+<p>
+Buyer should check the component, specifications,
+compatibility and condition before accepting it.
+CampusComponents is not responsible for defective,
+damaged, incompatible or non-working components
+after delivery.
+</p>
+
+<h3>
+3. Buyer–Seller Interaction
+</h3>
+
+<p>
+Questions about quality, condition, compatibility,
+delivery or replacement should be handled directly
+between buyer and seller.
+</p>
+
+<h3>
+4. Payment & Buyer Commission
+</h3>
+
+<p>
+The buyer pays the component price plus the applicable
+CampusComponents platform commission.
+</p>
+
+<h3>
+5. Quantity
+</h3>
+
+<p>
+Sellers must enter the actual quantity available.
+Buyers can purchase only the quantity currently
+available in the listing.
+</p>
+
+<h3>
+6. Refund
+</h3>
+
+<p>
+If payment was successfully completed but the seller
+does not deliver the purchased component, the buyer
+may contact CampusComponents for a refund review.
+</p>
+
+<h3>
+7. Seller Responsibility
+</h3>
+
+<p>
+Sellers must provide accurate information regarding
+price, condition, description and available quantity.
+</p>
+
+<h3>
+8. Platform Limitation
+</h3>
+
+<p>
+CampusComponents provides marketplace and payment
+facilitation features. It does not inspect, manufacture,
+guarantee or warrant every component sold by individual
+sellers.
+</p>
+
+<p>
+<b>Important:</b>
+These terms are a platform-policy draft and should be
+reviewed for compliance with applicable Indian law
+before production use.
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- =====================================================
+     HELP
+===================================================== -->
+
+<div
+class="modal"
+id="helpModal">
+
+<div class="box">
+
+<button
+class="close"
+onclick="closeModal('helpModal')">
+
+×
+
+</button>
+
+<h2>
+Help & Contact
+</h2>
+
+<h3>
+Payment Problem
+</h3>
+
+<p>
+If payment was successful but the seller did not
+deliver the component, contact support with your
+Order ID.
+</p>
+
+<h3>
+Component Problem
+</h3>
+
+<p>
+For quality, condition or compatibility problems,
+contact the seller directly.
+</p>
+
+<h3>
+Quantity Problem
+</h3>
+
+<p>
+The buyer can select only the quantity currently
+available in the listing.
+</p>
+
+<h3>
+General Support
+</h3>
+
+<p>
+Email:
+<a href="mailto:singhadarsh7254@gmail.com">
+singhadarsh7254@gmail.com
+</a>
+</p>
+
+</div>
+
+</div>
+
+
+<!-- =====================================================
+     FOUNDER
+===================================================== -->
+
+<div
+class="modal"
+id="founderModal">
+
+<div class="box">
+
+<button
+class="close"
+onclick="closeModal('founderModal')">
+
+×
+
+</button>
+
+<h2>
+Founder Panel
+</h2>
+
+<h3>
+Pending Listings
+</h3>
+
+<div id="pendingListings"></div>
+
+<hr>
+
+<h3>
+Orders / Seller Payments
+</h3>
+
+<div id="founderOrders"></div>
+
+</div>
+
+</div>
+
+
+<!-- =====================================================
+     FIREBASE MODULE
+===================================================== -->
+
+<script type="module">
+
+import {
+  initializeApp
+}
+from
+"https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+
+
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged,
+  RecaptchaVerifier,
+  signInWithPhoneNumber,
+  PhoneAuthProvider,
+  linkWithCredential,
+  deleteUser
+}
+from
+"https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
+
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  getDocs,
+  getDoc,
+  doc,
+  setDoc,
+  updateDoc,
+  deleteDoc,
+  query,
+  where,
+  serverTimestamp,
+  runTransaction
+}
+from
+"https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+
+/* =====================================================
+   FIREBASE CONFIG
+===================================================== */
+
+const firebaseConfig = {
+
+  apiKey:
+    "AIzaSyAkETZr4bZQRlLfpbHVlCdvwK7iub-gVmQ",
+
+  authDomain:
+    "campus-components-2c641.firebaseapp.com",
+
+  projectId:
+    "campus-components-2c641",
+
+  storageBucket:
+    "campus-components-2c641.firebasestorage.app",
+
+  messagingSenderId:
+    "174888026978",
+
+  appId:
+    "1:174888026978:web:9170ceb1880bf9334f223b",
+
+  measurementId:
+    "G-0JYEYHLHDC"
+
+};
+
+
+const app =
+  initializeApp(firebaseConfig);
+
+const auth =
+  getAuth(app);
+
+const db =
+  getFirestore(app);
+
+
+/* =====================================================
+   CASHFREE
+===================================================== */
+
+const cashfree =
+  typeof window.Cashfree === "function"
+  ? window.Cashfree({
+      mode:"production"
+    })
+  : null;
+
+
+/* =====================================================
+   CONSTANTS
+===================================================== */
+
+const FOUNDER_EMAIL =
+  "singhadarsh7254@gmail.com";
+
+
+/*
+ IMPORTANT:
+
+Cashfree order creation must happen on your backend.
+
+Example:
+
+const CREATE_ORDER_ENDPOINT =
+  "/api/create-order";
+
+Change this to your deployed backend URL.
+*/
+
+const CREATE_ORDER_ENDPOINT =
+  "/api/create-order";
+
+
+/* =====================================================
+   STATE
+===================================================== */
+
+let listings = [];
+
+let editingId = null;
+
+let imageData = "";
+
+let authMode = "login";
+
+let recaptchaVerifier = null;
+
+let phoneConfirmationResult = null;
+
+let phoneVerified = false;
+
+let signupPhone = "";
+
+let phoneCredential = null;
+
+let selectedListing = null;
+
+let selectedQuantity = 1;
+
+
+/* =====================================================
+   HELPERS
+===================================================== */
+
+function getCurrentUser(){
+
+  return auth.currentUser;
+
+}
+
+
+function isFounder(){
+
+  return auth.currentUser &&
+         auth.currentUser.email &&
+         auth.currentUser.email.toLowerCase()
+         === FOUNDER_EMAIL.toLowerCase();
+
+}
+
+
+function showMessage(
+  elementId,
+  message,
+  type="normal"
+){
+
+  const el =
+    document.getElementById(elementId);
+
+  if(!el) return;
+
+  el.textContent = message;
+
+  if(type==="error"){
+    el.style.color = "#b42318";
+  }
+
+  else if(type==="success"){
+    el.style.color = "#16834a";
+  }
+
+  else{
+    el.style.color = "#1558a6";
+  }
+
+}
+
+
+/* =====================================================
+   GLOBAL WINDOW FUNCTIONS
+===================================================== */
+
+window.closeModal =
+function(id){
+
+  const modal =
+    document.getElementById(id);
+
+  if(modal){
+    modal.style.display="none";
+  }
+
+};
+
+
+window.openLogin =
+function(){
+
+  document.getElementById("loginModal")
+  .style.display="flex";
+
+};
+
+
+window.openHelp =
+function(){
+
+  document.getElementById("helpModal")
+  .style.display="flex";
+
+};
+
+
+window.openTerms =
+function(){
+
+  document.getElementById("termsModal")
+  .style.display="flex";
+
+};
+
+
+window.closePayment =
+function(){
+
+  document.getElementById("paymentModal")
+  .style.display="none";
+
+  selectedListing=null;
+
+};
+
+
+window.openSell =
+function(){
+
+  if(!getCurrentUser()){
+
+    alert(
+      "Please login first to sell a component."
+    );
+
+    openLogin();
+
+    return;
+  }
+
+  resetSellForm();
+
+  document.getElementById("sellModal")
+  .style.display="flex";
+
+};
+
+
+window.openProfile =
+async function(){
+
+  if(!getCurrentUser()){
+
+    alert(
+      "Please login first."
+    );
+
+    openLogin();
+
+    return;
+  }
+
+  document.getElementById("profileModal")
+  .style.display="flex";
+
+  await loadProfile();
+
+  await loadMyOrders();
+
+};
+
+
+window.openFounder =
+async function(){
+
+  if(!isFounder()){
+
+    alert(
+      "Founder access denied."
+    );
+
+    return;
+  }
+
+  document.getElementById("founderModal")
+  .style.display="flex";
+
+  await loadPendingListings();
+
+  await loadFounderOrders();
+
+};
+
+
+/* =====================================================
+   AUTH MODE
+===================================================== */
+
+window.toggleAuth =
+function(){
+
+  const title =
+    document.getElementById("authTitle");
+
+  const submit =
+    document.getElementById("authSubmit");
+
+  const toggle =
+    document.getElementById("toggleAuth");
+
+  const phoneArea =
+    document.getElementById("phoneSignupArea");
+
+  const message =
+    document.getElementById("authMessage");
+
+
+  message.textContent="";
+
+
+  if(authMode==="login"){
+
+    authMode="signup";
+
+    title.textContent="Create Account";
+
+    submit.textContent="Create Account";
+
+    toggle.textContent=
+      "Already have an account? Login";
+
+    phoneArea.style.display="block";
+
+    setTimeout(
+      setupRecaptcha,
+      100
+    );
+
+  }
+
+  else{
+
+    authMode="login";
+
+    title.textContent="Login";
+
+    submit.textContent="Login";
+
+    toggle.textContent=
+      "Create new account";
+
+    phoneArea.style.display="none";
+
+  }
+
+};
+
+
+/* =====================================================
+   RECAPTCHA
+===================================================== */
+
+function setupRecaptcha(){
+
+  if(recaptchaVerifier){
+    return;
+  }
+
+  try{
+
+    recaptchaVerifier =
+      new RecaptchaVerifier(
+        auth,
+        "recaptcha-container",
+        {
+
+          size:"normal",
+
+          callback:()=>{
+
+            showMessage(
+              "phoneStatus",
+              "reCAPTCHA verified. You can send OTP.",
+              "success"
+            );
+
+          },
+
+          "expired-callback":()=>{
+
+            showMessage(
+              "phoneStatus",
+              "reCAPTCHA expired. Please verify again.",
+              "error"
+            );
+
+          }
+
+        }
+      );
+
+
+    recaptchaVerifier.render()
+      .catch(error=>{
+
+        console.error(
+          "reCAPTCHA render error:",
+          error
+        );
+
+      });
+
+  }
+
+  catch(error){
+
+    console.error(error);
+
+    showMessage(
+      "phoneStatus",
+      "Unable to load reCAPTCHA.",
+      "error"
+    );
+
+  }
+
+}
+
+
+/* =====================================================
+   SEND SIGNUP OTP
+===================================================== */
+
+window.sendSignupOTP =
+async function(){
+
+  const phoneInput =
+    document.getElementById("authPhone");
+
+  const phone =
+    phoneInput.value.trim();
+
+  if(!phone){
+
+    showMessage(
+      "phoneStatus",
+      "Please enter your mobile number.",
+      "error"
+    );
+
+    return;
+  }
+
+
+  if(!/^\+[1-9]\d{7,14}$/.test(phone)){
+
+    showMessage(
+      "phoneStatus",
+      "Use international format, e.g. +919876543210",
+      "error"
+    );
+
+    return;
+  }
+
+
+  try{
+
+    setupRecaptcha();
+
+    if(!recaptchaVerifier){
+
+      throw new Error(
+        "reCAPTCHA is not ready."
+      );
+
+    }
+
+
+    const button =
+      document.getElementById("sendOtpBtn");
+
+    button.disabled=true;
+
+    button.textContent=
+      "Sending OTP...";
+
+
+    phoneConfirmationResult =
+      await signInWithPhoneNumber(
+        auth,
+        phone,
+        recaptchaVerifier
+      );
+
+
+    signupPhone=phone;
+
+    document.getElementById("otpArea")
+      .style.display="block";
+
+
+    showMessage(
+      "phoneStatus",
+      "OTP sent successfully. Enter the OTP.",
+      "success"
+    );
+
+  }
+
+  catch(error){
+
+    console.error(
+      "OTP error:",
+      error
+    );
+
+
+    let message =
+      "Unable to send OTP.";
+
+
+    if(error.code){
+
+      message =
+        error.code
+        .replace("auth/","")
+        .replaceAll("-"," ");
+
+    }
+
+
+    showMessage(
+      "phoneStatus",
+      message,
+      "error"
+    );
+
+
+    /*
+      Reset reCAPTCHA after error.
+    */
+
+    try{
+
+      if(recaptchaVerifier){
+
+        const widgetId =
+          await recaptchaVerifier.render();
+
+        if(window.grecaptcha){
+
+          window.grecaptcha.reset(
+            widgetId
+          );
+
+        }
+
+      }
+
+    }
+    catch(resetError){
+
+      console.error(
+        resetError
+      );
+
+    }
+
+  }
+
+  finally{
+
+    const button =
+      document.getElementById("sendOtpBtn");
+
+    button.disabled=false;
+
+    button.textContent=
+      "Send OTP";
+
+  }
+
+};
+
+
+/* =====================================================
+   VERIFY OTP
+===================================================== */
+
+window.verifySignupOTP =
+async function(){
+
+  const otp =
+    document.getElementById("authOtp")
+    .value.trim();
+
+
+  if(!phoneConfirmationResult){
+
+    showMessage(
+      "phoneStatus",
+      "Please send OTP first.",
+      "error"
+    );
+
+    return;
+  }
+
+
+  if(!/^\d{6}$/.test(otp)){
+
+    showMessage(
+      "phoneStatus",
+      "Enter a valid 6-digit OTP.",
+      "error"
+    );
+
+    return;
+  }
+
+
+  try{
+
+    showMessage(
+      "phoneStatus",
+      "Verifying OTP..."
+    );
+
+
+    /*
+      IMPORTANT:
+
+      We DO NOT call confirmationResult.confirm()
+      here because that would sign the phone user in.
+
+      Instead we create a PhoneAuthCredential
+      and later link it to the email/password account.
+    */
+
+    phoneCredential =
+      PhoneAuthProvider.credential(
+        phoneConfirmationResult.verificationId,
+        otp
+      );
+
+
+    phoneVerified=true;
+
+
+    showMessage(
+      "phoneStatus",
+      "Mobile number verified successfully.",
+      "success"
+    );
+
+
+    document.getElementById("authOtp")
+      .disabled=true;
+
+
+  }
+
+  catch(error){
+
+    console.error(
+      "OTP verification error:",
+      error
+    );
+
+    phoneVerified=false;
+    phoneCredential=null;
+
+    showMessage(
+      "phoneStatus",
+      "Invalid or expired OTP.",
+      "error"
+    );
+
+  }
+
+};
+
+
+/* =====================================================
+   LOGIN / SIGNUP
+===================================================== */
+
+window.handleAuth =
+async function(event){
+
+  event.preventDefault();
+
+
+  const email =
+    document.getElementById("authEmail")
+    .value.trim();
+
+
+  const password =
+    document.getElementById("authPassword")
+    .value;
+
+
+  const msg =
+    document.getElementById("authMessage");
+
+
+  try{
+
+    msg.textContent="";
+
+
+    if(authMode==="signup"){
+
+      /*
+        Signup requires phone verification.
+      */
+
+      if(
+        !phoneVerified ||
+        !phoneCredential ||
+        !signupPhone
+      ){
+
+        showMessage(
+          "authMessage",
+          "Please verify your mobile number with OTP first.",
+          "error"
+        );
+
+        return;
+      }
+
+
+      showMessage(
+        "authMessage",
+        "Creating your account..."
+      );
+
+
+      /*
+        Create email/password account.
+      */
+
+      const userCredential =
+        await createUserWithEmailAndPassword(
+          auth,
+          email,
+          password
+        );
+
+
+      try{
+
+        /*
+          Link verified phone credential
+          with email account.
+        */
+
+        await linkWithCredential(
+          userCredential.user,
+          phoneCredential
+        );
+
+
+        /*
+          Create profile document.
+        */
+
+        await setDoc(
+          doc(
+            db,
+            "users",
+            userCredential.user.uid
+          ),
+          {
+
+            email:email,
+
+            phone:signupPhone,
+
+            upi:"",
+
+            createdAt:
+              serverTimestamp()
+
+          },
+          {
+            merge:true
+          }
+        );
+
+
+      }
+
+      catch(linkError){
+
+        console.error(
+          "Phone linking error:",
+          linkError
+        );
+
+
+        try{
+
+          await deleteUser(
+            userCredential.user
+          );
+
+        }
+
+        catch(deleteError){
+
+          console.error(
+            deleteError
+          );
+
+        }
+
+
+        throw linkError;
+
+      }
+
+
+      phoneVerified=false;
+
+      phoneCredential=null;
+
+      signupPhone="";
+
+      phoneConfirmationResult=null;
+
+
+      showMessage(
+        "authMessage",
+        "Account created successfully.",
+        "success"
+      );
+
+
+      setTimeout(()=>{
+
+        closeModal("loginModal");
+
+      },900);
+
+
+    }
+
+    else{
+
+      /*
+        NORMAL LOGIN
+      */
+
+      showMessage(
+        "authMessage",
+        "Logging in..."
+      );
+
+
+      await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+
+
+      showMessage(
+        "authMessage",
+        "Login successful.",
+        "success"
+      );
+
+
+      setTimeout(()=>{
+
+        closeModal("loginModal");
+
+      },700);
+
+    }
+
+  }
+
+  catch(error){
+
+    console.error(
+      "Authentication error:",
+      error
+    );
+
+
+    let message =
+      "Authentication failed.";
+
+
+    switch(error.code){
+
+      case "auth/invalid-credential":
+        message=
+          "Invalid email or password.";
+        break;
+
+      case "auth/wrong-password":
+        message=
+          "Incorrect password.";
+        break;
+
+      case "auth/user-not-found":
+        message=
+          "No account found with this email.";
+        break;
+
+      case "auth/email-already-in-use":
+        message=
+          "This email is already registered.";
+        break;
+
+      case "auth/weak-password":
+        message=
+          "Password should be at least 6 characters.";
+        break;
+
+      case "auth/invalid-email":
+        message=
+          "Invalid email address.";
+        break;
+
+      case "auth/credential-already-in-use":
+        message=
+          "This mobile number is already linked to another account.";
+        break;
+
+      case "auth/provider-already-linked":
+        message=
+          "This mobile number is already linked.";
+        break;
+
+      case "auth/too-many-requests":
+        message=
+          "Too many attempts. Please try again later.";
+        break;
+
+      default:
+
+        if(error.message){
+          message=error.message;
+        }
+
+    }
+
+
+    showMessage(
+      "authMessage",
+      message,
+      "error"
+    );
+
+  }
+
+};
+
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+window.logoutUser =
+async function(){
+
+  try{
+
+    await signOut(auth);
+
+    alert(
+      "Logged out successfully."
+    );
+
+  }
+
+  catch(error){
+
+    console.error(error);
+
+    alert(
+      "Logout failed."
+    );
+
+  }
+
+};
+
+
+/* =====================================================
+   AUTH STATE
+===================================================== */
+
+onAuthStateChanged(
+  auth,
+  async user=>{
+
+    const status =
+      document.getElementById("status");
+
+    const loginBtn =
+      document.getElementById("loginBtn");
+
+    const logoutBtn =
+      document.getElementById("logoutBtn");
+
+    const founderBtn =
+      document.getElementById("founderBtn");
+
+
+    if(user){
+
+      status.textContent =
+        user.email || "Logged in";
+
+
+      loginBtn.style.display="none";
+
+      logoutBtn.style.display="inline-block";
+
+
+      if(
+        user.email &&
+        user.email.toLowerCase()
+        === FOUNDER_EMAIL.toLowerCase()
+      ){
+
+        founderBtn.style.display=
+          "inline-block";
+
+      }
+
+      else{
+
+        founderBtn.style.display=
+          "none";
+
+      }
+
+    }
+
+    else{
+
+      status.textContent=
+        "Not logged in";
+
+      loginBtn.style.display=
+        "inline-block";
+
+      logoutBtn.style.display=
+        "none";
+
+      founderBtn.style.display=
+        "none";
+
+    }
+
+  }
+);
+
+
+/* =====================================================
+   IMAGE READER
+===================================================== */
+
+window.readImage =
+function(event){
+
+  const file =
+    event.target.files[0];
+
+  if(!file){
+    return;
+  }
+
+
+  /*
+    Keep Firestore document size reasonable.
+  */
+
+  if(file.size > 900000){
+
+    alert(
+      "Please select an image below 900 KB."
+    );
+
+    event.target.value="";
+
+    return;
+  }
+
+
+  const reader =
+    new FileReader();
+
+
+  reader.onload =
+  function(e){
+
+    imageData =
+      e.target.result;
+
+
+    const preview =
+      document.getElementById("preview");
+
+    preview.src=imageData;
+
+    preview.style.display="block";
+
+  };
+
+
+  reader.readAsDataURL(file);
+
+};
+
+
+/* =====================================================
+   RESET SELL FORM
+===================================================== */
+
+function resetSellForm(){
+
+  editingId=null;
+
+  imageData="";
+
+  const fields=[
+    "name",
+    "price",
+    "quantity",
+    "seller",
+    "college",
+    "collegeLocation",
+    "whatsapp",
+    "instagram",
+    "description"
+  ];
+
+
+  fields.forEach(id=>{
+
+    const el=
+      document.getElementById(id);
+
+    if(el){
+      el.value="";
+    }
+
+  });
+
+
+  document.getElementById("cond")
+    .value="";
+
+
+  document.getElementById("restricted")
+    .checked=false;
+
+
+  document.getElementById("image")
+    .value="";
+
+
+  document.getElementById("preview")
+    .style.display="none";
+
+}
+
+
+/* =====================================================
+   SAVE LISTING
+===================================================== */
+
+window.saveListing =
+async function(event){
+
+  event.preventDefault();
+
+
+  const user =
+    getCurrentUser();
+
+
+  if(!user){
+
+    alert(
+      "Please login first."
+    );
+
+    closeModal("sellModal");
+
+    openLogin();
+
+    return;
+
+  }
+
+
+  try{
+
+    const listing={
+
+      name:
+        document.getElementById("name")
+        .value.trim(),
+
+      price:
+        Number(
+          document.getElementById("price")
+          .value
+        ),
+
+      quantity:
+        Number(
+          document.getElementById("quantity")
+          .value
+        ),
+
+      condition:
+        document.getElementById("cond")
+        .value,
+
+      seller:
+        document.getElementById("seller")
+        .value.trim(),
+
+      college:
+        document.getElementById("college")
+        .value.trim(),
+
+      location:
+        document.getElementById("collegeLocation")
+        .value.trim(),
+
+      whatsapp:
+        document.getElementById("whatsapp")
+        .value.trim(),
+
+      instagram:
+        document.getElementById("instagram")
+        .value.trim(),
+
+      image:
+        imageData || "",
+
+      description:
+        document.getElementById("description")
+        .value.trim(),
+
+      restricted:
+        document.getElementById("restricted")
+        .checked,
+
+      sellerUid:
+        user.uid,
+
+      sellerEmail:
+        user.email || "",
+
+      status:
+        document.getElementById("restricted")
+        .checked
+        ? "pending"
+        : "approved",
+
+      createdAt:
+        serverTimestamp()
+
+    };
+
+
+    if(
+      !listing.name ||
+      listing.price < 2 ||
+      listing.quantity < 1
+    ){
+
+      alert(
+        "Please enter valid listing details."
+      );
+
+      return;
+
+    }
+
+
+    await addDoc(
+      collection(db,"listings"),
+      listing
+    );
+
+
+    alert(
+      listing.restricted
+      ? "Listing submitted for founder approval."
+      : "Listing published successfully."
+    );
+
+
+    closeModal("sellModal");
+
+    await loadListings();
+
+  }
+
+  catch(error){
+
+    console.error(
+      "Save listing error:",
+      error
+    );
+
+    alert(
+      "Unable to save listing:\n"+
+      error.message
+    );
+
+  }
+
+};
+
+
+/* =====================================================
+   LOAD LISTINGS
+===================================================== */
+
+async function loadListings(){
+
+  try{
+
+    const snapshot =
+      await getDocs(
+        collection(db,"listings")
+      );
+
+
+    listings=[];
+
+
+    snapshot.forEach(
+      item=>{
+
+        listings.push({
+
+          id:item.id,
+
+          ...item.data()
+
+        });
+
+      }
+    );
+
+
+    listings.sort(
+      (a,b)=>{
+
+        const aTime =
+          a.createdAt?.seconds || 0;
+
+        const bTime =
+          b.createdAt?.seconds || 0;
+
+        return bTime-aTime;
+
+      }
+    );
+
+
+    updateLocationFilter();
+
+    renderListings();
+
+  }
+
+  catch(error){
+
+    console.error(
+      "Load listings error:",
+      error
+    );
+
+    document.getElementById("grid")
+      .innerHTML=
+      `<div class="empty">
+      Unable to load listings.
+      </div>`;
+
+  }
+
+}
+
+
+/* =====================================================
+   LOCATION FILTER
+===================================================== */
+
+function updateLocationFilter(){
+
+  const select =
+    document.getElementById(
+      "locationFilter"
+    );
+
+
+  const current =
+    select.value;
+
+
+  const locations =
+    [
+      ...new Set(
+        listings
+          .filter(x=>
+            x.status==="approved"
+          )
+          .map(x=>x.location)
+          .filter(Boolean)
+      )
+    ]
+    .sort();
+
+
+  select.innerHTML=
+    `<option value="">
+    All locations
+    </option>`;
+
+
+  locations.forEach(
+    location=>{
+
+      const option =
+        document.createElement("option");
+
+      option.value=location;
+
+      option.textContent=location;
+
+      select.appendChild(option);
+
+    }
+  );
+
+
+  if(locations.includes(current)){
+    select.value=current;
+  }
+
+}
+
+
+/* =====================================================
+   RENDER LISTINGS
+===================================================== */
+
+window.renderListings =
+function(){
+
+  const grid =
+    document.getElementById("grid");
+
+
+  const search =
+    document.getElementById("search")
+    .value
+    .trim()
+    .toLowerCase();
+
+
+  const condition =
+    document.getElementById("condition")
+    .value;
+
+
+  const location =
+    document.getElementById("locationFilter")
+    .value;
+
+
+  const filtered =
+    listings.filter(item=>{
+
+      /*
+        Only approved listings
+        visible publicly.
+      */
+
+      if(item.status!=="approved"){
+        return false;
+      }
+
+
+      const text =
+        [
+          item.name,
+          item.description,
+          item.college,
+          item.location,
+          item.seller
+        ]
+        .join(" ")
+        .toLowerCase();
+
+
+      if(
+        search &&
+        !text.includes(search)
+      ){
+        return false;
+      }
+
+
+      if(
+        condition &&
+        item.condition!==condition
+      ){
+        return false;
+      }
+
+
+      if(
+        location &&
+        item.location!==location
+      ){
+        return false;
+      }
+
+
+      return true;
+
+    });
+
+
+  if(!filtered.length){
+
+    grid.innerHTML=
+      `<div class="empty">
+        No components found.
+      </div>`;
+
+    return;
+
+  }
+
+
+  grid.innerHTML=
+    filtered.map(item=>{
+
+      const image =
+        item.image
+        ? `<img src="${item.image}" alt="${escapeHTML(item.name)}">`
+        : "🔧";
+
+
+      return `
+
+      <div class="card">
+
+        <div class="pic">
+          ${image}
+        </div>
+
+        <div class="card-body">
+
+          <h3>
+            ${escapeHTML(item.name)}
+          </h3>
+
+          <div class="price">
+            ₹${Number(item.price).toFixed(2)}
+          </div>
+
+          <div style="margin-top:7px">
+
+            <span class="badge green">
+              ${escapeHTML(item.condition || "Used")}
+            </span>
+
+            <span class="badge purple">
+              Qty: ${Number(item.quantity || 0)}
+            </span>
+
+          </div>
+
+          <div class="meta">
+
+            <b>Seller:</b>
+            ${escapeHTML(item.seller || "-")}
+            <br>
+
+            <b>College:</b>
+            ${escapeHTML(item.college || "-")}
+            <br>
+
+            <b>Location:</b>
+            ${escapeHTML(item.location || "-")}
+
+            ${
+              item.description
+              ?
+              `<br><br>
+              ${escapeHTML(item.description)}`
+              :
+              ""
+            }
+
+          </div>
+
+          <div class="actions">
+
+            <button
+              class="primary small"
+              onclick="buyListing('${item.id}')">
+
+              Buy
+
+            </button>
+
+            <button
+              class="secondary small"
+              onclick="contactSeller('${item.id}')">
+
+              Contact Seller
+
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      `;
+
+    })
+    .join("");
+
+};
+
+
+/* =====================================================
+   ESCAPE HTML
+===================================================== */
+
+function escapeHTML(value){
+
+  return String(value ?? "")
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+
+}
+
+
+/* =====================================================
+   CONTACT SELLER
+===================================================== */
+
+window.contactSeller =
+function(id){
+
+  const item =
+    listings.find(
+      x=>x.id===id
+    );
+
+
+  if(!item){
+    return;
+  }
+
+
+  document.getElementById(
+    "contactTitle"
+  ).textContent=
+    `Contact ${item.seller}`;
+
+
+  let html="";
+
+
+  if(item.whatsapp){
+
+    const whatsapp =
+      item.whatsapp
+      .replace(/\D/g,"");
+
+
+    html +=
+      `<p>
+      <b>WhatsApp:</b><br>
+      <a
+        href="https://wa.me/${whatsapp}"
+        target="_blank">
+
+        ${escapeHTML(item.whatsapp)}
+
+      </a>
+      </p>`;
+
+  }
+
+
+  if(item.instagram){
+
+    let insta =
+      item.instagram.trim();
+
+    insta =
+      insta.replace(/^@/,"");
+
+
+    html +=
+      `<p>
+      <b>Instagram:</b><br>
+      <a
+        href="https://instagram.com/${encodeURIComponent(insta)}"
+        target="_blank">
+
+        @${escapeHTML(insta)}
+
+      </a>
+      </p>`;
+
+  }
+
+
+  if(!html){
+
+    html=
+      `<p>
+      Seller has not provided contact information.
+      </p>`;
+
+  }
+
+
+  document.getElementById(
+    "contactInfo"
+  ).innerHTML=html;
+
+
+  document.getElementById(
+    "contactModal"
+  ).style.display="flex";
+
+};
+
+
+/* =====================================================
+   BUY LISTING
+===================================================== */
+
+window.buyListing =
+function(id){
+
+  const item =
+    listings.find(
+      x=>x.id===id
+    );
+
+
+  if(!item){
+    return;
+  }
+
+
+  if(!getCurrentUser()){
+
+    alert(
+      "Please login before purchasing."
+    );
+
+    openLogin();
+
+    return;
+  }
+
+
+  if(
+    item.sellerUid ===
+    getCurrentUser().uid
+  ){
+
+    alert(
+      "You cannot buy your own listing."
+    );
+
+    return;
+
+  }
+
+
+  if(
+    Number(item.quantity) < 1
+  ){
+
+    alert(
+      "This component is out of stock."
+    );
+
+    return;
+
+  }
+
+
+  selectedListing=item;
+
+  selectedQuantity=1;
+
+
+  showPaymentReview();
+
+};
+
+
+/* =====================================================
+   PAYMENT REVIEW
+===================================================== */
+
+function showPaymentReview(){
+
+  if(!selectedListing){
+    return;
+  }
+
+
+  const item =
+    selectedListing;
+
+
+  const price =
+    Number(item.price);
+
+
+  const commission =
+    calculateCommission(
+      price,
+      selectedQuantity
+    );
+
+
+  const subtotal =
+    price *
+    selectedQuantity;
+
+
+  const total =
+    subtotal +
+    commission;
+
+
+  document.getElementById(
+    "paymentSummary"
+  ).innerHTML=`
+
+    <b>Component:</b>
+    ${escapeHTML(item.name)}
+    <br>
+
+    <b>Price:</b>
+    ₹${price.toFixed(2)}
+    per piece
+    <br>
+
+    <b>Available:</b>
+    ${item.quantity}
+    <br><br>
+
+    <label>
+      <b>Quantity</b>
+
+      <input
+        id="buyQuantity"
+        type="number"
+        min="1"
+        max="${Number(item.quantity)}"
+        value="${selectedQuantity}"
+        onchange="updatePaymentSummary()">
+    </label>
+
+    <div id="paymentCalculation"
+         style="margin-top:12px">
+
+      <b>Subtotal:</b>
+      ₹${subtotal.toFixed(2)}
+      <br>
+
+      <b>Platform Commission:</b>
+      ₹${commission.toFixed(2)}
+      <br>
+
+      <b>Total:</b>
+      ₹${total.toFixed(2)}
+
+    </div>
+
+  `;
+
+
+  document.getElementById(
+    "paymentModal"
+  ).style.display="flex";
+
+}
+
+
+/* =====================================================
+   COMMISSION
+===================================================== */
+
+function calculateCommission(
+  subtotal,
+  quantity
+){
+
+  /*
+    Current example:
+    5% platform commission.
+
+    Change this value according
+    to your actual business policy.
+  */
+
+  const RATE=0.05;
+
+  return subtotal *
+         quantity *
+         RATE;
+
+}
+
+
+/* =====================================================
+   UPDATE PAYMENT SUMMARY
+===================================================== */
+
+window.updatePaymentSummary =
+function(){
+
+  if(!selectedListing){
+    return;
+  }
+
+
+  const input =
+    document.getElementById(
+      "buyQuantity"
+    );
+
+
+  let quantity =
+    Number(input.value);
+
+
+  if(
+    quantity<1 ||
+    quantity>Number(selectedListing.quantity)
+  ){
+
+    quantity=1;
+
+    input.value=1;
+
+  }
+
+
+  selectedQuantity=quantity;
+
+
+  const subtotal =
+    Number(selectedListing.price) *
+    quantity;
+
+
+  const commission =
+    calculateCommission(
+      Number(selectedListing.price),
+      quantity
+    );
+
+
+  const total =
+    subtotal+
+    commission;
+
+
+  document.getElementById(
+    "paymentCalculation"
+  ).innerHTML=`
+
+    <b>Subtotal:</b>
+    ₹${subtotal.toFixed(2)}
+    <br>
+
+    <b>Platform Commission:</b>
+    ₹${commission.toFixed(2)}
+    <br>
+
+    <b>Total:</b>
+    ₹${total.toFixed(2)}
+
+  `;
+
+};
+
+
+/* =====================================================
+   START PAYMENT
+===================================================== */
+
+window.startPayment =
+async function(){
+
+  if(!selectedListing){
+    return;
+  }
+
+
+  const user =
+    getCurrentUser();
+
+
+  if(!user){
+
+    alert(
+      "Please login first."
+    );
+
+    closePayment();
+
+    openLogin();
+
+    return;
+  }
+
+
+  const button =
+    document.getElementById(
+      "continuePaymentBtn"
+    );
+
+
+  try{
+
+    button.disabled=true;
+
+    button.textContent=
+      "Creating Payment...";
+
+
+    const subtotal =
+      Number(selectedListing.price) *
+      Number(selectedQuantity);
+
+
+    const commission =
+      calculateCommission(
+        Number(selectedListing.price),
+        Number(selectedQuantity)
+      );
+
+
+    const total =
+      subtotal+
+      commission;
+
+
+    /*
+      Create an order record in Firestore.
+
+      The actual Cashfree order/session
+      must be generated by your backend.
+    */
+
+    const orderRef =
+      await addDoc(
+        collection(db,"orders"),
+        {
+
+          buyerUid:
+            user.uid,
+
+          buyerEmail:
+            user.email || "",
+
+          sellerUid:
+            selectedListing.sellerUid || "",
+
+          listingId:
+            selectedListing.id,
+
+          component:
+            selectedListing.name,
+
+          quantity:
+            selectedQuantity,
+
+          unitPrice:
+            Number(selectedListing.price),
+
+          subtotal:
+            subtotal,
+
+          commission:
+            commission,
+
+          total:
+            total,
+
+          status:
+            "payment_pending",
+
+          createdAt:
+            serverTimestamp()
+
+        }
+      );
+
+
+    /*
+      Ask your backend to create Cashfree order.
+    */
+
+    const response =
+      await fetch(
+        CREATE_ORDER_ENDPOINT,
+        {
+
+          method:"POST",
+
+          headers:{
+            "Content-Type":
+              "application/json"
+          },
+
+          body:JSON.stringify({
+
+            orderId:
+              orderRef.id,
+
+            amount:
+              Number(total.toFixed(2)),
+
+            customerId:
+              user.uid,
+
+            customerEmail:
+              user.email || "",
+
+            customerPhone:
+              user.phoneNumber || ""
+
+          })
+
+        }
+      );
+
+
+    if(!response.ok){
+
+      throw new Error(
+        "Backend payment endpoint returned an error."
+      );
+
+    }
+
+
+    const data =
+      await response.json();
+
+
+    /*
+      Expected backend response:
+
+      {
+        paymentSessionId:
+          "session_xxxxxxxxx"
+      }
+    */
+
+    if(
+      !data.paymentSessionId
+    ){
+
+      throw new Error(
+        "Payment session ID was not received from backend."
+      );
+
+    }
+
+
+    if(!cashfree){
+
+      throw new Error(
+        "Cashfree SDK is not loaded."
+      );
+
+    }
+
+
+    await cashfree.checkout({
+
+      paymentSessionId:
+        data.paymentSessionId,
+
+      redirectTarget:
+        "_self"
+
+    });
+
+
+  }
+
+  catch(error){
+
+    console.error(
+      "Payment error:",
+      error
+    );
+
+
+    alert(
+      "Payment could not be started.\n\n"+
+      error.message
+    );
+
+  }
+
+  finally{
+
+    button.disabled=false;
+
+    button.textContent=
+      "Continue to Payment";
+
+  }
+
+};
+
+
+/* =====================================================
+   LOAD PROFILE
+===================================================== */
+
+async function loadProfile(){
+
+  const user =
+    getCurrentUser();
+
+
+  if(!user){
+    return;
+  }
+
+
+  document.getElementById(
+    "profileEmail"
+  ).textContent=
+    `Email: ${user.email || "-"}`;
+
+
+  try{
+
+    const snapshot =
+      await getDoc(
+        doc(
+          db,
+          "users",
+          user.uid
+        )
+      );
+
+
+    if(snapshot.exists()){
+
+      const data =
+        snapshot.data();
+
+
+      document.getElementById(
+        "profileUpi"
+      ).value=
+        data.upi || "";
+
+    }
+
+    else{
+
+      document.getElementById(
+        "profileUpi"
+      ).value="";
+
+    }
+
+  }
+
+  catch(error){
+
+    console.error(error);
+
+  }
+
+}
+
+
+/* =====================================================
+   SAVE PROFILE
+===================================================== */
+
+window.saveProfile =
+async function(event){
+
+  event.preventDefault();
+
+
+  const user =
+    getCurrentUser();
+
+
+  if(!user){
+    return;
+  }
+
+
+  const upi =
+    document.getElementById(
+      "profileUpi"
+    )
+    .value
+    .trim();
+
+
+  try{
+
+    await setDoc(
+
+      doc(
+        db,
+        "users",
+        user.uid
+      ),
+
+      {
+
+        email:
+          user.email || "",
+
+        upi:
+          upi,
+
+        updatedAt:
+          serverTimestamp()
+
+      },
+
+      {
+        merge:true
+      }
+
+    );
+
+
+    showMessage(
+      "profileMsg",
+      "Profile saved successfully.",
+      "success"
+    );
+
+  }
+
+  catch(error){
+
+    console.error(error);
+
+    showMessage(
+      "profileMsg",
+      "Unable to save profile.",
+      "error"
+    );
+
+  }
+
+};
+
+
+/* =====================================================
+   MY ORDERS
+===================================================== */
+
+async function loadMyOrders(){
+
+  const container =
+    document.getElementById(
+      "myOrders"
+    );
+
+
+  const user =
+    getCurrentUser();
+
+
+  if(!user){
+    return;
+  }
+
+
+  container.innerHTML=
+    "Loading orders...";
+
+
+  try{
+
+    const q =
+      query(
+        collection(db,"orders"),
+        where(
+          "buyerUid",
+          "==",
+          user.uid
+        )
+      );
+
+
+    const snapshot =
+      await getDocs(q);
+
+
+    if(snapshot.empty){
+
+      container.innerHTML=
+        `<p class="meta">
+        No orders yet.
+        </p>`;
+
+      return;
+
+    }
+
+
+    const orders=[];
+
+
+    snapshot.forEach(
+      item=>{
+
+        orders.push({
+
+          id:item.id,
+
+          ...item.data()
+
+        });
+
+      }
+    );
+
+
+    orders.sort(
+      (a,b)=>{
+
+        const aTime =
+          a.createdAt?.seconds || 0;
+
+        const bTime =
+          b.createdAt?.seconds || 0;
+
+        return bTime-aTime;
+
+      }
+    );
+
+
+    container.innerHTML =
+      orders
+      .map(order=>{
+
+        return `
+
+        <div class="order">
+
+          <b>
+          ${escapeHTML(order.component || "-")}
+          </b>
+
+          <br>
+
+          Quantity:
+          ${Number(order.quantity || 0)}
+
+          <br>
+
+          Total:
+          ₹${Number(order.total || 0).toFixed(2)}
+
+          <br>
+
+          Status:
+          <span class="badge orange">
+          ${escapeHTML(order.status || "unknown")}
+          </span>
+
+          <br>
+
+          Order ID:
+          <small>
+          ${escapeHTML(order.id)}
+          </small>
+
+        </div>
+
+        `;
+
+      })
+      .join("");
+
+  }
+
+  catch(error){
+
+    console.error(error);
+
+    container.innerHTML=
+      `<p class="meta">
+      Unable to load orders.
+      </p>`;
+
+  }
+
+}
+
+
+/* =====================================================
+   FOUNDER - PENDING LISTINGS
+===================================================== */
+
+async function loadPendingListings(){
+
+  const container =
+    document.getElementById(
+      "pendingListings"
+    );
+
+
+  container.innerHTML=
+    "Loading...";
+
+
+  try{
+
+    const q =
+      query(
+        collection(db,"listings"),
+        where(
+          "status",
+          "==",
+          "pending"
+        )
+      );
+
+
+    const snapshot =
+      await getDocs(q);
+
+
+    if(snapshot.empty){
+
+      container.innerHTML=
+        `<p class="meta">
+        No pending listings.
+        </p>`;
+
+      return;
+
+    }
+
+
+    container.innerHTML="";
+
+
+    snapshot.forEach(
+      item=>{
+
+        const data =
+          item.data();
+
+
+        const div =
+          document.createElement(
+            "div"
+          );
+
+
+        div.className="order";
+
+
+        div.innerHTML=`
+
+          <b>
+          ${escapeHTML(data.name)}
+          </b>
+
+          <br>
+
+          Price:
+          ₹${Number(data.price || 0).toFixed(2)}
+
+          <br>
+
+          Quantity:
+          ${Number(data.quantity || 0)}
+
+          <br>
+
+          Seller:
+          ${escapeHTML(data.seller || "-")}
+
+          <br>
+
+          College:
+          ${escapeHTML(data.college || "-")}
+
+          <br>
+
+          Location:
+          ${escapeHTML(data.location || "-")}
+
+          <br><br>
+
+          <button
+            class="primary small"
+            data-action="approve">
+
+            Approve
+
+          </button>
+
+          <button
+            class="danger small"
+            data-action="reject">
+
+            Reject
+
+          </button>
+
+        `;
+
+
+        div
+        .querySelector(
+          '[data-action="approve"]'
+        )
+        .onclick=
+          ()=>approveListing(item.id);
+
+
+        div
+        .querySelector(
+          '[data-action="reject"]'
+        )
+        .onclick=
+          ()=>rejectListing(item.id);
+
+
+        container.appendChild(div);
+
+      }
+    );
+
+  }
+
+  catch(error){
+
+    console.error(error);
+
+    container.innerHTML=
+      `<p class="meta">
+      Unable to load pending listings.
+      </p>`;
+
+  }
+
+}
+
+
+/* =====================================================
+   APPROVE LISTING
+===================================================== */
+
+async function approveListing(id){
+
+  if(!isFounder()){
+    return;
+  }
+
+
+  try{
+
+    await updateDoc(
+
+      doc(
+        db,
+        "listings",
+        id
+      ),
+
+      {
+
+        status:
+          "approved",
+
+        approvedBy:
+          auth.currentUser.email,
+
+        approvedAt:
+          serverTimestamp()
+
+      }
+
+    );
+
+
+    alert(
+      "Listing approved."
+    );
+
+
+    await loadPendingListings();
+
+    await loadListings();
+
+  }
+
+  catch(error){
+
+    console.error(error);
+
+    alert(
+      "Unable to approve listing."
+    );
+
+  }
+
+}
+
+
+/* =====================================================
+   REJECT LISTING
+===================================================== */
+
+async function rejectListing(id){
+
+  if(!isFounder()){
+    return;
+  }
+
+
+  const confirmed =
+    confirm(
+      "Reject this listing?"
+    );
+
+
+  if(!confirmed){
+    return;
+  }
+
+
+  try{
+
+    await updateDoc(
+
+      doc(
+        db,
+        "listings",
+        id
+      ),
+
+      {
+
+        status:
+          "rejected",
+
+        rejectedBy:
+          auth.currentUser.email,
+
+        rejectedAt:
+          serverTimestamp()
+
+      }
+
+    );
+
+
+    alert(
+      "Listing rejected."
+    );
+
+
+    await loadPendingListings();
+
+    await loadListings();
+
+  }
+
+  catch(error){
+
+    console.error(error);
+
+    alert(
+      "Unable to reject listing."
+    );
+
+  }
+
+}
+
+
+/* =====================================================
+   FOUNDER ORDERS
+===================================================== */
+
+async function loadFounderOrders(){
+
+  const container =
+    document.getElementById(
+      "founderOrders"
+    );
+
+
+  if(!isFounder()){
+    return;
+  }
+
+
+  container.innerHTML=
+    "Loading orders...";
+
+
+  try{
+
+    const snapshot =
+      await getDocs(
+        collection(db,"orders")
+      );
+
+
+    if(snapshot.empty){
+
+      container.innerHTML=
+        `<p class="meta">
+        No orders found.
+        </p>`;
+
+      return;
+
+    }
+
+
+    const orders=[];
+
+
+    snapshot.forEach(
+      item=>{
+
+        orders.push({
+
+          id:item.id,
+
+          ...item.data()
+
+        });
+
+      }
+    );
+
+
+    orders.sort(
+      (a,b)=>{
+
+        const aTime =
+          a.createdAt?.seconds || 0;
+
+        const bTime =
+          b.createdAt?.seconds || 0;
+
+        return bTime-aTime;
+
+      }
+    );
+
+
+    container.innerHTML=
+      orders
+      .map(order=>{
+
+        return `
+
+        <div class="order">
+
+          <b>
+          ${escapeHTML(order.component || "-")}
+          </b>
+
+          <br>
+
+          Buyer:
+          ${escapeHTML(order.buyerEmail || "-")}
+
+          <br>
+
+          Quantity:
+          ${Number(order.quantity || 0)}
+
+          <br>
+
+          Subtotal:
+          ₹${Number(order.subtotal || 0).toFixed(2)}
+
+          <br>
+
+          Commission:
+          ₹${Number(order.commission || 0).toFixed(2)}
+
+          <br>
+
+          Total:
+          ₹${Number(order.total || 0).toFixed(2)}
+
+          <br>
+
+          Status:
+          <span class="badge orange">
+          ${escapeHTML(order.status || "-")}
+          </span>
+
+          <br>
+
+          Order ID:
+          <small>
+          ${escapeHTML(order.id)}
+          </small>
+
+        </div>
+
+        `;
+
+      })
+      .join("");
+
+  }
+
+  catch(error){
+
+    console.error(error);
+
+    container.innerHTML=
+      `<p class="meta">
+      Unable to load orders.
+      </p>`;
+
+  }
+
+}
+
+
+/* =====================================================
+   CLOSE MODALS WHEN CLICKING BACKDROP
+===================================================== */
+
+document
+.querySelectorAll(".modal")
+.forEach(modal=>{
+
+  modal.addEventListener(
+    "click",
+    event=>{
+
+      if(
+        event.target === modal
+      ){
+
+        modal.style.display="none";
+
+      }
+
+    }
+  );
+
+});
+
+
+/* =====================================================
+   INITIAL LOAD
+===================================================== */
+
+loadListings();
+
+
+</script>
+
+</body>
+</html></section>
 
 <footer>
 <b>CampusComponents</b><br><br>
