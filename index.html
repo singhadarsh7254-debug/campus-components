@@ -250,6 +250,72 @@ This item needs founder approval
 
 <p id="profileEmail"></p>
 
+   <button
+type="button"
+class="primary"
+onclick="enableEditProfile()">
+Edit Profile
+</button>
+
+<div id="editProfileSection" style="display:none;margin-top:15px;">
+
+<h3>Edit Profile</h3>
+
+<input
+type="text"
+id="editSellerName"
+placeholder="Your Name">
+
+<br><br>
+
+<input
+type="text"
+id="editCollege"
+placeholder="College Name">
+
+<br><br>
+
+<input
+type="text"
+id="editCollegeLocation"
+placeholder="College Location">
+
+<br><br>
+
+<input
+type="tel"
+id="editPhone"
+placeholder="Mobile Number">
+
+<br><br>
+
+<input
+type="text"
+id="editUpi"
+placeholder="Seller UPI ID">
+
+<br><br>
+
+<div class="row">
+
+<button
+type="button"
+class="primary"
+onclick="updateProfile()">
+Save Changes
+</button>
+
+<button
+type="button"
+onclick="cancelEditProfile()">
+Cancel
+</button>
+
+</div>
+
+<p id="editProfileMsg"></p>
+
+</div>
 <form class="form" onsubmit="saveProfile(event)">
 
 <input id="profileUpi" placeholder="Your Seller UPI ID">
@@ -1812,7 +1878,151 @@ alert(error.message);
 }
 
 };
+/* =========================
+   EDIT PROFILE
+========================= */
 
+window.enableEditProfile=async function(){
+
+if(!auth.currentUser){
+
+alert("Please login first.");
+return;
+
+}
+
+try{
+
+const profileSnap=await getDoc(
+doc(db,"profiles",auth.currentUser.uid)
+);
+
+const data=profileSnap.exists()
+?profileSnap.data()
+:{};
+
+document.getElementById("editSellerName").value=
+data.name||"";
+
+document.getElementById("editCollege").value=
+data.college||"";
+
+document.getElementById("editCollegeLocation").value=
+data.collegeLocation||"";
+
+document.getElementById("editPhone").value=
+data.phone||"";
+
+document.getElementById("editUpi").value=
+data.upiId||"";
+
+document.getElementById("editProfileSection").style.display=
+"block";
+
+}catch(error){
+
+console.error(error);
+
+alert(
+"Unable to load profile:\n\n"+
+error.message
+);
+
+}
+
+};
+
+
+window.cancelEditProfile=function(){
+
+document.getElementById("editProfileSection").style.display=
+"none";
+
+document.getElementById("editProfileMsg").textContent="";
+
+};
+
+
+window.updateProfile=async function(){
+
+if(!auth.currentUser){
+
+alert("Please login first.");
+return;
+
+}
+
+const name=
+document.getElementById("editSellerName").value.trim();
+
+const college=
+document.getElementById("editCollege").value.trim();
+
+const collegeLocation=
+document.getElementById("editCollegeLocation").value.trim();
+
+const phone=
+document.getElementById("editPhone").value.trim();
+
+const upiId=
+document.getElementById("editUpi").value.trim();
+
+try{
+
+await setDoc(
+
+doc(
+db,
+"profiles",
+auth.currentUser.uid
+),
+
+{
+
+name:name,
+
+college:college,
+
+collegeLocation:collegeLocation,
+
+phone:phone,
+
+upiId:upiId,
+
+email:auth.currentUser.email,
+
+updatedAt:serverTimestamp()
+
+},
+
+{merge:true}
+
+);
+
+document.getElementById("editProfileMsg").style.color="green";
+
+document.getElementById("editProfileMsg").textContent=
+"Profile updated successfully.";
+
+await new Promise(resolve=>setTimeout(resolve,800));
+
+document.getElementById("editProfileSection").style.display=
+"none";
+
+await openProfile();
+
+}catch(error){
+
+console.error(error);
+
+document.getElementById("editProfileMsg").style.color="red";
+
+document.getElementById("editProfileMsg").textContent=
+"Profile update failed: "+error.message;
+
+}
+
+};
 
 /* =========================
    MY ORDERS
