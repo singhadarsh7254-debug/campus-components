@@ -740,41 +740,46 @@ authMode==="signup"
    AUTH STATE
 ========================= */
 
-onAuthStateChanged(auth,async(user)=>{
+onAuthStateChanged(auth, async (user) => {
 
-const status=document.getElementById("status");
-const loginBtn=document.getElementById("loginBtn");
-const founderBtn=document.getElementById("founderBtn");
+if (user) {
 
-if(user){
+try {
 
-status.textContent=
-founder()?"Founder · "+user.Name:user.name;
+const profileSnap = await getDoc(
+doc(db, "profiles", user.uid)
+);
 
-loginBtn.textContent="Logout";
+const profileData = profileSnap.exists()
+? profileSnap.data()
+: {};
 
-loginBtn.onclick=async()=>{
-await signOut(auth);
-};
+const userName =
+profileData.name ||
+user.displayName ||
+user.email.split("@")[0];
 
-founderBtn.style.display=
-founder()?"inline-block":"none";
+status.textContent =
+founder()
+? "Founder · " + userName
+: userName;
 
-}else{
+} catch (error) {
 
-status.textContent="Not logged in";
+console.error("Profile name loading error:", error);
 
-loginBtn.textContent="Login";
-loginBtn.onclick=openLogin;
-
-founderBtn.style.display="none";
+status.textContent =
+user.email.split("@")[0];
 
 }
 
-await loadListings();
+} else {
+
+status.textContent = "Login";
+
+}
 
 });
-
 
 /* =========================
    COMMISSION
