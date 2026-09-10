@@ -740,44 +740,63 @@ authMode==="signup"
    AUTH STATE
 ========================= */
 
-onAuthStateChanged(auth, async (user) => {
+onAuthStateChanged(auth,async(user)=>{
 
-if (user) {
+const status=document.getElementById("status");
+const loginBtn=document.getElementById("loginBtn");
+const founderBtn=document.getElementById("founderBtn");
 
-try {
+if(user){
 
-const profileSnap = await getDoc(
-doc(db, "profiles", user.uid)
+try{
+
+const profileSnap=await getDoc(
+doc(db,"profiles",user.uid)
 );
 
-const profileData = profileSnap.exists()
-? profileSnap.data()
-: {};
+const profileData=profileSnap.exists()
+?profileSnap.data()
+:{};
 
-const userName =
-profileData.name ||
-user.displayName ||
+const userName=
+profileData.name||
 user.email.split("@")[0];
 
-status.textContent =
+status.textContent=
 founder()
-? "Founder · " + userName
-: userName;
+?"Founder · "+userName
+:userName;
 
-} catch (error) {
+}catch(error){
 
-console.error("Profile name loading error:", error);
+console.error("Profile name loading error:",error);
 
-status.textContent =
+status.textContent=
 user.email.split("@")[0];
 
 }
 
-} else {
+loginBtn.textContent="Logout";
 
-status.textContent = "Login";
+loginBtn.onclick=async()=>{
+await signOut(auth);
+};
+
+founderBtn.style.display=
+founder()?"inline-block":"none";
+
+}else{
+
+status.textContent="Not logged in";
+
+loginBtn.textContent="Login";
+loginBtn.onclick=openLogin;
+
+founderBtn.style.display="none";
 
 }
+
+await loadListings();
 
 });
 
