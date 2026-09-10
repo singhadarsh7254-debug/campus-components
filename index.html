@@ -255,6 +255,12 @@ This item needs founder approval
 <input id="profileUpi" placeholder="Your Seller UPI ID">
 
 <button class="primary">Save UPI ID</button>
+<button
+  type="button"
+  class="primary"
+  onclick="enableEditProfile()">
+  Edit Profile
+</button>
 
 </form>
 
@@ -1812,6 +1818,57 @@ alert(error.message);
 }
 
 };
+
+<!-- EDIT PROFILE SECTION -->
+<div id="editProfileSection" style="display:none;">
+
+  <h3>Edit Profile</h3>
+
+  <input
+    type="text"
+    id="editSellerName"
+    placeholder="Your Name">
+
+  <input
+    type="text"
+    id="editCollege"
+    placeholder="College Name">
+
+  <input
+    type="text"
+    id="editCollegeLocation"
+    placeholder="College Location">
+
+  <input
+    type="tel"
+    id="editPhone"
+    placeholder="Mobile Number">
+
+  <input
+    type="text"
+    id="editUpi"
+    placeholder="Seller UPI ID">
+
+  <div class="row">
+
+    <button
+      type="button"
+      class="primary"
+      onclick="updateProfile()">
+      Save Changes
+    </button>
+
+    <button
+      type="button"
+      onclick="cancelEditProfile()">
+      Cancel
+    </button>
+
+  </div>
+
+  <p id="editProfileMsg"></p>
+
+</div>
 
 
 /* =========================
