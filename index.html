@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Campus Components — Student Marketplace</title>
+<title>CampusComponents — Campus Marketplace</title>
 
 <script src="https://sdk.cashfree.com/js/v3/cashfree.js"></script>
 
@@ -664,6 +664,155 @@ footer b{
 ::-webkit-scrollbar-thumb:hover{
   background:#3b4b63;
 }
+   /* Category Section */
+.category-section {
+  margin-top: 10px;
+}
+
+.section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 14px;
+}
+
+.section-head h2 {
+  margin: 0;
+  font-size: 22px;
+}
+
+.section-kicker {
+  color: var(--primary);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin-bottom: 4px;
+}
+
+.category-chips {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding-bottom: 6px;
+  scrollbar-width: thin;
+}
+
+.category-chip {
+  flex: 0 0 auto;
+  padding: 10px 15px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+  transition: .2s;
+  font-size: 14px;
+}
+
+.category-chip:hover {
+  border-color: var(--primary);
+  transform: translateY(-1px);
+}
+
+.category-chip.active {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: white;
+}
+
+.small {
+  padding: 8px 12px !important;
+  font-size: 13px !important;
+}
+.product-description {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 8px 0 12px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.listing-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px 0 15px;
+}
+
+.listing-heading h2 {
+  margin: 0;
+  font-size: 22px;
+}
+
+.listing-count {
+  color: var(--muted);
+  font-size: 14px;
+}
+/* =========================
+   NEED COMPONENT SECTION
+========================= */
+
+.need-section {
+  margin-top: 20px;
+}
+
+.need-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+
+  padding: 24px;
+
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+}
+
+.need-box h2 {
+  margin: 4px 0 8px;
+  font-size: 22px;
+}
+
+.need-box p {
+  margin: 0;
+  color: var(--muted);
+}
+
+@media (max-width: 700px) {
+
+  .need-box {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .need-box button {
+    width: 100%;
+  }
+
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.modal-box textarea {
+  width: 100%;
+  resize: vertical;
+}
+
+.modal-box label {
+  display: block;
+  margin-top: 12px;
+  margin-bottom: 6px;
+  font-size: 14px;
+  font-weight: 600;
+}
 </style>
 </head>
 
@@ -690,19 +839,62 @@ Founder Panel
 
   <h1>
     Project Components.<br>
-    Right From Your Campus.
+    Components. Right From Your Campus.
   </h1>
 
   <p>
     Buy and sell Arduino boards, sensors, motors, modules,
-    robotics parts and other electronics items from students
+    robotics parts and other items from students
     near your college.
   </p>
+<section class="container need-section">
+
+  <div class="need-box">
+
+    <div>
+      <div class="section-kicker">LOOKING FOR SOMETHING?</div>
+
+      <h2>Can't Find the Component You Need?</h2>
+
+      <p>
+        Post your requirement and let students from your campus know.
+      </p>
+    </div>
+
+    <button class="primary" onclick="openRequirement()">
+      + Post Requirement
+    </button>
+
+  </div>
 
 </section>
+   
+</section>
+<section class="container category-section">
 
+  <div class="section-head">
+    <div>
+      <div class="section-kicker">EXPLORE</div>
+      <h2>Browse by Category</h2>
+    </div>
+
+    <button class="secondary small" onclick="selectCategory('')">
+      View All
+    </button>
+  </div>
+
+  <div id="categoryChips" class="category-chips"></div>
+
+</section>
 <section class="container">
+<div class="listing-heading">
+  <div>
+    <div class="section-kicker">MARKETPLACE</div>
+    <h2>Available Components</h2>
+  </div>
 
+  <span id="listingCount" class="listing-count"></span>
+</div>
 <div class="toolbar">
 <input id="search" placeholder="Search MQ2, Arduino, NRF24L01..." oninput="renderListings()">
 
@@ -1022,7 +1214,7 @@ For quality, condition or compatibility issues, contact the seller directly.
 <p>
 <b>General support:</b><br>
 Email:
-<a href="mailto:singhadarsh7254@gmail.com">
+<a href="mailto:ideateonics7254@gmail.com">
 ideateonics7254@gmail.com
 </a>
 </p>
@@ -1112,6 +1304,7 @@ let listings=[];
 let editingId=null;
 let imageData="";
 let authMode="login";
+let activeCategory = "";
 
 
 /* =========================
@@ -1415,7 +1608,85 @@ founderBtn.style.display="none";
 await loadListings();
 
 });
+window.openRequirement = function(){
 
+  if(!auth.currentUser){
+    alert("Please login first.");
+    openLogin();
+    return;
+  }
+
+  document.getElementById("requirementModal")
+    .classList.add("show");
+};
+
+
+window.saveRequirement = async function(e){
+
+  e.preventDefault();
+
+  if(!auth.currentUser){
+    alert("Please login first.");
+    return;
+  }
+
+  try{
+
+    const data = {
+
+      componentName:
+        document.getElementById("reqName").value.trim(),
+
+      category:
+        document.getElementById("reqCategory").value,
+
+      quantity:
+        Number(document.getElementById("reqQuantity").value),
+
+      college:
+        document.getElementById("reqCollege").value.trim(),
+
+      location:
+        document.getElementById("reqLocation").value.trim(),
+
+      budget:
+        Number(document.getElementById("reqBudget").value || 0),
+
+      description:
+        document.getElementById("reqDescription").value.trim(),
+
+      userUid:
+        auth.currentUser.uid,
+
+      userEmail:
+        auth.currentUser.email,
+
+      status: "open",
+
+      createdAt: serverTimestamp()
+
+    };
+
+    await addDoc(
+      collection(db, "requirements"),
+      data
+    );
+
+    alert("Requirement posted successfully! 🎉");
+
+    closeModal("requirementModal");
+
+    e.target.reset();
+
+  }catch(error){
+
+    console.error(error);
+
+    alert("Failed to post requirement.");
+
+  }
+
+};
 /* =========================
    COMMISSION
 ========================= */
@@ -1531,6 +1802,7 @@ document.getElementById("sellTitle").textContent="Edit Listing";
 document.getElementById("name").value=x.name||"";
 document.getElementById("category").value=x.category||"";
 document.getElementById("price").value=x.price||"";
+document.getElementById("Quantity").value=x.quantity||"";
 document.getElementById("cond").value=x.condition||"";
 document.getElementById("seller").value=x.seller||"";
 document.getElementById("college").value=x.college||"";
@@ -1585,6 +1857,8 @@ category:document.getElementById("category").value,
 
 price:Number(document.getElementById("price").value),
 
+quantity: document.getElementById("Quantity").value.trim(),
+   
 condition:document.getElementById("cond").value,
 
 seller:document.getElementById("seller").value.trim(),
@@ -1758,6 +2032,7 @@ id:d.id,
 });
 
 updateLocations();
+renderCategoryChips();
 renderListings();
 
 }catch(error){
@@ -1810,6 +2085,63 @@ select.value=current;
 
 }
 
+function renderCategoryChips(){
+
+  const box = document.getElementById("categoryChips");
+  if(!box) return;
+
+  const categories = [...new Set(
+    listings
+      .filter(x => {
+        if(x.restricted && !founder()) return false;
+        if(x.approved === false && !founder()) return false;
+        return true;
+      })
+      .map(x => x.category)
+      .filter(Boolean)
+  )].sort();
+
+  box.innerHTML = `
+    <button
+      class="category-chip ${activeCategory === "" ? "active" : ""}"
+      onclick="selectCategory('')">
+      All
+    </button>
+  `;
+
+  categories.forEach(category => {
+
+    const safeCategory = esc(category);
+
+    box.innerHTML += `
+      <button
+        class="category-chip ${activeCategory === category ? "active" : ""}"
+        onclick="selectCategory('${category.replace(/'/g, "\\'")}')">
+        ${safeCategory}
+      </button>
+    `;
+
+  });
+}
+
+
+window.selectCategory = function(category){
+
+  activeCategory = category;
+
+  renderCategoryChips();
+  renderListings();
+
+  const grid = document.getElementById("grid");
+
+  if(grid && category){
+    grid.scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
+  }
+};
+
 
 /* =========================
    RENDER
@@ -1831,7 +2163,7 @@ document.getElementById("condition").value;
 const location=
 document.getElementById("locationFilter").value;
 
-listings.filter(x=>{
+const filteredListings = listings.filter(x=>{
 
 const text=[
 
@@ -1848,8 +2180,19 @@ x.condition
 return text.includes(search)
 &&(!condition||x.condition===condition)
 &&(!location||x.collegeLocation===location);
+&&(!activeCategory||x.category===activeCategory);
 
-}).forEach(x=>{
+});
+
+const count = document.getElementById("listingCount");
+
+if(count){
+  count.textContent =
+    `${filteredListings.length} item${filteredListings.length !== 1 ? "s" : ""}`;
+}
+
+filteredListings.forEach(x=>{
+
 
 if(x.restricted&&!x.approved&&!founder())
 return;
@@ -1879,16 +2222,15 @@ status=
 
 let buttons="";
 
-if(!x.sold){
+if(!x.sold && x.whatsapp){
 
 buttons+=`
-<button class="primary small"
-onclick="buyNow('${x.id}')">
-Buy Now
+<button class="secondary small"
+onclick="openWhatsApp('${x.id}')">
+💬 WhatsApp Seller
 </button>`;
 
 }
-
 if(
 x.sold&&
 auth.currentUser&&
@@ -1962,9 +2304,17 @@ card.innerHTML=`
 ₹${Number(x.price||0).toLocaleString("en-IN")}
 </div>
 
+${x.description ? `
+<div class="product-description">
+${esc(x.description)}
+</div>
+` : ""}
+
 <div class="meta">
 
 Category: ${esc(x.category||"")}<br>
+
+${x.quantity ? `📦 Quantity: ${esc(x.quantity)}<br>` : ""}
 
 ${esc(x.condition||"")}<br>
 
@@ -2240,7 +2590,42 @@ error.message
 
 };
 
+window.openWhatsApp=function(id){
 
+const x=listings.find(item=>item.id===id);
+
+if(!x||!x.whatsapp){
+
+alert("Seller has not provided a WhatsApp number.");
+
+return;
+}
+
+let phone=String(x.whatsapp).replace(/\D/g,"");
+
+if(phone.length===10){
+
+phone="91"+phone;
+
+}
+
+if(phone.length<10){
+
+alert("Invalid WhatsApp number.");
+
+return;
+}
+
+const message=encodeURIComponent(
+`Hi, I found "${x.name}" on CampusComponents. Is it still available?`
+);
+
+window.open(
+`https://wa.me/${phone}?text=${message}`,
+"_blank"
+);
+
+};
 /* =========================
    CONTACT SELLER
 ========================= */
@@ -3076,6 +3461,102 @@ alert(error.message);
 };
 
 </script>
+<!-- REQUIREMENT MODAL -->
 
+<div class="modal" id="requirementModal">
+
+  <div class="modal-box">
+
+    <button class="close" onclick="closeModal('requirementModal')">
+      ×
+    </button>
+
+    <h2>Post a Requirement</h2>
+
+    <p class="muted">
+      Tell other students what component you are looking for.
+    </p>
+
+    <form onsubmit="saveRequirement(event)">
+
+      <label>Component Name</label>
+      <input
+        id="reqName"
+        type="text"
+        placeholder="e.g. Arduino UNO, NRF24L01"
+        required
+      >
+
+      <label>Category</label>
+      <select id="reqCategory" required>
+
+        <option value="">Select Category</option>
+        <option>Microcontroller</option>
+        <option>Sensor</option>
+        <option>Communication Module</option>
+        <option>Motor & Motor Driver</option>
+        <option>Display</option>
+        <option>Power Supply</option>
+        <option>Arduino / Development Board</option>
+        <option>Raspberry Pi</option>
+        <option>FPGA / Embedded</option>
+        <option>IC / Semiconductor</option>
+        <option>Passive Component</option>
+        <option>Connector / Cable</option>
+        <option>Battery</option>
+        <option>PCB / Module</option>
+        <option>Other</option>
+
+      </select>
+
+      <label>Quantity</label>
+      <input
+        id="reqQuantity"
+        type="number"
+        min="1"
+        placeholder="e.g. 2"
+        required
+      >
+
+      <label>College</label>
+      <input
+        id="reqCollege"
+        type="text"
+        placeholder="Your college name"
+        required
+      >
+
+      <label>Location</label>
+      <input
+        id="reqLocation"
+        type="text"
+        placeholder="e.g. Mathura"
+        required
+      >
+
+      <label>Maximum Budget (Optional)</label>
+      <input
+        id="reqBudget"
+        type="number"
+        min="0"
+        placeholder="₹ e.g. 500"
+      >
+
+      <label>Description</label>
+      <textarea
+        id="reqDescription"
+        rows="4"
+        placeholder="Any specific requirement..."
+      ></textarea>
+
+      <button class="primary" type="submit">
+        Post Requirement
+      </button>
+
+    </form>
+
+  </div>
+
+</div>
 </body>
 </html>
