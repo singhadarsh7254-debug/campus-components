@@ -4313,24 +4313,47 @@ async function(id){
     return;
 
   }
+try{
+const productPrice =
+  Number(listing.price);
 
+const availableQuantity =
+  Number(listing.quantity || 1);
 
-  try{
+const quantity =
+  Number(
+    prompt(
+      "Available Quantity: " +
+      availableQuantity +
+      "\n\nHow many do you want to order?"
+    )
+  );
 
-    const productPrice=
-      Number(listing.price);
+if(
+  !Number.isInteger(quantity) ||
+  quantity < 1
+){
+  alert("Please enter a valid quantity.");
+  return;
+}
 
+if(quantity > availableQuantity){
+  alert(
+    "Only " +
+    availableQuantity +
+    " quantity available."
+  );
+  return;
+}
 
-    const commission=
-      commissionAmount(
-        productPrice
-      );
+const totalAmount =
+  productPrice * quantity;
 
+const commission =
+  commissionAmount(totalAmount);
 
-    const buyerTotal=
-      productPrice+
-      commission;
-
+const buyerTotal =
+  totalAmount + commission;
 
     const response=
       await fetch(
